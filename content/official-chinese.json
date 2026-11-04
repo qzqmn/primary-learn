@@ -1,0 +1,399 @@
+{
+ "pack": "official-chinese",
+ "version": 1,
+ "license": "CC BY-SA 4.0",
+ "units": [
+  {
+   "id": "c1-measure-words",
+   "subject": "chinese",
+   "grade": 1,
+   "title": "量詞（一…）",
+   "intro": [
+    "量詞是用來數事物的單位詞，要配合名詞。例：一本書、一隻貓、一張紙、一枝筆。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "一___書",
+     "answer": "本",
+     "choices": [
+      "本",
+      "隻",
+      "張",
+      "枝"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___貓",
+     "answer": "隻",
+     "choices": [
+      "隻",
+      "本",
+      "條",
+      "個"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___紙",
+     "answer": "張",
+     "choices": [
+      "張",
+      "枝",
+      "隻",
+      "件"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___鉛筆",
+     "answer": "枝",
+     "choices": [
+      "枝",
+      "本",
+      "張",
+      "隻"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___魚",
+     "answer": "條",
+     "choices": [
+      "條",
+      "隻",
+      "張",
+      "本"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___衣服",
+     "answer": "件",
+     "choices": [
+      "件",
+      "條",
+      "本",
+      "隻"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___雨傘",
+     "answer": "把",
+     "choices": [
+      "把",
+      "張",
+      "隻",
+      "件"
+     ],
+     "tag": "c-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___花",
+     "answer": "朵",
+     "choices": [
+      "朵",
+      "本",
+      "張",
+      "件"
+     ],
+     "tag": "c-measure"
+    }
+   ]
+  },
+  {
+   "id": "c2-antonyms",
+   "subject": "chinese",
+   "grade": 2,
+   "title": "反義詞",
+   "intro": [
+    "意思相反的詞語叫反義詞。例：大 ↔ 小、多 ↔ 少、高 ↔ 矮。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「大」的反義詞是 …",
+     "answer": "小",
+     "choices": [
+      "小",
+      "多",
+      "高",
+      "長"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「高」的反義詞是 …",
+     "answer": "矮",
+     "choices": [
+      "矮",
+      "大",
+      "短",
+      "胖"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「多」的反義詞是 …",
+     "answer": "少",
+     "choices": [
+      "少",
+      "小",
+      "短",
+      "輕"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「快」的反義詞是 …",
+     "answer": "慢",
+     "choices": [
+      "慢",
+      "停",
+      "小",
+      "輕"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「開」的反義詞是 …",
+     "answer": "關",
+     "choices": [
+      "關",
+      "門",
+      "停",
+      "推"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「冷」的反義詞是 …",
+     "answer": "熱",
+     "choices": [
+      "熱",
+      "冰",
+      "凍",
+      "寒"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「遠」的反義詞是 …",
+     "answer": "近",
+     "choices": [
+      "近",
+      "短",
+      "小",
+      "低"
+     ],
+     "tag": "c-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「早」的反義詞是 …",
+     "answer": "晚",
+     "choices": [
+      "晚",
+      "夜",
+      "慢",
+      "快"
+     ],
+     "tag": "c-antonym"
+    }
+   ]
+  },
+  {
+   "id": "c3-synonyms",
+   "subject": "chinese",
+   "grade": 3,
+   "title": "近義詞",
+   "intro": [
+    "意思相近的詞語叫近義詞。例：高興 ≈ 開心、美麗 ≈ 漂亮。選擇時要留意句子的意思。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「高興」的近義詞是 …",
+     "answer": "開心",
+     "choices": [
+      "開心",
+      "難過",
+      "生氣",
+      "害怕"
+     ],
+     "tag": "c-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「美麗」的近義詞是 …",
+     "answer": "漂亮",
+     "choices": [
+      "漂亮",
+      "醜陋",
+      "普通",
+      "安靜"
+     ],
+     "tag": "c-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「勇敢」的近義詞是 …",
+     "answer": "大膽",
+     "choices": [
+      "大膽",
+      "膽小",
+      "害羞",
+      "安靜"
+     ],
+     "tag": "c-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「迅速」的近義詞是 …",
+     "answer": "快捷",
+     "choices": [
+      "快捷",
+      "緩慢",
+      "安靜",
+      "仔細"
+     ],
+     "tag": "c-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「寬闊」的近義詞是 …",
+     "answer": "遼闊",
+     "choices": [
+      "遼闊",
+      "狹窄",
+      "擁擠",
+      "彎曲"
+     ],
+     "tag": "c-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「幫助」的近義詞是 …",
+     "answer": "協助",
+     "choices": [
+      "協助",
+      "阻止",
+      "打擾",
+      "拒絕"
+     ],
+     "tag": "c-synonym"
+    }
+   ]
+  },
+  {
+   "id": "c4-idioms",
+   "subject": "chinese",
+   "grade": 5,
+   "title": "成語運用",
+   "intro": [
+    "成語大多由四個字組成，有固定的意思。使用時要明白它的意思，並配合語境。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「守株待兔」比喻 …",
+     "answer": "不努力，只想僥倖得到成果",
+     "choices": [
+      "不努力，只想僥倖得到成果",
+      "耐心等待",
+      "保護樹木",
+      "打獵很厲害"
+     ],
+     "tag": "c-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「亡羊補牢」的意思是 …",
+     "answer": "出了問題後設法補救，還不算晚",
+     "choices": [
+      "出了問題後設法補救，還不算晚",
+      "丟了羊就放棄",
+      "羊圈很堅固",
+      "牧羊人很勤勞"
+     ],
+     "tag": "c-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「井底之蛙」比喻 …",
+     "answer": "見識狹小的人",
+     "choices": [
+      "見識狹小的人",
+      "很會游泳的人",
+      "住在井邊的人",
+      "勤力的人"
+     ],
+     "tag": "c-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「畫蛇添足」比喻 …",
+     "answer": "做多餘的事，反而弄巧成拙",
+     "choices": [
+      "做多餘的事，反而弄巧成拙",
+      "畫畫很出色",
+      "蛇有很多腳",
+      "辦事很周到"
+     ],
+     "tag": "c-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「半途而廢」的意思是 …",
+     "answer": "做事中途放棄",
+     "choices": [
+      "做事中途放棄",
+      "走到一半休息",
+      "走得很慢",
+      "一開始就失敗"
+     ],
+     "tag": "c-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "他做事一向有恆心，絕不會___。",
+     "answer": "半途而廢",
+     "choices": [
+      "半途而廢",
+      "守株待兔",
+      "畫蛇添足",
+      "井底之蛙"
+     ],
+     "tag": "c-idiom-use"
+    },
+    {
+     "type": "choice",
+     "prompt": "你已經做得很好，再加這一筆就是___了。",
+     "answer": "畫蛇添足",
+     "choices": [
+      "畫蛇添足",
+      "亡羊補牢",
+      "半途而廢",
+      "一心一意"
+     ],
+     "tag": "c-idiom-use"
+    }
+   ]
+  }
+ ]
+}

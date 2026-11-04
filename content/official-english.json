@@ -1,0 +1,817 @@
+{
+ "pack": "official-english",
+ "version": 1,
+ "license": "CC BY-SA 4.0",
+ "units": [
+  {
+   "id": "e1-animals-colors",
+   "subject": "english",
+   "grade": 1,
+   "title": "Animals and Colours 動物與顏色",
+   "intro": [
+    "Learn the English words for common animals and colours. 例：cat 貓、dog 狗、red 紅色、blue 藍色。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "Which word means「貓」?",
+     "answer": "cat",
+     "choices": [
+      "cat",
+      "dog",
+      "bird",
+      "fish"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「狗」?",
+     "answer": "dog",
+     "choices": [
+      "dog",
+      "cat",
+      "pig",
+      "cow"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「魚」?",
+     "answer": "fish",
+     "choices": [
+      "fish",
+      "bird",
+      "fox",
+      "frog"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「兔子」?",
+     "answer": "rabbit",
+     "choices": [
+      "rabbit",
+      "monkey",
+      "tiger",
+      "horse"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「老虎」?",
+     "answer": "tiger",
+     "choices": [
+      "tiger",
+      "lion",
+      "bear",
+      "duck"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「鳥」?",
+     "answer": "bird",
+     "choices": [
+      "bird",
+      "bee",
+      "bat",
+      "bug"
+     ],
+     "tag": "e-vocab-animals"
+    },
+    {
+     "type": "choice",
+     "prompt": "What does「red」mean?",
+     "answer": "紅色",
+     "choices": [
+      "紅色",
+      "藍色",
+      "綠色",
+      "黃色"
+     ],
+     "tag": "e-vocab-colours"
+    },
+    {
+     "type": "choice",
+     "prompt": "What does「blue」mean?",
+     "answer": "藍色",
+     "choices": [
+      "藍色",
+      "紅色",
+      "黑色",
+      "白色"
+     ],
+     "tag": "e-vocab-colours"
+    },
+    {
+     "type": "choice",
+     "prompt": "What does「green」mean?",
+     "answer": "綠色",
+     "choices": [
+      "綠色",
+      "黃色",
+      "粉紅色",
+      "橙色"
+     ],
+     "tag": "e-vocab-colours"
+    },
+    {
+     "type": "choice",
+     "prompt": "What does「yellow」mean?",
+     "answer": "黃色",
+     "choices": [
+      "黃色",
+      "綠色",
+      "紫色",
+      "棕色"
+     ],
+     "tag": "e-vocab-colours"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「白色」?",
+     "answer": "white",
+     "choices": [
+      "white",
+      "black",
+      "brown",
+      "pink"
+     ],
+     "tag": "e-vocab-colours"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「黑色」?",
+     "answer": "black",
+     "choices": [
+      "black",
+      "blue",
+      "white",
+      "brown"
+     ],
+     "tag": "e-vocab-colours"
+    }
+   ]
+  },
+  {
+   "id": "e1-family-school",
+   "subject": "english",
+   "grade": 1,
+   "title": "Family and School 家庭與學校",
+   "intro": [
+    "Words about family and school: mother 媽媽、father 爸爸、teacher 老師、book 書。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "Which word means「媽媽」?",
+     "answer": "mother",
+     "choices": [
+      "mother",
+      "father",
+      "sister",
+      "brother"
+     ],
+     "tag": "e-vocab-family"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「爸爸」?",
+     "answer": "father",
+     "choices": [
+      "father",
+      "mother",
+      "uncle",
+      "grandfather"
+     ],
+     "tag": "e-vocab-family"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「姐姐／妹妹」?",
+     "answer": "sister",
+     "choices": [
+      "sister",
+      "brother",
+      "aunt",
+      "friend"
+     ],
+     "tag": "e-vocab-family"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「哥哥／弟弟」?",
+     "answer": "brother",
+     "choices": [
+      "brother",
+      "sister",
+      "father",
+      "uncle"
+     ],
+     "tag": "e-vocab-family"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「老師」?",
+     "answer": "teacher",
+     "choices": [
+      "teacher",
+      "student",
+      "doctor",
+      "nurse"
+     ],
+     "tag": "e-vocab-school"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「書」?",
+     "answer": "book",
+     "choices": [
+      "book",
+      "bag",
+      "desk",
+      "door"
+     ],
+     "tag": "e-vocab-school"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「書包」?",
+     "answer": "bag",
+     "choices": [
+      "bag",
+      "book",
+      "box",
+      "bed"
+     ],
+     "tag": "e-vocab-school"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「鉛筆」?",
+     "answer": "pencil",
+     "choices": [
+      "pencil",
+      "pen",
+      "ruler",
+      "eraser"
+     ],
+     "tag": "e-vocab-school"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which word means「尺」?",
+     "answer": "ruler",
+     "choices": [
+      "ruler",
+      "rubber",
+      "pencil",
+      "paper"
+     ],
+     "tag": "e-vocab-school"
+    },
+    {
+     "type": "choice",
+     "prompt": "What does「student」mean?",
+     "answer": "學生",
+     "choices": [
+      "學生",
+      "老師",
+      "醫生",
+      "朋友"
+     ],
+     "tag": "e-vocab-school"
+    }
+   ]
+  },
+  {
+   "id": "e2-be-verbs",
+   "subject": "english",
+   "grade": 2,
+   "title": "am / is / are",
+   "intro": [
+    "I → am；he / she / it 或單數名詞 → is；you / we / they 或眾數 → are。例：I am Tom. She is a nurse. They are happy."
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "I ___ a student.",
+     "answer": "am",
+     "choices": [
+      "am",
+      "is",
+      "are",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "She ___ my teacher.",
+     "answer": "is",
+     "choices": [
+      "is",
+      "am",
+      "are",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "They ___ in the park.",
+     "answer": "are",
+     "choices": [
+      "are",
+      "is",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "The cat ___ on the sofa.",
+     "answer": "is",
+     "choices": [
+      "is",
+      "are",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "You ___ my best friend.",
+     "answer": "are",
+     "choices": [
+      "are",
+      "is",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "We ___ in Class 2A.",
+     "answer": "are",
+     "choices": [
+      "are",
+      "is",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "It ___ a sunny day.",
+     "answer": "is",
+     "choices": [
+      "is",
+      "are",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "My parents ___ at home.",
+     "answer": "are",
+     "choices": [
+      "are",
+      "is",
+      "am",
+      "be"
+     ],
+     "tag": "e-grammar-be"
+    }
+   ]
+  },
+  {
+   "id": "e2-a-an-plural",
+   "subject": "english",
+   "grade": 2,
+   "title": "a / an 與眾數 Plurals",
+   "intro": [
+    "元音音標開頭的字用 an（an apple, an egg），其他用 a（a book）。多數名詞加 -s（cats）；s, x, ch, sh 結尾加 -es（boxes, watches）。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "I have ___ apple.",
+     "answer": "an",
+     "choices": [
+      "an",
+      "a",
+      "the",
+      "two"
+     ],
+     "tag": "e-grammar-a-an"
+    },
+    {
+     "type": "choice",
+     "prompt": "She has ___ book.",
+     "answer": "a",
+     "choices": [
+      "a",
+      "an",
+      "the",
+      "some"
+     ],
+     "tag": "e-grammar-a-an"
+    },
+    {
+     "type": "choice",
+     "prompt": "He is ___ English teacher.",
+     "answer": "an",
+     "choices": [
+      "an",
+      "a",
+      "the",
+      "one"
+     ],
+     "tag": "e-grammar-a-an"
+    },
+    {
+     "type": "choice",
+     "prompt": "There is ___ umbrella.",
+     "answer": "an",
+     "choices": [
+      "an",
+      "a",
+      "the",
+      "two"
+     ],
+     "tag": "e-grammar-a-an"
+    },
+    {
+     "type": "choice",
+     "prompt": "The plural of「box」is ...",
+     "answer": "boxes",
+     "choices": [
+      "boxes",
+      "boxs",
+      "boxies",
+      "box"
+     ],
+     "tag": "e-grammar-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "The plural of「cat」is ...",
+     "answer": "cats",
+     "choices": [
+      "cats",
+      "cates",
+      "catses",
+      "cat"
+     ],
+     "tag": "e-grammar-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "The plural of「watch」is ...",
+     "answer": "watches",
+     "choices": [
+      "watches",
+      "watchs",
+      "watchies",
+      "watche"
+     ],
+     "tag": "e-grammar-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "The plural of「child」is ...",
+     "answer": "children",
+     "choices": [
+      "children",
+      "childs",
+      "childes",
+      "childrens"
+     ],
+     "tag": "e-grammar-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "The plural of「man」is ...",
+     "answer": "men",
+     "choices": [
+      "men",
+      "mans",
+      "mens",
+      "manes"
+     ],
+     "tag": "e-grammar-plural"
+    }
+   ]
+  },
+  {
+   "id": "e3-prepositions",
+   "subject": "english",
+   "grade": 3,
+   "title": "Prepositions 介詞",
+   "intro": [
+    "in（在…裏面）、on（在…上面）、under（在…下面）、next to（在…旁邊）、behind（在…後面）。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "The ball is ___ the box. (球在盒子裏面)",
+     "answer": "in",
+     "choices": [
+      "in",
+      "on",
+      "under",
+      "behind"
+     ],
+     "tag": "e-grammar-prep"
+    },
+    {
+     "type": "choice",
+     "prompt": "The book is ___ the table. (書在桌面上)",
+     "answer": "on",
+     "choices": [
+      "on",
+      "in",
+      "under",
+      "at"
+     ],
+     "tag": "e-grammar-prep"
+    },
+    {
+     "type": "choice",
+     "prompt": "The cat is ___ the bed. (貓在床下面)",
+     "answer": "under",
+     "choices": [
+      "under",
+      "on",
+      "in",
+      "at"
+     ],
+     "tag": "e-grammar-prep"
+    },
+    {
+     "type": "choice",
+     "prompt": "My school is ___ the park. (學校在公園旁邊)",
+     "answer": "next to",
+     "choices": [
+      "next to",
+      "in",
+      "under",
+      "on"
+     ],
+     "tag": "e-grammar-prep"
+    },
+    {
+     "type": "choice",
+     "prompt": "The dog is ___ the door. (狗在門後面)",
+     "answer": "behind",
+     "choices": [
+      "behind",
+      "on",
+      "in",
+      "at"
+     ],
+     "tag": "e-grammar-prep"
+    },
+    {
+     "type": "choice",
+     "prompt": "I go to school ___ bus.",
+     "answer": "by",
+     "choices": [
+      "by",
+      "in",
+      "at",
+      "on"
+     ],
+     "tag": "e-grammar-prep-time"
+    },
+    {
+     "type": "choice",
+     "prompt": "My birthday is ___ May.",
+     "answer": "in",
+     "choices": [
+      "in",
+      "on",
+      "at",
+      "by"
+     ],
+     "tag": "e-grammar-prep-time"
+    },
+    {
+     "type": "choice",
+     "prompt": "We have lunch ___ 12:30.",
+     "answer": "at",
+     "choices": [
+      "at",
+      "in",
+      "on",
+      "by"
+     ],
+     "tag": "e-grammar-prep-time"
+    }
+   ]
+  },
+  {
+   "id": "e4-past-tense",
+   "subject": "english",
+   "grade": 4,
+   "title": "Simple Past Tense 簡單過去式",
+   "intro": [
+    "說已經發生的事用過去式。規則動詞加 -ed（played）；不規則動詞要背：go → went, see → saw, eat → ate, have → had。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "Yesterday I ___ to the library.",
+     "answer": "went",
+     "choices": [
+      "went",
+      "go",
+      "goed",
+      "going"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "She ___ a movie last night.",
+     "answer": "saw",
+     "choices": [
+      "saw",
+      "see",
+      "seed",
+      "seen"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "We ___ football after school.",
+     "answer": "played",
+     "choices": [
+      "played",
+      "play",
+      "plays",
+      "playing"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "He ___ breakfast at seven.",
+     "answer": "ate",
+     "choices": [
+      "ate",
+      "eat",
+      "eated",
+      "eaten"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "They ___ a good time at the party.",
+     "answer": "had",
+     "choices": [
+      "had",
+      "have",
+      "haved",
+      "has"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "The past tense of「study」is ...",
+     "answer": "studied",
+     "choices": [
+      "studied",
+      "studyed",
+      "studys",
+      "studing"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "The past tense of「buy」is ...",
+     "answer": "bought",
+     "choices": [
+      "bought",
+      "buyed",
+      "buys",
+      "buying"
+     ],
+     "tag": "e-grammar-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "Which sentence is correct?",
+     "answer": "I did not go to school.",
+     "choices": [
+      "I did not go to school.",
+      "I did not went to school.",
+      "I not go to school.",
+      "I did not going to school."
+     ],
+     "tag": "e-grammar-past-neg",
+     "explain": "did not 之後用動詞原形。"
+    }
+   ]
+  },
+  {
+   "id": "e5-comparatives",
+   "subject": "english",
+   "grade": 5,
+   "title": "Comparatives 比較級",
+   "intro": [
+    "短形容詞加 -er（taller, faster），後面常接 than。長形容詞前加 more（more beautiful）。不規則：good → better, bad → worse。"
+   ],
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "Tom is ___ than Ben. (tall)",
+     "answer": "taller",
+     "choices": [
+      "taller",
+      "more tall",
+      "tallest",
+      "tallest than"
+     ],
+     "tag": "e-grammar-compare"
+    },
+    {
+     "type": "choice",
+     "prompt": "This bag is ___ than that one. (heavy)",
+     "answer": "heavier",
+     "choices": [
+      "heavier",
+      "heavyer",
+      "more heavy",
+      "heaviest"
+     ],
+     "tag": "e-grammar-compare"
+    },
+    {
+     "type": "choice",
+     "prompt": "Maths is ___ than English for me. (difficult)",
+     "answer": "more difficult",
+     "choices": [
+      "more difficult",
+      "difficulter",
+      "most difficult",
+      "more difficulter"
+     ],
+     "tag": "e-grammar-compare"
+    },
+    {
+     "type": "choice",
+     "prompt": "Her English is ___ than mine. (good)",
+     "answer": "better",
+     "choices": [
+      "better",
+      "gooder",
+      "more good",
+      "best"
+     ],
+     "tag": "e-grammar-compare"
+    },
+    {
+     "type": "choice",
+     "prompt": "The weather today is ___ than yesterday. (bad)",
+     "answer": "worse",
+     "choices": [
+      "worse",
+      "badder",
+      "more bad",
+      "worst"
+     ],
+     "tag": "e-grammar-compare"
+    },
+    {
+     "type": "choice",
+     "prompt": "A cheetah runs ___ than a horse. (fast)",
+     "answer": "faster",
+     "choices": [
+      "faster",
+      "more fast",
+      "fastest",
+      "fastly"
+     ],
+     "tag": "e-grammar-compare"
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+# 快速開始：
+#   cp .env.example .env
+#   docker compose up -d --build        # 第一次（從原始碼建置）
+#   docker compose logs app             # 查看「設定碼」，然後用瀏覽器打開 http://伺服器IP:3000
+#
+# 發佈版本後可直接拉取鏡像（把 OWNER 改成你的 GitHub 用戶名）：
+#   docker compose pull && docker compose up -d
+#
+# 加上 HTTPS（二選一）：
+#   docker compose --profile caddy up -d     # 自動申請證書（需要 DOMAIN 和 80/443 埠）
+#   docker compose --profile tunnel up -d    # Cloudflare Tunnel（需要 TUNNEL_TOKEN）
+name: hk-primary-learn
+
+services:
+  app:
+    image: ghcr.io/OWNER/hk-primary-learn:latest
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    init: true
+    restart: unless-stopped
+    environment:
+      APP_URL: ${APP_URL:-}
+      TRUST_PROXY: ${TRUST_PROXY:-none}
+      SETUP_TOKEN: ${SETUP_TOKEN:-}
+      SETUP_REQUIRE_TOKEN: ${SETUP_REQUIRE_TOKEN:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      BACKUP_MAX_MB: ${BACKUP_MAX_MB:-512}
+    ports:
+      - "${BIND:-0.0.0.0}:${PORT:-3000}:3000"
+    volumes:
+      - data:/data
+      # 自訂題庫：把內容包 JSON 放進 ./content，取消下一行註解後重啟
+      # - ./content:/content:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  caddy:
+    profiles: ["caddy"]
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?請在 .env 設定 DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+  cloudflared:
+    profiles: ["tunnel"]
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?請在 .env 設定 TUNNEL_TOKEN}
+    depends_on:
+      - app
+
+volumes:
+  data:
+  caddy_data:
+  caddy_config:

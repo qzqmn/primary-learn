@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "PingFang HK", "PingFang TC", "Hiragino Sans CNS", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans CJK TC", system-ui, sans-serif;
+  --color-paper: #f4f6fb;
+  --color-ink: #14213d;
+  --color-ink-soft: #55627f;
+  --color-ballpoint: #2347c5;
+  --color-ballpoint-dark: #1a3699;
+  --color-ballpoint-tint: #e4eaff;
+  --color-pen: #d7263d;
+  --color-pen-tint: #fde8eb;
+  --color-line: #cfd8ee;
+  --color-hi: #ffe45c;
+  --color-ok: #187a56;
+  --color-ok-tint: #e1f4ec;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+body { background: var(--color-paper); color: var(--color-ink); font-family: var(--font-sans); line-height: 1.6; }
+
+/* 格仔簿紙紋：整個產品的視覺母題 */
+.grid-paper {
+  background-color: #fbfcff;
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+}
+
+:focus-visible { outline: 3px solid var(--color-ballpoint); outline-offset: 2px; border-radius: 4px; }

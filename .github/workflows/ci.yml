@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: 型別檢查、單元測試、建置、端到端煙霧測試
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - name: 端到端煙霧測試（真實 HTTP：設定精靈 → 班級 → 練習 → 報告 → 權限隔離）
+        run: npm run smoke
+
+  docker:
+    name: Docker 鏡像建置並跑煙霧測試
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+      - name: 建置鏡像
+        run: docker build -f docker/Dockerfile -t hkpl:ci .
+      - name: 啟動容器
+        run: |
+          mkdir -p smoke-data
+          docker run -d --name hkpl --user "$(id -u):$(id -g)" -p 3000:3000 \
+            -v "$PWD/smoke-data:/data" -e SETUP_TOKEN=CI-SMOKE hkpl:ci
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:3000/api/healthz && break; sleep 1; done
+          curl -sf http://127.0.0.1:3000/api/healthz
+      - name: 對容器跑煙霧測試
+        working-directory: apps/web
+        run: |
+          npm ci
+          BASE_URL=http://127.0.0.1:3000 SETUP_TOKEN=CI-SMOKE DATA_DIR="$GITHUB_WORKSPACE/smoke-data" node scripts/smoke.mjs
+      - name: 容器內維護工具可用
+        run: |
+          docker exec hkpl cli list-admins | grep boss
+          docker inspect --format '{{.State.Health.Status}}' hkpl
+      - name: 容器日誌
+        if: always()
+        run: docker logs hkpl | tail -50

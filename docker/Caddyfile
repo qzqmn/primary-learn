@@ -1,0 +1,5 @@
+{$DOMAIN} {
+	encode zstd gzip
+	# Caddy 會覆寫客戶端傳來的 X-Forwarded-For，所以 .env 可設 TRUST_PROXY=xff
+	reverse_proxy app:3000
+}
