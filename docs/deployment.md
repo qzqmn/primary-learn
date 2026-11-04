@@ -86,10 +86,25 @@ docker compose up -d --build        # 或：docker compose pull && docker compos
 
 ## 6. 發佈自己的鏡像（GitHub Actions）
 
-1. 把倉庫推上 GitHub。`CI` 工作流程會在每次推送時跑型別檢查、單元測試、建置、端到端煙霧測試，並**實際建置 Docker 鏡像、啟動容器、對容器跑一次煙霧測試**。
-2. 打標籤：`git tag v0.1.0 && git push --tags`。`Release` 工作流程會建置 `linux/amd64` 和 `linux/arm64` 鏡像並推送到 `ghcr.io/<你的用戶名>/hk-primary-learn`。
-3. 第一次推送後，到 GitHub 的 Packages 頁把鏡像設為 Public（如果你想讓別的伺服器不登入就能拉取）。
-4. 把 `docker-compose.yml` 的 `OWNER` 改成你的 GitHub 用戶名。
+單一個工作流程 `.github/workflows/ci.yml`，三個階段依序執行：
+
+| 階段 | 做什麼 | 何時跑 |
+|---|---|---|
+| `test` | 型別檢查、單元測試、建置、端到端煙霧測試 | 每次 push、每個 pull request |
+| `docker` | 建置 Docker 鏡像、啟動容器、對容器跑煙霧測試 | 同上（`test` 通過後） |
+| `publish` | 建置 `linux/amd64` + `linux/arm64` 鏡像並推送到 GHCR | **只有 push 到 `main`、推送 `v*.*.*` 標籤或手動觸發**，且前兩階段都通過 |
+
+發佈的標籤：`:latest`、`:sha-xxxxxxx`；推送 `v1.2.3` 標籤時另有 `:1.2.3`、`:1.2`。Pull request（包括來自 fork 的）不會發佈。
+
+**第一次設定**
+
+1. 把倉庫推上 GitHub 的 `main` 分支，到 Actions 頁籤確認三個階段都成功。如果 `publish` 失敗並提示沒有權限，到倉庫 Settings → Actions → General → Workflow permissions，選「Read and write permissions」。
+2. 鏡像會出現在你的 GitHub **Packages**。預設是私有的：
+   - 讓 VPS 免登入拉取：Package settings → Change visibility → Public；
+   - 或保持私有，在每台 VPS 登入一次：`echo <token> | docker login ghcr.io -u <用戶名> --password-stdin`（token 需要 `read:packages` 權限）。
+3. 在 VPS 用 `deploy/docker-compose.yml`（只拉鏡像、不建置），`.env` 裡設 `APP_IMAGE=ghcr.io/你的用戶名/hk-primary-learn:latest`（全小寫）。
+
+**之後的日常**：改程式 → push 到 main → 等 Actions 綠燈（鏡像自動更新）→ VPS 上 `docker compose pull && docker compose up -d`。想固定在某個版本，就把 `APP_IMAGE` 設成 `…:1.2.3` 或 `…:sha-xxxxxxx`；出問題時改回上一個標籤即可回退（資料庫遷移只向前，回退前請先備份）。
 
 ## 7. 疑難排解
 

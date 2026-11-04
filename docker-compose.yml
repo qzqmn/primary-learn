@@ -3,8 +3,8 @@
 #   docker compose up -d --build        # 第一次（從原始碼建置）
 #   docker compose logs app             # 查看「設定碼」，然後用瀏覽器打開 http://伺服器IP:3000
 #
-# 發佈版本後可直接拉取鏡像（把 OWNER 改成你的 GitHub 用戶名）：
-#   docker compose pull && docker compose up -d
+# 這份是「從原始碼建置」用的。若 VPS 上不放原始碼、只拉 GitHub Actions 發佈的鏡像，
+# 請改用 deploy/docker-compose.yml（見 README「部署方式二」）。
 #
 # 加上 HTTPS（二選一）：
 #   docker compose --profile caddy up -d     # 自動申請證書（需要 DOMAIN 和 80/443 埠）
@@ -13,7 +13,7 @@ name: hk-primary-learn
 
 services:
   app:
-    image: ghcr.io/OWNER/hk-primary-learn:latest
+    image: ${APP_IMAGE:-hk-primary-learn:local}
     build:
       context: .
       dockerfile: docker/Dockerfile

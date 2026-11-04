@@ -40,7 +40,7 @@
 
 ## 快速開始
 
-需要 Docker 和 Docker Compose。
+有兩種部署方式：**（一）在 VPS 上從原始碼建置**（最簡單，下面這節）；**（二）VPS 只拉 GitHub Actions 發佈的鏡像**（見後面）。需要 Docker 和 Docker Compose。
 
 ```bash
 git clone https://github.com/OWNER/hk-primary-learn.git   # 改成你的倉庫
@@ -56,13 +56,28 @@ docker compose logs app          # 找到「設定碼 (Setup code)」
 
 > 正式上線前請閱讀 [部署指南](docs/deployment.md)：HTTPS、`APP_URL`、`TRUST_PROXY`、備份和電郵設定。**用公網 IP 加 HTTP 登入，密碼會以明文傳輸**，請務必加上 HTTPS。
 
-### 用現成鏡像（推送版本標籤後）
+### 部署方式二：VPS 只拉鏡像（不需要原始碼）
 
-倉庫的 GitHub Actions 會在你推送 `v0.1.0` 這類標籤時，把多架構鏡像發佈到 `ghcr.io/<你的用戶名>/hk-primary-learn`。把 `docker-compose.yml` 裡的 `OWNER` 改成你的用戶名，之後在任何 VPS：
+**推到 GitHub 的 `main` 分支後**，GitHub Actions 會先跑測試和 Docker 煙霧測試，**通過後自動建置 `amd64` + `arm64` 鏡像並發佈到 GHCR**（`ghcr.io/<你的用戶名>/hk-primary-learn:latest`，另有 `:sha-xxxxxxx`；推 `v1.2.3` 標籤時再多 `:1.2.3`、`:1.2`）。Pull request 只跑測試，不發佈。
+
+第一次發佈後：
+
+1. 到 GitHub → 你的個人頁／組織 → **Packages** → 該鏡像 → Package settings：
+   - 想讓 VPS 免登入拉取，把可見度改成 **Public**；
+   - 或保持 Private，在 VPS 上登入一次：`echo <read:packages 權限的 token> | docker login ghcr.io -u <用戶名> --password-stdin`。
+2. 在 VPS 上（不用 clone 倉庫，只需要兩個檔案）：
 
 ```bash
-docker compose pull && docker compose up -d
+mkdir hk-primary-learn && cd hk-primary-learn
+# 把倉庫的 deploy/docker-compose.yml 存成 docker-compose.yml，.env.example 存成 .env（用 scp 或 curl 都可以）
+# 編輯 .env：APP_IMAGE=ghcr.io/你的用戶名/hk-primary-learn:latest（全小寫），並設定 APP_URL、TRUST_PROXY
+docker compose up -d
+docker compose logs app          # 找設定碼
 ```
+
+3. 以後每次 push 到 main，鏡像自動更新；VPS 上執行 `docker compose pull && docker compose up -d` 即升級（資料在 volume 內，不受影響）。
+
+> 想自動升級可以另外跑 Watchtower，但建議先備份再升級，所以預設不開。
 
 ### 備份、匯出與還原
 

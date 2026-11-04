@@ -1,0 +1,74 @@
+# VPS 部署（只拉取鏡像，不需要原始碼、不需要建置）
+#
+#   mkdir hk-primary-learn && cd hk-primary-learn
+#   把這個檔案存成 docker-compose.yml；再把倉庫根目錄的 .env.example 存成 .env
+#   編輯 .env：至少填 APP_IMAGE，正式使用還要填 APP_URL、TRUST_PROXY
+#   docker compose up -d
+#   docker compose logs app          # 找「設定碼」，然後用瀏覽器完成首次設定
+#
+# 升級：docker compose pull && docker compose up -d
+#
+# 鏡像若是私有的（GHCR 預設是私有），先登入一次：
+#   echo <具有 read:packages 權限的 token> | docker login ghcr.io -u <你的 GitHub 用戶名> --password-stdin
+# 或在 GitHub 的 Packages 頁面把這個鏡像改成 Public，就不用登入。
+#
+# 加上 HTTPS（二選一，詳見 docs/deployment.md；需要把 docker/Caddyfile 一併放到 ./Caddyfile）：
+#   docker compose --profile caddy up -d
+#   docker compose --profile tunnel up -d
+name: hk-primary-learn
+
+services:
+  app:
+    image: ${APP_IMAGE:?請在 .env 設定 APP_IMAGE，例如 ghcr.io/你的用戶名/hk-primary-learn:latest}
+    pull_policy: always
+    init: true
+    restart: unless-stopped
+    environment:
+      APP_URL: ${APP_URL:-}
+      TRUST_PROXY: ${TRUST_PROXY:-none}
+      SETUP_TOKEN: ${SETUP_TOKEN:-}
+      SETUP_REQUIRE_TOKEN: ${SETUP_REQUIRE_TOKEN:-true}
+      COOKIE_SECURE: ${COOKIE_SECURE:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      BACKUP_MAX_MB: ${BACKUP_MAX_MB:-512}
+    ports:
+      - "${BIND:-0.0.0.0}:${PORT:-3000}:3000"
+    volumes:
+      - data:/data
+      # 自訂題庫資料夾（可選）：取消下一行註解，把內容包 JSON 放進 ./content
+      # - ./content:/content:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+  caddy:
+    profiles: ["caddy"]
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      DOMAIN: ${DOMAIN:?請在 .env 設定 DOMAIN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+
+  cloudflared:
+    profiles: ["tunnel"]
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?請在 .env 設定 TUNNEL_TOKEN}
+    depends_on:
+      - app
+
+volumes:
+  data:
+  caddy_data:
+  caddy_config:

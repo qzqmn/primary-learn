@@ -1,12 +1,21 @@
 name: CI
 
+# push 到 main：測試通過後自動把鏡像發佈到 GHCR（:latest 與 :sha-xxxxxxx）。
+# 推送版本標籤（v1.2.3）：同樣發佈，並多加 :1.2.3、:1.2 標籤。
+# Pull request：只跑測試，不發佈。
 on:
   push:
     branches: [main]
+    tags: ["v*.*.*"]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   test:
@@ -26,7 +35,7 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run build
-      - name: 端到端煙霧測試（真實 HTTP：設定精靈 → 班級 → 練習 → 報告 → 權限隔離）
+      - name: 端到端煙霧測試（真實 HTTP：設定精靈 → 班級 → 練習 → 報告 → 權限隔離 → 備份還原）
         run: npm run smoke
 
   docker:
@@ -61,3 +70,52 @@ jobs:
       - name: 容器日誌
         if: always()
         run: docker logs hkpl | tail -50
+
+  publish:
+    name: 發佈多架構鏡像到 GHCR
+    runs-on: ubuntu-latest
+    needs: [test, docker]
+    # 只在 push 到 main、版本標籤、或手動觸發時發佈；pull request（包括來自 fork 的）不會發佈
+    if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v'))
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v7
+      - name: 鏡像名稱（GHCR 要求全小寫）
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}" >> "$GITHUB_ENV"
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=raw,value=latest
+            type=sha,format=short
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: 發佈結果
+        run: |
+          {
+            echo "### 已發佈鏡像"
+            echo '```'
+            echo "${{ steps.meta.outputs.tags }}"
+            echo '```'
+            echo "VPS 上：\`docker compose pull && docker compose up -d\`"
+          } >> "$GITHUB_STEP_SUMMARY"

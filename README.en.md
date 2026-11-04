@@ -25,6 +25,10 @@ Open `http://<server-ip>:3000`, enter the setup code and create the admin accoun
 
 105 built-in units today: 51 math, 29 English, 19 Chinese, 6 general studies. Every unit has a short lesson, common mistakes and generated worked examples. Math is generated (~94k distinct questions measured by sampling); English/Chinese come from curated word lists and are much thinner — some units repeat after a few sessions. Contributions welcome ([content packs](docs/content-packs.md)). All questions must be original or under a permissive license; uploaded packs must declare one (CC0, CC BY, CC BY-SA, MIT, Apache-2.0, BSD, ISC, Unlicense; no NC/ND). Admin backup/restore (validated upload, safety backup, auto-rollback) is built in.
 
+## Deploy from a published image (no source on the VPS)
+
+Pushing to `main` runs tests, then **publishes a multi-arch image to GHCR automatically** (`ghcr.io/<you>/hk-primary-learn:latest`, plus `:sha-…`; `v1.2.3` tags add `:1.2.3`). Pull requests only run tests. On the VPS, use `deploy/docker-compose.yml` with `APP_IMAGE=ghcr.io/<you>/hk-primary-learn:latest` in `.env`, then `docker compose up -d`; upgrade with `docker compose pull && docker compose up -d`. Packages are private by default: make the package public or `docker login ghcr.io` with a `read:packages` token. Details: [deployment guide](docs/deployment.md#6-發佈自己的鏡像github-actions).
+
 ## Development
 
 ```bash
