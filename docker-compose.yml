@@ -35,8 +35,15 @@ services:
       # - ./content:/content:ro
     security_opt:
       - no-new-privileges:true
+    # 丟掉所有特權，只保留入口腳本修正 /data 權限並降權成 node（uid 1000）所需的四個；
+    # 降權之後，程式本身沒有任何特權。
     cap_drop:
       - ALL
+    cap_add:
+      - CHOWN
+      - DAC_OVERRIDE
+      - SETUID
+      - SETGID
 
   caddy:
     profiles: ["caddy"]

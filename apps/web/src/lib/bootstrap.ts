@@ -9,6 +9,38 @@ import { loadCatalog } from './content/registry';
 import { pruneExtraBackups } from './backup';
 import { ensureSetupToken, isSetupComplete } from './setup';
 
+/** 資料目錄不能寫入時，立刻以清楚的訊息結束，而不是啟動後對每個請求回 500。 */
+function assertDataDirUsable() {
+  const uid = typeof process.getuid === 'function' ? process.getuid() : '?';
+  try {
+    fs.mkdirSync(DATA_DIR, { recursive: true });
+    fs.accessSync(DATA_DIR, fs.constants.W_OK);
+    const db = path.join(DATA_DIR, 'app.db');
+    if (fs.existsSync(db)) fs.accessSync(db, fs.constants.R_OK | fs.constants.W_OK);
+  } catch (e) {
+    let owner = '?';
+    try {
+      owner = String(fs.statSync(DATA_DIR).uid);
+    } catch {
+      /* 目錄不存在 */
+    }
+    console.error(
+      [
+        '',
+        '============================================================',
+        ` 錯誤：資料目錄 ${DATA_DIR} 無法讀寫，系統無法啟動`,
+        `   目前用戶 uid=${uid}，目錄擁有者 uid=${owner}（${e instanceof Error ? e.message : e}）`,
+        ' 處理方法（任選一種）：',
+        '   • 在宿主機執行：chown -R 1000:1000 <掛載到 /data 的資料夾或 volume>',
+        '   • 使用官方鏡像的預設啟動方式（不要設定 user:），入口腳本會自動修正權限',
+        '============================================================',
+        '',
+      ].join('\n'),
+    );
+    process.exit(1);
+  }
+}
+
 function cleanup() {
   const now = Date.now();
   const db = getDb();
@@ -43,6 +75,7 @@ async function dailyBackup() {
 
 /** 由 instrumentation 在伺服器啟動時呼叫一次 */
 export async function bootstrap() {
+  assertDataDirUsable();
   getDb(); // 開庫並自動遷移
   const token = ensureSetupToken();
   if (token) {

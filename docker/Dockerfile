@@ -33,10 +33,14 @@ COPY --from=build --chown=node:node /app/drizzle ./drizzle
 COPY --from=build --chown=node:node /app/scripts/cli.mjs ./scripts/cli.mjs
 COPY content /content
 # 維護工具：docker compose exec app cli reset-admin
-RUN printf '#!/bin/sh\nexec node /app/scripts/cli.mjs "$@"\n' > /usr/local/bin/cli && chmod +x /usr/local/bin/cli
-USER node
+# （exec 預設是 root；先降權成 node，否則會在資料目錄留下 root 擁有的檔案，之後程式就打不開資料庫）
+RUN printf '#!/bin/sh\nif [ "$(id -u)" = "0" ]; then export HOME=/home/node; exec setpriv --reuid=1000 --regid=1000 --init-groups node /app/scripts/cli.mjs "$@"; fi\nexec node /app/scripts/cli.mjs "$@"\n' > /usr/local/bin/cli && chmod +x /usr/local/bin/cli
+COPY docker/entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+# 以 root 啟動，由入口腳本修正 /data 權限後降權成 node（uid 1000）
 VOLUME ["/data"]
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
   CMD node -e "fetch('http://127.0.0.1:'+(process.env.PORT||3000)+'/api/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["node", "server.js"]

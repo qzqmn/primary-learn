@@ -67,9 +67,36 @@ jobs:
         run: |
           docker exec hkpl cli list-admins | grep boss
           docker inspect --format '{{.State.Health.Status}}' hkpl
+      - name: 回歸測試：/data 屬於 root（NAS、管理面板、舊 volume 常見）仍能啟動，且程式降權運行
+        run: |
+          sudo mkdir -p root-data && sudo chown -R 0:0 root-data
+          docker run -d --name hkpl-root -p 3001:3000 -v "$PWD/root-data:/data" \
+            --cap-drop ALL --cap-add CHOWN --cap-add DAC_OVERRIDE --cap-add SETUID --cap-add SETGID \
+            --security-opt no-new-privileges:true hkpl:ci
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:3001/api/healthz && break; sleep 1; done
+          curl -sf http://127.0.0.1:3001/api/healthz
+          test "$(sudo stat -c '%u' root-data/app.db)" = "1000"
+          docker exec hkpl-root cli list-admins
+          # exec 預設是 root，cli 必須降權，不可在資料目錄留下 root 擁有的檔案
+          test "$(sudo find root-data ! -uid 1000 | wc -l)" = "0"
+      - name: 回歸測試：舊版 compose（cap_drop ALL、沒有 cap_add）仍能啟動（以 root 運行並給出警告）
+        run: |
+          sudo mkdir -p legacy-data && sudo chown -R 0:0 legacy-data
+          docker run -d --name hkpl-legacy -p 3002:3000 -v "$PWD/legacy-data:/data" \
+            --cap-drop ALL --security-opt no-new-privileges:true hkpl:ci
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:3002/api/healthz && break; sleep 1; done
+          curl -sf http://127.0.0.1:3002/api/healthz
+          docker logs hkpl-legacy 2>&1 | grep -q "沒有 SETUID"
+      - name: 回歸測試：非 root 且 /data 不可寫 → 快速失敗並給出清楚訊息（不是啟動後每個請求都 500）
+        run: |
+          sudo mkdir -p ro-data && sudo chown -R 0:0 ro-data
+          if out=$(docker run --rm --user 1000:1000 -v "$PWD/ro-data:/data" hkpl:ci 2>&1); then echo "應該要失敗"; exit 1; fi
+          echo "$out" | grep -q "無法寫入"
       - name: 容器日誌
         if: always()
-        run: docker logs hkpl | tail -50
+        run: |
+          docker logs hkpl | tail -30
+          docker logs hkpl-root 2>&1 | tail -30 || true
 
   publish:
     name: 發佈多架構鏡像到 GHCR

@@ -14,7 +14,19 @@ docker compose logs app        # 看「設定碼」
 
 資料全部在名為 `data` 的 Docker volume（容器內 `/data`）：`app.db`（資料庫）、`backups/`（每日自動備份，保留 7 份）、`.secret`（加密用密鑰，自動產生）。
 
-> 若你改用 bind mount（例如 `./data:/data`），目錄必須屬於容器用戶（uid 1000）：`sudo chown -R 1000:1000 ./data`。
+> 容器以 root 啟動，入口腳本會自動把 `/data` 的擁有者修正為 uid 1000，再降權運行程式，所以 bind mount、NAS、管理面板建立的目錄都不需要手動處理權限。（如果你硬要用 `user: 1000:1000` 指定非 root 運行，就必須自己先 `chown -R 1000:1000` 該目錄。）
+
+### 用主機資料夾（bind mount）取代 volume
+
+把 compose 裏的 `data:/data` 改成 `./data:/data` 即可，資料就會放在 compose 檔旁邊的 `data/` 資料夾，方便備份和查看。注意：
+
+- 容器內的路徑必須是**絕對路徑**：寫 `./data:/data`，不是 `./data:data`（後者 Docker 會報錯）。
+- 同時要把檔案最下面 `volumes:` 區塊裏用不到的 `data:` 刪掉（留著也無害）。
+- 容器啟動時會把 `./data` 的擁有者改成 uid 1000，所以**在宿主機上要用 `sudo` 才能讀寫裏面的檔案**（備份時 `sudo cp -a data /你的備份位置`）。
+- `data/` 內有資料庫和 `secret.key`（用來解密郵件 API Key），備份和權限都要當成機密處理。
+- 從 volume 換成 bind mount **不會自動搬資料**。已有資料的話：在舊環境「備份與還原」下載備份，新環境首次設定後匯入還原。
+- 如果宿主機啟用 SELinux（CentOS／Fedora／RHEL 系），寫成 `./data:/data:Z`。
+- compose 的 `cap_add`（CHOWN、DAC_OVERRIDE、SETUID、SETGID）不能刪：入口腳本靠它們修正權限並降權。沒有這四個能力時，程式仍會啟動，但會以 root 運行並在日誌印出警告。
 
 ## 2. HTTPS（正式使用必做）
 
@@ -113,5 +125,5 @@ docker compose up -d --build        # 或：docker compose pull && docker compos
 | 找不到設定碼 | `docker compose logs app`；或 `docker compose exec app cli setup-token` |
 | 登入後馬上被登出／操作被拒（403 請求來源不明） | `APP_URL` 與實際網址不一致，或代理沒有傳 `Host`／`X-Forwarded-Host` |
 | 登入頻繁被限流 | 沒有設 `TRUST_PROXY`，或設錯 |
-| 容器無法寫入 `/data` | bind mount 的目錄權限，見上 |
+| 日誌出現 `SQLITE_CANTOPEN: unable to open database file`、網站 500、容器 unhealthy | `/data` 不能被程式寫入。**舊版鏡像**（v0.2.1 以前）沒有自動修正權限，請更新到最新鏡像；急救：`docker run --rm -v <volume 或資料夾>:/data busybox chown -R 1000:1000 /data` 後重啟。新版鏡像會在日誌明確寫出原因並直接結束，而不是對每個請求回 500 |
 | 郵件發不出 | 後台「郵件服務」看錯誤訊息；多數是域名未驗證或發件地址不屬於已驗證域名 |
