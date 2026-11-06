@@ -15,6 +15,14 @@ describe('catalog', () => {
     expect(new Set(units.map((u) => u.id)).size).toBe(units.length);
     for (let g = 1; g <= 6; g++) expect(units.filter((u) => u.subject === 'math' && u.grade === g).length).toBeGreaterThanOrEqual(4);
   });
+  it('每個年級、每個科目都至少有一個單元', () => {
+    const units = allUnits();
+    for (let g = 1; g <= 6; g++) {
+      for (const s of ['math', 'english', 'chinese', 'general'] as const) {
+        expect(units.filter((u) => u.subject === s && u.grade === g).length, `${s} P${g}`).toBeGreaterThanOrEqual(1);
+      }
+    }
+  });
   it('rejects malformed packs', () => {
     expect(() => packToUnits({ pack: 'x', version: 1, units: [{ id: 'a', subject: 'english', grade: 1, title: 't', questions: [{ type: 'choice', prompt: 'p', choices: ['a', 'b'], answer: 'zzz', tag: 't' }] }] })).toThrow();
     expect(() => packToUnits({ pack: 'x', version: 1, units: [{ id: 'Bad Id', subject: 'math', grade: 1, title: 't', questions: [] }] })).toThrow();
@@ -187,8 +195,10 @@ describe('教學內容', () => {
   it('所有數學單元都有完整的教學重點與常見錯誤', async () => {
     const { LESSONS } = await import('../content/lessons');
     for (const u of allUnits().filter((x) => x.subject === 'math')) {
-      expect(LESSONS[u.id]?.points.length, u.id).toBeGreaterThanOrEqual(2);
-      expect(LESSONS[u.id]?.pitfalls?.length, u.id).toBeGreaterThanOrEqual(1);
+      // 內容包（source !== 'builtin'）沒有內建 LESSONS 條目，改用它自帶的 lesson
+      const lesson = u.lesson ?? LESSONS[u.id];
+      expect(lesson?.points.length, u.id).toBeGreaterThanOrEqual(2);
+      expect(lesson?.pitfalls?.length, u.id).toBeGreaterThanOrEqual(1);
     }
   });
 });
