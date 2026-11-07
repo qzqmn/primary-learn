@@ -1,0 +1,3908 @@
+{
+ "pack": "hk-original-expansion-2026",
+ "version": 1,
+ "license": "CC BY-SA 4.0",
+ "source": "原創題目：由 generate_pack.py 以自撰詞表與確定性參數表生成，程度依香港教育局小學數學科學習內容、中國語文／英國語文課程指引及小學科學科／人文科框架，並對齊本專案內建單元之年級分佈。未取自任何課本、坊間練習、TSA 試卷、商業題庫或第三方網站。",
+ "units": [
+  {
+   "id": "exp-m-p1-addsub",
+   "subject": "math",
+   "grade": 1,
+   "title": "數學｜20 以內加減與位值",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P1（數範疇：20 以內加減、100 以內的數、港幣）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P1 程度：數範疇：20 以內加減、100 以內的數、港幣。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "加減時留意進位和退位；先看清題目問的是和還是差。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "7 + 5 = ?",
+     "answer": "12",
+     "explain": "把 7 和 5 合起來：7 + 5 = 12。20 以內可用湊十法。",
+     "tag": "edb-p1-add20"
+    },
+    {
+     "type": "number",
+     "prompt": "9 + 8 = ?",
+     "answer": "17",
+     "explain": "把 9 和 8 合起來：9 + 8 = 17。20 以內可用湊十法。",
+     "tag": "edb-p1-add20"
+    },
+    {
+     "type": "number",
+     "prompt": "6 + 6 = ?",
+     "answer": "12",
+     "explain": "把 6 和 6 合起來：6 + 6 = 12。20 以內可用湊十法。",
+     "tag": "edb-p1-add20"
+    },
+    {
+     "type": "number",
+     "prompt": "12 + 7 = ?",
+     "answer": "19",
+     "explain": "把 12 和 7 合起來：12 + 7 = 19。20 以內可用湊十法。",
+     "tag": "edb-p1-add20"
+    },
+    {
+     "type": "number",
+     "prompt": "13 − 5 = ?",
+     "answer": "8",
+     "explain": "由 13 減去 5，剩下 8；驗算：8 + 5 = 13。",
+     "tag": "edb-p1-sub20"
+    },
+    {
+     "type": "number",
+     "prompt": "18 − 9 = ?",
+     "answer": "9",
+     "explain": "由 18 減去 9，剩下 9；驗算：9 + 9 = 18。",
+     "tag": "edb-p1-sub20"
+    },
+    {
+     "type": "number",
+     "prompt": "15 − 7 = ?",
+     "answer": "8",
+     "explain": "由 15 減去 7，剩下 8；驗算：8 + 7 = 15。",
+     "tag": "edb-p1-sub20"
+    },
+    {
+     "type": "number",
+     "prompt": "20 − 6 = ?",
+     "answer": "14",
+     "explain": "由 20 減去 6，剩下 14；驗算：14 + 6 = 20。",
+     "tag": "edb-p1-sub20"
+    },
+    {
+     "type": "number",
+     "prompt": "47 的十位數字是多少？",
+     "answer": "4",
+     "explain": "47 由 4 個十和 7 個一組成，十位數字是 4。",
+     "tag": "edb-p1-place"
+    },
+    {
+     "type": "number",
+     "prompt": "82 的個位數字是多少？",
+     "answer": "2",
+     "explain": "82 由 8 個十和 2 個一組成，個位數字是 2。",
+     "tag": "edb-p1-place"
+    },
+    {
+     "type": "number",
+     "prompt": "3 個 $5 硬幣和 4 個 $2 硬幣，共多少元？",
+     "answer": "23",
+     "explain": "3 × 5 = 15 元，4 × 2 = 8 元，合共 23 元。",
+     "tag": "edb-p1-money"
+    },
+    {
+     "type": "number",
+     "prompt": "2 個 $5 硬幣和 5 個 $2 硬幣，共多少元？",
+     "answer": "20",
+     "explain": "2 × 5 = 10 元，5 × 2 = 10 元，合共 20 元。",
+     "tag": "edb-p1-money"
+    }
+   ]
+  },
+  {
+   "id": "exp-m-p2-addsub100",
+   "subject": "math",
+   "grade": 2,
+   "title": "數學｜100 以內加減與乘法",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P2（數與度量：100 以內加減、基本乘法、時間、港幣）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P2 程度：數與度量：100 以內加減、基本乘法、時間、港幣。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "加減時留意進位和退位；先看清題目問的是和還是差。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "24 + 35 = ?",
+     "answer": "59",
+     "explain": "個位 4 + 5，滿 10 向十位進 1：24 + 35 = 59。",
+     "tag": "edb-p2-add100"
+    },
+    {
+     "type": "number",
+     "prompt": "48 + 27 = ?",
+     "answer": "75",
+     "explain": "個位 8 + 7，滿 10 向十位進 1：48 + 27 = 75。",
+     "tag": "edb-p2-add100"
+    },
+    {
+     "type": "number",
+     "prompt": "56 + 19 = ?",
+     "answer": "75",
+     "explain": "個位 6 + 9，滿 10 向十位進 1：56 + 19 = 75。",
+     "tag": "edb-p2-add100"
+    },
+    {
+     "type": "number",
+     "prompt": "73 − 28 = ?",
+     "answer": "45",
+     "explain": "個位不夠減時向十位退 1：73 − 28 = 45。",
+     "tag": "edb-p2-sub100"
+    },
+    {
+     "type": "number",
+     "prompt": "91 − 46 = ?",
+     "answer": "45",
+     "explain": "個位不夠減時向十位退 1：91 − 46 = 45。",
+     "tag": "edb-p2-sub100"
+    },
+    {
+     "type": "number",
+     "prompt": "60 − 37 = ?",
+     "answer": "23",
+     "explain": "個位不夠減時向十位退 1：60 − 37 = 23。",
+     "tag": "edb-p2-sub100"
+    },
+    {
+     "type": "number",
+     "prompt": "3 × 7 = ?",
+     "answer": "21",
+     "explain": "3 × 7 即 7 個 3 相加，用乘法口訣得 21。",
+     "tag": "edb-p2-times"
+    },
+    {
+     "type": "number",
+     "prompt": "5 × 9 = ?",
+     "answer": "45",
+     "explain": "5 × 9 即 9 個 5 相加，用乘法口訣得 45。",
+     "tag": "edb-p2-times"
+    },
+    {
+     "type": "number",
+     "prompt": "4 × 6 = ?",
+     "answer": "24",
+     "explain": "4 × 6 即 6 個 4 相加，用乘法口訣得 24。",
+     "tag": "edb-p2-times"
+    },
+    {
+     "type": "number",
+     "prompt": "2 小時是多少分鐘？",
+     "answer": "120",
+     "explain": "1 小時 = 60 分鐘，2 × 60 = 120 分鐘。",
+     "tag": "edb-p2-time"
+    },
+    {
+     "type": "number",
+     "prompt": "4 小時是多少分鐘？",
+     "answer": "240",
+     "explain": "1 小時 = 60 分鐘，4 × 60 = 240 分鐘。",
+     "tag": "edb-p2-time"
+    },
+    {
+     "type": "number",
+     "prompt": "一本簿售 $35，付 $100，應找回多少元？",
+     "answer": "65",
+     "explain": "100 − 35 = 65 元。",
+     "tag": "edb-p2-money"
+    }
+   ]
+  },
+  {
+   "id": "exp-m-p3-muldiv",
+   "subject": "math",
+   "grade": 3,
+   "title": "數學｜乘除、周界與分數入門",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P3（數與度量：乘除、四位數、周界、分數入門）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P3 程度：數與度量：乘除、四位數、周界、分數入門。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "做直式時要把相同數位對齊，個位滿 10 要進位。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "24 × 3 = ?",
+     "answer": "72",
+     "explain": "先算個位 4 × 3 = 12，再算十位 20 × 3 = 60，相加得 72。",
+     "tag": "edb-p3-mul2d"
+    },
+    {
+     "type": "number",
+     "prompt": "36 × 5 = ?",
+     "answer": "180",
+     "explain": "先算個位 6 × 5 = 30，再算十位 30 × 5 = 150，相加得 180。",
+     "tag": "edb-p3-mul2d"
+    },
+    {
+     "type": "number",
+     "prompt": "42 × 7 = ?",
+     "answer": "294",
+     "explain": "先算個位 2 × 7 = 14，再算十位 40 × 7 = 280，相加得 294。",
+     "tag": "edb-p3-mul2d"
+    },
+    {
+     "type": "number",
+     "prompt": "42 ÷ 6 = ?",
+     "answer": "7",
+     "explain": "想 6 × □ = 42，所以 42 ÷ 6 = 7。",
+     "tag": "edb-p3-div"
+    },
+    {
+     "type": "number",
+     "prompt": "72 ÷ 8 = ?",
+     "answer": "9",
+     "explain": "想 8 × □ = 72，所以 72 ÷ 8 = 9。",
+     "tag": "edb-p3-div"
+    },
+    {
+     "type": "number",
+     "prompt": "48 ÷ 4 = ?",
+     "answer": "12",
+     "explain": "想 4 × □ = 48，所以 48 ÷ 4 = 12。",
+     "tag": "edb-p3-div"
+    },
+    {
+     "type": "number",
+     "prompt": "長方形的長是 8 厘米、闊是 5 厘米，周界是多少厘米？",
+     "answer": "26",
+     "explain": "周界 = (長 + 闊) × 2 = (8 + 5) × 2 = 26 厘米。",
+     "tag": "edb-p3-perimeter"
+    },
+    {
+     "type": "number",
+     "prompt": "長方形的長是 12 厘米、闊是 7 厘米，周界是多少厘米？",
+     "answer": "38",
+     "explain": "周界 = (長 + 闊) × 2 = (12 + 7) × 2 = 38 厘米。",
+     "tag": "edb-p3-perimeter"
+    },
+    {
+     "type": "number",
+     "prompt": "3486 的百位數字是多少？",
+     "answer": "4",
+     "explain": "3486 的各位數字：千 3、百 4、十 8、個 6，所以百位是 4。",
+     "tag": "edb-p3-place"
+    },
+    {
+     "type": "number",
+     "prompt": "7152 的千位數字是多少？",
+     "answer": "7",
+     "explain": "7152 的各位數字：千 7、百 1、十 5、個 2，所以千位是 7。",
+     "tag": "edb-p3-place"
+    },
+    {
+     "type": "choice",
+     "prompt": "把一個蛋糕平均分成 8 份，吃了 3 份，吃了蛋糕的幾分之幾？",
+     "choices": [
+      "8/3",
+      "3/9",
+      "4/8",
+      "3/8"
+     ],
+     "answer": "3/8",
+     "explain": "取了 3 份、共 8 份，寫成 3/8；分母是總份數，分子是取了的份數。",
+     "tag": "edb-p3-fraction"
+    },
+    {
+     "type": "choice",
+     "prompt": "把一個蛋糕平均分成 12 份，吃了 5 份，吃了蛋糕的幾分之幾？",
+     "choices": [
+      "5/13",
+      "6/12",
+      "5/12",
+      "12/5"
+     ],
+     "answer": "5/12",
+     "explain": "取了 5 份、共 12 份，寫成 5/12；分母是總份數，分子是取了的份數。",
+     "tag": "edb-p3-fraction"
+    }
+   ]
+  },
+  {
+   "id": "exp-m-p4-mixed",
+   "subject": "math",
+   "grade": 4,
+   "title": "數學｜四則運算與小數",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P4（數與度量：四則運算、小數加減、面積、等值分數）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P4 程度：數與度量：四則運算、小數加減、面積、等值分數。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "四則混合題要先算括號、再乘除、後加減，不要由左至右一路算到底。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "8 + 3 × 6 = ?",
+     "answer": "26",
+     "explain": "先乘後加：3 × 6 = 18，再加 8，得 26。",
+     "tag": "edb-p4-order"
+    },
+    {
+     "type": "number",
+     "prompt": "25 + 4 × 7 = ?",
+     "answer": "53",
+     "explain": "先乘後加：4 × 7 = 28，再加 25，得 53。",
+     "tag": "edb-p4-order"
+    },
+    {
+     "type": "number",
+     "prompt": "9 + 6 × 8 = ?",
+     "answer": "57",
+     "explain": "先乘後加：6 × 8 = 48，再加 9，得 57。",
+     "tag": "edb-p4-order"
+    },
+    {
+     "type": "number",
+     "prompt": "(3 + 5) × 4 = ?",
+     "answer": "32",
+     "explain": "先算括號：3 + 5 = 8，再乘 4，得 32。",
+     "tag": "edb-p4-order"
+    },
+    {
+     "type": "number",
+     "prompt": "(6 + 2) × 7 = ?",
+     "answer": "56",
+     "explain": "先算括號：6 + 2 = 8，再乘 7，得 56。",
+     "tag": "edb-p4-order"
+    },
+    {
+     "type": "number",
+     "prompt": "0.3 + 0.6 = ?",
+     "answer": "0.9",
+     "explain": "小數點對齊：3 + 6 = 9 個 0.1，即 0.9。",
+     "tag": "edb-p4-decimal"
+    },
+    {
+     "type": "number",
+     "prompt": "0.8 + 0.5 = ?",
+     "answer": "1.3",
+     "explain": "小數點對齊：8 + 5 = 13 個 0.1，即 1.3。",
+     "tag": "edb-p4-decimal"
+    },
+    {
+     "type": "number",
+     "prompt": "0.2 + 0.9 = ?",
+     "answer": "1.1",
+     "explain": "小數點對齊：2 + 9 = 11 個 0.1，即 1.1。",
+     "tag": "edb-p4-decimal"
+    },
+    {
+     "type": "number",
+     "prompt": "長方形的長是 9 厘米、闊是 4 厘米，面積是多少平方厘米？",
+     "answer": "36",
+     "explain": "面積 = 長 × 闊 = 9 × 4 = 36 平方厘米。",
+     "tag": "edb-p4-area"
+    },
+    {
+     "type": "number",
+     "prompt": "長方形的長是 12 厘米、闊是 6 厘米，面積是多少平方厘米？",
+     "answer": "72",
+     "explain": "面積 = 長 × 闊 = 12 × 6 = 72 平方厘米。",
+     "tag": "edb-p4-area"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪個分數與 1/2 相等？",
+     "choices": [
+      "3/2",
+      "3/6",
+      "1/6",
+      "2/6"
+     ],
+     "answer": "3/6",
+     "explain": "分子和分母同時乘以 3：1/2 = 3/6，分數的大小不變。",
+     "tag": "edb-p4-equivfrac"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪個分數與 2/3 相等？",
+     "choices": [
+      "2/12",
+      "8/3",
+      "3/12",
+      "8/12"
+     ],
+     "answer": "8/12",
+     "explain": "分子和分母同時乘以 4：2/3 = 8/12，分數的大小不變。",
+     "tag": "edb-p4-equivfrac"
+    }
+   ]
+  },
+  {
+   "id": "exp-m-p5-decimal",
+   "subject": "math",
+   "grade": 5,
+   "title": "數學｜小數、分數與百分數",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P5（數與度量：小數乘除、異分母分數、百分數、平均數、體積）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P5 程度：數與度量：小數乘除、異分母分數、百分數、平均數、體積。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "四則混合題要先算括號、再乘除、後加減，不要由左至右一路算到底。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "1.2 × 3 = ?",
+     "answer": "3.6",
+     "explain": "先當整數算 12 × 3 = 36，再補回 1 位小數，得 3.6。",
+     "tag": "edb-p5-decimal-mul"
+    },
+    {
+     "type": "number",
+     "prompt": "1.5 × 3 = ?",
+     "answer": "4.5",
+     "explain": "先當整數算 15 × 3 = 45，再補回 1 位小數，得 4.5。",
+     "tag": "edb-p5-decimal-mul"
+    },
+    {
+     "type": "number",
+     "prompt": "2.4 × 2 = ?",
+     "answer": "4.8",
+     "explain": "先當整數算 24 × 2 = 48，再補回 1 位小數，得 4.8。",
+     "tag": "edb-p5-decimal-mul"
+    },
+    {
+     "type": "choice",
+     "prompt": "1/2 + 1/3 = ?",
+     "choices": [
+      "2/5",
+      "1/6",
+      "5/6",
+      "2/6"
+     ],
+     "answer": "5/6",
+     "explain": "先通分：1/2 + 1/3 = 3/6 + 2/6 = 5/6，約簡得 5/6。",
+     "tag": "edb-p5-fraction-add"
+    },
+    {
+     "type": "choice",
+     "prompt": "1/4 + 1/2 = ?",
+     "choices": [
+      "2/6",
+      "3/4",
+      "1/8",
+      "2/8"
+     ],
+     "answer": "3/4",
+     "explain": "先通分：1/4 + 1/2 = 2/8 + 4/8 = 6/8，約簡得 3/4。",
+     "tag": "edb-p5-fraction-add"
+    },
+    {
+     "type": "number",
+     "prompt": "80 的 25% 是多少？",
+     "answer": "20",
+     "explain": "25% 即 25/100，80 × 25 ÷ 100 = 20。",
+     "tag": "edb-p5-percent"
+    },
+    {
+     "type": "number",
+     "prompt": "200 的 15% 是多少？",
+     "answer": "30",
+     "explain": "15% 即 15/100，200 × 15 ÷ 100 = 30。",
+     "tag": "edb-p5-percent"
+    },
+    {
+     "type": "number",
+     "prompt": "60 的 50% 是多少？",
+     "answer": "30",
+     "explain": "50% 即 50/100，60 × 50 ÷ 100 = 30。",
+     "tag": "edb-p5-percent"
+    },
+    {
+     "type": "number",
+     "prompt": "3 次測驗的分數是 72、84、90，平均分是多少？",
+     "answer": "82",
+     "explain": "總和 246 ÷ 3 = 82。",
+     "tag": "edb-p5-average"
+    },
+    {
+     "type": "number",
+     "prompt": "4 次測驗的分數是 60、75、90、95，平均分是多少？",
+     "answer": "80",
+     "explain": "總和 320 ÷ 4 = 80。",
+     "tag": "edb-p5-average"
+    },
+    {
+     "type": "number",
+     "prompt": "長方體的長 5 厘米、闊 3 厘米、高 4 厘米，體積是多少立方厘米？",
+     "answer": "60",
+     "explain": "體積 = 長 × 闊 × 高 = 5 × 3 × 4 = 60 立方厘米。",
+     "tag": "edb-p5-volume"
+    },
+    {
+     "type": "number",
+     "prompt": "長方體的長 6 厘米、闊 4 厘米、高 2 厘米，體積是多少立方厘米？",
+     "answer": "48",
+     "explain": "體積 = 長 × 闊 × 高 = 6 × 4 × 2 = 48 立方厘米。",
+     "tag": "edb-p5-volume"
+    }
+   ]
+  },
+  {
+   "id": "exp-m-p6-ratio",
+   "subject": "math",
+   "grade": 6,
+   "title": "數學｜比、折扣與圓",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P6（數與度量：比、百分數應用、速率、簡易方程、圓）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P6 程度：數與度量：比、百分數應用、速率、簡易方程、圓。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "算完後用逆運算驗算一次：加法用減法驗，除法用乘法驗。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "四則混合題要先算括號、再乘除、後加減，不要由左至右一路算到底。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "number",
+     "prompt": "把 $250 按 2:3 分給兩人，較多的一份是多少元？",
+     "answer": "150",
+     "explain": "共 5 份，每份 250 ÷ 5 = 50 元；較多的一份有 3 份，即 150 元。",
+     "tag": "edb-p6-ratio"
+    },
+    {
+     "type": "number",
+     "prompt": "把 $400 按 3:5 分給兩人，較多的一份是多少元？",
+     "answer": "250",
+     "explain": "共 8 份，每份 400 ÷ 8 = 50 元；較多的一份有 5 份，即 250 元。",
+     "tag": "edb-p6-ratio"
+    },
+    {
+     "type": "number",
+     "prompt": "一件貨品原價 $200，減價 20% 後，售價是多少元？",
+     "answer": "160",
+     "explain": "售價 = 原價 × (100 − 20)% = 200 × 80% = 160 元。",
+     "tag": "edb-p6-discount"
+    },
+    {
+     "type": "number",
+     "prompt": "一件貨品原價 $400，減價 25% 後，售價是多少元？",
+     "answer": "300",
+     "explain": "售價 = 原價 × (100 − 25)% = 400 × 75% = 300 元。",
+     "tag": "edb-p6-discount"
+    },
+    {
+     "type": "number",
+     "prompt": "一件貨品原價 $500，減價 10% 後，售價是多少元？",
+     "answer": "450",
+     "explain": "售價 = 原價 × (100 − 10)% = 500 × 90% = 450 元。",
+     "tag": "edb-p6-discount"
+    },
+    {
+     "type": "number",
+     "prompt": "汽車以每小時 60 公里的速率行駛 3 小時，共行了多少公里？",
+     "answer": "180",
+     "explain": "路程 = 速率 × 時間 = 60 × 3 = 180 公里。",
+     "tag": "edb-p6-speed"
+    },
+    {
+     "type": "number",
+     "prompt": "汽車以每小時 80 公里的速率行駛 4 小時，共行了多少公里？",
+     "answer": "320",
+     "explain": "路程 = 速率 × 時間 = 80 × 4 = 320 公里。",
+     "tag": "edb-p6-speed"
+    },
+    {
+     "type": "number",
+     "prompt": "解方程：3x + 5 = 26，x = ?",
+     "answer": "7",
+     "explain": "3x = 26 − 5 = 21，所以 x = 21 ÷ 3 = 7。",
+     "tag": "edb-p6-equation"
+    },
+    {
+     "type": "number",
+     "prompt": "解方程：4x + 6 = 42，x = ?",
+     "answer": "9",
+     "explain": "4x = 42 − 6 = 36，所以 x = 36 ÷ 4 = 9。",
+     "tag": "edb-p6-equation"
+    },
+    {
+     "type": "number",
+     "prompt": "圓的半徑是 3 厘米，圓周是多少厘米？（π 取 3.14）",
+     "answer": "18.84",
+     "explain": "圓周 = 2 × π × 半徑 = 2 × 3.14 × 3 = 18.84 厘米。",
+     "tag": "edb-p6-circle"
+    },
+    {
+     "type": "number",
+     "prompt": "圓的半徑是 5 厘米，圓周是多少厘米？（π 取 3.14）",
+     "answer": "31.40",
+     "explain": "圓周 = 2 × π × 半徑 = 2 × 3.14 × 5 = 31.40 厘米。",
+     "tag": "edb-p6-circle"
+    },
+    {
+     "type": "number",
+     "prompt": "圓的半徑是 10 厘米，圓周是多少厘米？（π 取 3.14）",
+     "answer": "62.80",
+     "explain": "圓周 = 2 × π × 半徑 = 2 × 3.14 × 10 = 62.80 厘米。",
+     "tag": "edb-p6-circle"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p1-letters",
+   "subject": "english",
+   "grade": 1,
+   "title": "英文｜字母與開首音",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P1（KS1 基礎識字）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P1 程度：KS1 基礎識字。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「apple」的第一個字母是？",
+     "choices": [
+      "b",
+      "a",
+      "d",
+      "c"
+     ],
+     "answer": "a",
+     "explain": "apple 以字母 a 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「book」的第一個字母是？",
+     "choices": [
+      "e",
+      "b",
+      "d",
+      "c"
+     ],
+     "answer": "b",
+     "explain": "book 以字母 b 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「cat」的第一個字母是？",
+     "choices": [
+      "f",
+      "d",
+      "e",
+      "c"
+     ],
+     "answer": "c",
+     "explain": "cat 以字母 c 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「dog」的第一個字母是？",
+     "choices": [
+      "g",
+      "d",
+      "f",
+      "e"
+     ],
+     "answer": "d",
+     "explain": "dog 以字母 d 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「egg」的第一個字母是？",
+     "choices": [
+      "h",
+      "g",
+      "f",
+      "e"
+     ],
+     "answer": "e",
+     "explain": "egg 以字母 e 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「fish」的第一個字母是？",
+     "choices": [
+      "g",
+      "f",
+      "h",
+      "i"
+     ],
+     "answer": "f",
+     "explain": "fish 以字母 f 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「girl」的第一個字母是？",
+     "choices": [
+      "i",
+      "g",
+      "j",
+      "h"
+     ],
+     "answer": "g",
+     "explain": "girl 以字母 g 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「hand」的第一個字母是？",
+     "choices": [
+      "k",
+      "i",
+      "h",
+      "j"
+     ],
+     "answer": "h",
+     "explain": "hand 以字母 h 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「ink」的第一個字母是？",
+     "choices": [
+      "k",
+      "j",
+      "i",
+      "l"
+     ],
+     "answer": "i",
+     "explain": "ink 以字母 i 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「jam」的第一個字母是？",
+     "choices": [
+      "l",
+      "j",
+      "m",
+      "k"
+     ],
+     "answer": "j",
+     "explain": "jam 以字母 j 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「kite」的第一個字母是？",
+     "choices": [
+      "m",
+      "n",
+      "k",
+      "l"
+     ],
+     "answer": "k",
+     "explain": "kite 以字母 k 開首。",
+     "tag": "e-p1-letter"
+    },
+    {
+     "type": "choice",
+     "prompt": "「lion」的第一個字母是？",
+     "choices": [
+      "m",
+      "o",
+      "n",
+      "l"
+     ],
+     "answer": "l",
+     "explain": "lion 以字母 l 開首。",
+     "tag": "e-p1-letter"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p2-plurals",
+   "subject": "english",
+   "grade": 2,
+   "title": "英文｜名詞複數",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P2（KS1 名詞單複數）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P2 程度：KS1 名詞單複數。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「cat」的複數是？",
+     "choices": [
+      "cats",
+      "cates",
+      "dogs",
+      "cat"
+     ],
+     "answer": "cats",
+     "explain": "cat 的複數是 cats；cates 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「dog」的複數是？",
+     "choices": [
+      "cats",
+      "doges",
+      "dog",
+      "dogs"
+     ],
+     "answer": "dogs",
+     "explain": "dog 的複數是 dogs；doges 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「book」的複數是？",
+     "choices": [
+      "pens",
+      "books",
+      "bookes",
+      "book"
+     ],
+     "answer": "books",
+     "explain": "book 的複數是 books；bookes 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「pen」的複數是？",
+     "choices": [
+      "pen",
+      "penes",
+      "pens",
+      "books"
+     ],
+     "answer": "pens",
+     "explain": "pen 的複數是 pens；penes 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「bus」的複數是？",
+     "choices": [
+      "boxes",
+      "buses",
+      "bus",
+      "buss"
+     ],
+     "answer": "buses",
+     "explain": "bus 的複數是 buses；buss 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「box」的複數是？",
+     "choices": [
+      "boxs",
+      "buses",
+      "boxes",
+      "box"
+     ],
+     "answer": "boxes",
+     "explain": "box 的複數是 boxes；boxs 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「baby」的複數是？",
+     "choices": [
+      "babys",
+      "babies",
+      "cities",
+      "baby"
+     ],
+     "answer": "babies",
+     "explain": "baby 的複數是 babies；babys 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「city」的複數是？",
+     "choices": [
+      "cities",
+      "city",
+      "citys",
+      "babies"
+     ],
+     "answer": "cities",
+     "explain": "city 的複數是 cities；citys 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「cup」的複數是？",
+     "choices": [
+      "cups",
+      "cup",
+      "bags",
+      "cupes"
+     ],
+     "answer": "cups",
+     "explain": "cup 的複數是 cups；cupes 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「bag」的複數是？",
+     "choices": [
+      "cups",
+      "bags",
+      "bag",
+      "bages"
+     ],
+     "answer": "bags",
+     "explain": "bag 的複數是 bags；bages 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「desk」的複數是？",
+     "choices": [
+      "deskes",
+      "desks",
+      "desk",
+      "chairs"
+     ],
+     "answer": "desks",
+     "explain": "desk 的複數是 desks；deskes 不是正確寫法。",
+     "tag": "e-p2-plural"
+    },
+    {
+     "type": "choice",
+     "prompt": "「chair」的複數是？",
+     "choices": [
+      "desks",
+      "chair",
+      "chaires",
+      "chairs"
+     ],
+     "answer": "chairs",
+     "explain": "chair 的複數是 chairs；chaires 不是正確寫法。",
+     "tag": "e-p2-plural"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p3-be",
+   "subject": "english",
+   "grade": 3,
+   "title": "英文｜be 動詞",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P3（KS1 be 動詞）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P3 程度：KS1 be 動詞。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "I ___ a student.",
+     "choices": [
+      "am",
+      "is",
+      "be",
+      "are"
+     ],
+     "answer": "am",
+     "explain": "主語配搭：I am a student.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "She ___ my sister.",
+     "choices": [
+      "is",
+      "are",
+      "am",
+      "be"
+     ],
+     "answer": "is",
+     "explain": "主語配搭：She is my sister.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "He ___ tall.",
+     "choices": [
+      "are",
+      "be",
+      "is",
+      "am"
+     ],
+     "answer": "is",
+     "explain": "主語配搭：He is tall.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "It ___ a cat.",
+     "choices": [
+      "is",
+      "am",
+      "are",
+      "be"
+     ],
+     "answer": "is",
+     "explain": "主語配搭：It is a cat.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "They ___ happy.",
+     "choices": [
+      "am",
+      "is",
+      "be",
+      "are"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：They are happy.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "We ___ friends.",
+     "choices": [
+      "am",
+      "are",
+      "is",
+      "be"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：We are friends.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "You ___ kind.",
+     "choices": [
+      "be",
+      "am",
+      "is",
+      "are"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：You are kind.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "My mother ___ a teacher.",
+     "choices": [
+      "is",
+      "am",
+      "are",
+      "be"
+     ],
+     "answer": "is",
+     "explain": "主語配搭：My mother is a teacher.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "The cats ___ sleeping.",
+     "choices": [
+      "are",
+      "be",
+      "am",
+      "is"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：The cats are sleeping.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "Tom and I ___ in the same class.",
+     "choices": [
+      "are",
+      "am",
+      "is",
+      "be"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：Tom and I are in the same class.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "This ___ my book.",
+     "choices": [
+      "are",
+      "is",
+      "be",
+      "am"
+     ],
+     "answer": "is",
+     "explain": "主語配搭：This is my book.",
+     "tag": "e-p3-be"
+    },
+    {
+     "type": "choice",
+     "prompt": "These ___ my pencils.",
+     "choices": [
+      "is",
+      "are",
+      "am",
+      "be"
+     ],
+     "answer": "are",
+     "explain": "主語配搭：These are my pencils.",
+     "tag": "e-p3-be"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p4-past",
+   "subject": "english",
+   "grade": 4,
+   "title": "英文｜動詞過去式",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P4（KS2 簡單過去式）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P4 程度：KS2 簡單過去式。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「go」的過去式是？",
+     "choices": [
+      "went",
+      "go",
+      "goed",
+      "ate"
+     ],
+     "answer": "went",
+     "explain": "go 的過去式是 went；goed 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「eat」的過去式是？",
+     "choices": [
+      "eated",
+      "eat",
+      "ate",
+      "went"
+     ],
+     "answer": "ate",
+     "explain": "eat 的過去式是 ate；eated 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「see」的過去式是？",
+     "choices": [
+      "seed",
+      "saw",
+      "played",
+      "see"
+     ],
+     "answer": "saw",
+     "explain": "see 的過去式是 saw；seed 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「play」的過去式是？",
+     "choices": [
+      "play",
+      "saw",
+      "played",
+      "playd"
+     ],
+     "answer": "played",
+     "explain": "play 的過去式是 played；playd 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「walk」的過去式是？",
+     "choices": [
+      "ran",
+      "walk",
+      "walkd",
+      "walked"
+     ],
+     "answer": "walked",
+     "explain": "walk 的過去式是 walked；walkd 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「run」的過去式是？",
+     "choices": [
+      "walked",
+      "runned",
+      "ran",
+      "run"
+     ],
+     "answer": "ran",
+     "explain": "run 的過去式是 ran；runned 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「write」的過去式是？",
+     "choices": [
+      "writed",
+      "write",
+      "sang",
+      "wrote"
+     ],
+     "answer": "wrote",
+     "explain": "write 的過去式是 wrote；writed 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「sing」的過去式是？",
+     "choices": [
+      "sang",
+      "wrote",
+      "sing",
+      "singed"
+     ],
+     "answer": "sang",
+     "explain": "sing 的過去式是 sang；singed 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「drink」的過去式是？",
+     "choices": [
+      "swam",
+      "drink",
+      "drank",
+      "drinked"
+     ],
+     "answer": "drank",
+     "explain": "drink 的過去式是 drank；drinked 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「swim」的過去式是？",
+     "choices": [
+      "swam",
+      "swimmed",
+      "swim",
+      "drank"
+     ],
+     "answer": "swam",
+     "explain": "swim 的過去式是 swam；swimmed 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「help」的過去式是？",
+     "choices": [
+      "took",
+      "help",
+      "helped",
+      "helpd"
+     ],
+     "answer": "helped",
+     "explain": "help 的過去式是 helped；helpd 不是正確寫法。",
+     "tag": "e-p4-past"
+    },
+    {
+     "type": "choice",
+     "prompt": "「take」的過去式是？",
+     "choices": [
+      "take",
+      "took",
+      "taked",
+      "helped"
+     ],
+     "answer": "took",
+     "explain": "take 的過去式是 took；taked 不是正確寫法。",
+     "tag": "e-p4-past"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p5-comparative",
+   "subject": "english",
+   "grade": 5,
+   "title": "英文｜比較級",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P5（KS2 比較級）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P5 程度：KS2 比較級。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「tall」的比較級是？",
+     "choices": [
+      "taller",
+      "more tall",
+      "tall",
+      "tallr"
+     ],
+     "answer": "taller",
+     "explain": "tall 的比較級是 taller，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「short」的比較級是？",
+     "choices": [
+      "shortr",
+      "shorter",
+      "short",
+      "more short"
+     ],
+     "answer": "shorter",
+     "explain": "short 的比較級是 shorter，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「big」的比較級是？",
+     "choices": [
+      "bigger",
+      "more big",
+      "biger",
+      "big"
+     ],
+     "answer": "bigger",
+     "explain": "big 的比較級是 bigger，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「small」的比較級是？",
+     "choices": [
+      "smaller",
+      "smallr",
+      "more small",
+      "small"
+     ],
+     "answer": "smaller",
+     "explain": "small 的比較級是 smaller，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「fast」的比較級是？",
+     "choices": [
+      "faster",
+      "fastr",
+      "fast",
+      "more fast"
+     ],
+     "answer": "faster",
+     "explain": "fast 的比較級是 faster，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「slow」的比較級是？",
+     "choices": [
+      "more slow",
+      "slowr",
+      "slow",
+      "slower"
+     ],
+     "answer": "slower",
+     "explain": "slow 的比較級是 slower，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「happy」的比較級是？",
+     "choices": [
+      "happyer",
+      "happy",
+      "happier",
+      "more happy"
+     ],
+     "answer": "happier",
+     "explain": "happy 的比較級是 happier，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「easy」的比較級是？",
+     "choices": [
+      "easier",
+      "easyer",
+      "easy",
+      "more easy"
+     ],
+     "answer": "easier",
+     "explain": "easy 的比較級是 easier，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「good」的比較級是？",
+     "choices": [
+      "good",
+      "better",
+      "gooder",
+      "more good"
+     ],
+     "answer": "better",
+     "explain": "good 的比較級是 better，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「bad」的比較級是？",
+     "choices": [
+      "bad",
+      "worse",
+      "bader",
+      "more bad"
+     ],
+     "answer": "worse",
+     "explain": "bad 的比較級是 worse，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「long」的比較級是？",
+     "choices": [
+      "longr",
+      "more long",
+      "longer",
+      "long"
+     ],
+     "answer": "longer",
+     "explain": "long 的比較級是 longer，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    },
+    {
+     "type": "choice",
+     "prompt": "「young」的比較級是？",
+     "choices": [
+      "younger",
+      "more young",
+      "young",
+      "youngr"
+     ],
+     "answer": "younger",
+     "explain": "young 的比較級是 younger，用於比較兩樣事物。",
+     "tag": "e-p5-comparative"
+    }
+   ]
+  },
+  {
+   "id": "exp-e-p6-synonym",
+   "subject": "english",
+   "grade": 6,
+   "title": "英文｜詞義辨析",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P6（KS2 詞彙拓展）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P6 程度：KS2 詞彙拓展。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "英文拼音與詞形變化有規則，也有例外；不規則變化要另外記住。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "不要把所有動詞都加 -ed，也不要把所有形容詞都加 -er。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "與「enormous」意思最接近的是？",
+     "choices": [
+      "dark",
+      "noisy",
+      "huge",
+      "slow"
+     ],
+     "answer": "huge",
+     "explain": "enormous 和 huge 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「tiny」意思最接近的是？",
+     "choices": [
+      "noisy",
+      "heavy",
+      "small",
+      "dark"
+     ],
+     "answer": "small",
+     "explain": "tiny 和 small 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「ancient」意思最接近的是？",
+     "choices": [
+      "cheap",
+      "dark",
+      "old",
+      "heavy"
+     ],
+     "answer": "old",
+     "explain": "ancient 和 old 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「modern」意思最接近的是？",
+     "choices": [
+      "quiet",
+      "cheap",
+      "heavy",
+      "new"
+     ],
+     "answer": "new",
+     "explain": "modern 和 new 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「exhausted」意思最接近的是？",
+     "choices": [
+      "cheap",
+      "narrow",
+      "tired",
+      "quiet"
+     ],
+     "answer": "tired",
+     "explain": "exhausted 和 tired 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「delighted」意思最接近的是？",
+     "choices": [
+      "bitter",
+      "quiet",
+      "narrow",
+      "happy"
+     ],
+     "answer": "happy",
+     "explain": "delighted 和 happy 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「furious」意思最接近的是？",
+     "choices": [
+      "narrow",
+      "bitter",
+      "angry",
+      "rough"
+     ],
+     "answer": "angry",
+     "explain": "furious 和 angry 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「cautious」意思最接近的是？",
+     "choices": [
+      "rough",
+      "careful",
+      "dull",
+      "bitter"
+     ],
+     "answer": "careful",
+     "explain": "cautious 和 careful 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「rapid」意思最接近的是？",
+     "choices": [
+      "slow",
+      "dull",
+      "quick",
+      "rough"
+     ],
+     "answer": "quick",
+     "explain": "rapid 和 quick 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「scarce」意思最接近的是？",
+     "choices": [
+      "rare",
+      "dull",
+      "noisy",
+      "slow"
+     ],
+     "answer": "rare",
+     "explain": "scarce 和 rare 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「vacant」意思最接近的是？",
+     "choices": [
+      "empty",
+      "dark",
+      "slow",
+      "noisy"
+     ],
+     "answer": "empty",
+     "explain": "vacant 和 empty 意思相近。",
+     "tag": "e-p6-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "與「brilliant」意思最接近的是？",
+     "choices": [
+      "clever",
+      "dark",
+      "heavy",
+      "noisy"
+     ],
+     "answer": "clever",
+     "explain": "brilliant 和 clever 意思相近。",
+     "tag": "e-p6-synonym"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p1-measure",
+   "subject": "chinese",
+   "grade": 1,
+   "title": "中文｜量詞運用",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P1（KS1 量詞）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P1 程度：KS1 量詞。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "一___ 輪船",
+     "choices": [
+      "封",
+      "匹",
+      "艘",
+      "篇"
+     ],
+     "answer": "艘",
+     "explain": "「輪船」配量詞「艘」：一艘輪船。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 火車",
+     "choices": [
+      "列",
+      "朵",
+      "封",
+      "匹"
+     ],
+     "answer": "列",
+     "explain": "「火車」配量詞「列」：一列火車。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 大樓",
+     "choices": [
+      "匹",
+      "幢",
+      "顆",
+      "封"
+     ],
+     "answer": "幢",
+     "explain": "「大樓」配量詞「幢」：一幢大樓。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 房間",
+     "choices": [
+      "間",
+      "封",
+      "篇",
+      "匹"
+     ],
+     "answer": "間",
+     "explain": "「房間」配量詞「間」：一間房間。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 鏡子",
+     "choices": [
+      "面",
+      "篇",
+      "匹",
+      "封"
+     ],
+     "answer": "面",
+     "explain": "「鏡子」配量詞「面」：一面鏡子。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 門",
+     "choices": [
+      "封",
+      "扇",
+      "匹",
+      "篇"
+     ],
+     "answer": "扇",
+     "explain": "「門」配量詞「扇」：一扇門。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 旗幟",
+     "choices": [
+      "面",
+      "匹",
+      "篇",
+      "冊"
+     ],
+     "answer": "面",
+     "explain": "「旗幟」配量詞「面」：一面旗幟。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 繩子",
+     "choices": [
+      "封",
+      "篇",
+      "根",
+      "匹"
+     ],
+     "answer": "根",
+     "explain": "「繩子」配量詞「根」：一根繩子。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 毛筆",
+     "choices": [
+      "篇",
+      "封",
+      "匹",
+      "枝"
+     ],
+     "answer": "枝",
+     "explain": "「毛筆」配量詞「枝」：一枝毛筆。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 試卷",
+     "choices": [
+      "匹",
+      "篇",
+      "封",
+      "份"
+     ],
+     "answer": "份",
+     "explain": "「試卷」配量詞「份」：一份試卷。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 文章",
+     "choices": [
+      "篇",
+      "匹",
+      "封",
+      "艘"
+     ],
+     "answer": "篇",
+     "explain": "「文章」配量詞「篇」：一篇文章。",
+     "tag": "c-p1-measure"
+    },
+    {
+     "type": "choice",
+     "prompt": "一___ 詩",
+     "choices": [
+      "篇",
+      "封",
+      "匹",
+      "首"
+     ],
+     "answer": "首",
+     "explain": "「詩」配量詞「首」：一首詩。",
+     "tag": "c-p1-measure"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p2-antonym",
+   "subject": "chinese",
+   "grade": 2,
+   "title": "中文｜反義詞",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P2（KS1 反義詞）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P2 程度：KS1 反義詞。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「乾」的反義詞是？",
+     "choices": [
+      "快",
+      "大",
+      "高",
+      "濕"
+     ],
+     "answer": "濕",
+     "explain": "乾 和 濕 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「厚」的反義詞是？",
+     "choices": [
+      "遠",
+      "薄",
+      "高",
+      "快"
+     ],
+     "answer": "薄",
+     "explain": "厚 和 薄 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「寬」的反義詞是？",
+     "choices": [
+      "窄",
+      "高",
+      "新",
+      "遠"
+     ],
+     "answer": "窄",
+     "explain": "寬 和 窄 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「深」的反義詞是？",
+     "choices": [
+      "新",
+      "淺",
+      "輕",
+      "遠"
+     ],
+     "answer": "淺",
+     "explain": "深 和 淺 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「強」的反義詞是？",
+     "choices": [
+      "弱",
+      "新",
+      "甜",
+      "輕"
+     ],
+     "answer": "弱",
+     "explain": "強 和 弱 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「貴」的反義詞是？",
+     "choices": [
+      "平",
+      "圓",
+      "甜",
+      "輕"
+     ],
+     "answer": "平",
+     "explain": "貴 和 平 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「勤」的反義詞是？",
+     "choices": [
+      "圓",
+      "甜",
+      "大",
+      "懶"
+     ],
+     "answer": "懶",
+     "explain": "勤 和 懶 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「虛」的反義詞是？",
+     "choices": [
+      "快",
+      "大",
+      "圓",
+      "實"
+     ],
+     "answer": "實",
+     "explain": "虛 和 實 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「動」的反義詞是？",
+     "choices": [
+      "快",
+      "高",
+      "大",
+      "靜"
+     ],
+     "answer": "靜",
+     "explain": "動 和 靜 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「內」的反義詞是？",
+     "choices": [
+      "外",
+      "快",
+      "遠",
+      "高"
+     ],
+     "answer": "外",
+     "explain": "內 和 外 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「前」的反義詞是？",
+     "choices": [
+      "遠",
+      "高",
+      "後",
+      "新"
+     ],
+     "answer": "後",
+     "explain": "前 和 後 的意思相反。",
+     "tag": "c-p2-antonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「升」的反義詞是？",
+     "choices": [
+      "遠",
+      "新",
+      "輕",
+      "降"
+     ],
+     "answer": "降",
+     "explain": "升 和 降 的意思相反。",
+     "tag": "c-p2-antonym"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p3-synonym",
+   "subject": "chinese",
+   "grade": 3,
+   "title": "中文｜近義詞",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P3（KS1 近義詞）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P3 程度：KS1 近義詞。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「立刻」的近義詞是？",
+     "choices": [
+      "吵鬧",
+      "狹窄",
+      "緩慢",
+      "馬上"
+     ],
+     "answer": "馬上",
+     "explain": "立刻 和 馬上 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「安靜」的近義詞是？",
+     "choices": [
+      "昂貴",
+      "吵鬧",
+      "狹窄",
+      "寧靜"
+     ],
+     "answer": "寧靜",
+     "explain": "安靜 和 寧靜 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「著名」的近義詞是？",
+     "choices": [
+      "有名",
+      "困難",
+      "狹窄",
+      "昂貴"
+     ],
+     "answer": "有名",
+     "explain": "著名 和 有名 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「疲倦」的近義詞是？",
+     "choices": [
+      "疲累",
+      "柔軟",
+      "昂貴",
+      "困難"
+     ],
+     "answer": "疲累",
+     "explain": "疲倦 和 疲累 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「聰明」的近義詞是？",
+     "choices": [
+      "緩慢",
+      "困難",
+      "柔軟",
+      "機智"
+     ],
+     "answer": "機智",
+     "explain": "聰明 和 機智 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「寬敞」的近義詞是？",
+     "choices": [
+      "緩慢",
+      "柔軟",
+      "寬闊",
+      "吵鬧"
+     ],
+     "answer": "寬闊",
+     "explain": "寬敞 和 寬闊 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「馬虎」的近義詞是？",
+     "choices": [
+      "狹窄",
+      "吵鬧",
+      "緩慢",
+      "粗心"
+     ],
+     "answer": "粗心",
+     "explain": "馬虎 和 粗心 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「明白」的近義詞是？",
+     "choices": [
+      "狹窄",
+      "昂貴",
+      "理解",
+      "吵鬧"
+     ],
+     "answer": "理解",
+     "explain": "明白 和 理解 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「小心」的近義詞是？",
+     "choices": [
+      "狹窄",
+      "困難",
+      "謹慎",
+      "昂貴"
+     ],
+     "answer": "謹慎",
+     "explain": "小心 和 謹慎 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「忽然」的近義詞是？",
+     "choices": [
+      "突然",
+      "昂貴",
+      "柔軟",
+      "困難"
+     ],
+     "answer": "突然",
+     "explain": "忽然 和 突然 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「堅固」的近義詞是？",
+     "choices": [
+      "緩慢",
+      "牢固",
+      "困難",
+      "柔軟"
+     ],
+     "answer": "牢固",
+     "explain": "堅固 和 牢固 的意思相近。",
+     "tag": "c-p3-synonym"
+    },
+    {
+     "type": "choice",
+     "prompt": "「勤勞」的近義詞是？",
+     "choices": [
+      "緩慢",
+      "吵鬧",
+      "勤力",
+      "柔軟"
+     ],
+     "answer": "勤力",
+     "explain": "勤勞 和 勤力 的意思相近。",
+     "tag": "c-p3-synonym"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p4-classify",
+   "subject": "chinese",
+   "grade": 4,
+   "title": "中文｜詞語分類",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P4（KS2 詞語分類）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P4 程度：KS2 詞語分類。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「水果」？",
+     "choices": [
+      "蘋果",
+      "鉛筆",
+      "橙",
+      "香蕉"
+     ],
+     "answer": "鉛筆",
+     "explain": "鉛筆不是水果；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「顏色」？",
+     "choices": [
+      "跑步",
+      "綠色",
+      "紅色",
+      "藍色"
+     ],
+     "answer": "跑步",
+     "explain": "跑步不是顏色；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「動物」？",
+     "choices": [
+      "兔",
+      "貓",
+      "狗",
+      "書桌"
+     ],
+     "answer": "書桌",
+     "explain": "書桌不是動物；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「交通工具」？",
+     "choices": [
+      "鉛筆",
+      "巴士",
+      "港鐵",
+      "小巴"
+     ],
+     "answer": "鉛筆",
+     "explain": "鉛筆不是交通工具；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「文具」？",
+     "choices": [
+      "橡皮擦",
+      "米飯",
+      "鉛筆",
+      "間尺"
+     ],
+     "answer": "米飯",
+     "explain": "米飯不是文具；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「球類」？",
+     "choices": [
+      "課本",
+      "籃球",
+      "足球",
+      "羽毛球"
+     ],
+     "answer": "課本",
+     "explain": "課本不是球類；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「季節」？",
+     "choices": [
+      "春天",
+      "秋天",
+      "星期",
+      "夏天"
+     ],
+     "answer": "星期",
+     "explain": "星期不是季節；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「家人稱呼」？",
+     "choices": [
+      "老師",
+      "媽媽",
+      "哥哥",
+      "爸爸"
+     ],
+     "answer": "老師",
+     "explain": "老師不是家人稱呼；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「餐具」？",
+     "choices": [
+      "碗",
+      "書包",
+      "筷",
+      "碟"
+     ],
+     "answer": "書包",
+     "explain": "書包不是餐具；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「感官器官」？",
+     "choices": [
+      "眼",
+      "耳",
+      "鼻",
+      "鞋"
+     ],
+     "answer": "鞋",
+     "explain": "鞋不是感官器官；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「樂器」？",
+     "choices": [
+      "雪櫃",
+      "結他",
+      "鋼琴",
+      "小提琴"
+     ],
+     "answer": "雪櫃",
+     "explain": "雪櫃不是樂器；其餘三項都是。",
+     "tag": "c-p4-classify"
+    },
+    {
+     "type": "choice",
+     "prompt": "下列哪一項不屬於「職業」？",
+     "choices": [
+      "護士",
+      "消防員",
+      "鉛筆盒",
+      "醫生"
+     ],
+     "answer": "鉛筆盒",
+     "explain": "鉛筆盒不是職業；其餘三項都是。",
+     "tag": "c-p4-classify"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p5-idiom",
+   "subject": "chinese",
+   "grade": 5,
+   "title": "中文｜成語意思",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P5（KS2 成語）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P5 程度：KS2 成語。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「對牛彈琴」的意思是？",
+     "choices": [
+      "自己欺騙自己，以為別人不知道",
+      "情況變了，仍用舊方法辦事",
+      "前後說法互相抵觸",
+      "對不懂的人講道理，白費唇舌"
+     ],
+     "answer": "對不懂的人講道理，白費唇舌",
+     "explain": "對牛彈琴：對不懂的人講道理，白費唇舌。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「掩耳盜鈴」的意思是？",
+     "choices": [
+      "情況變了，仍用舊方法辦事",
+      "自己欺騙自己，以為別人不知道",
+      "借別人的勢力去嚇唬人",
+      "前後說法互相抵觸"
+     ],
+     "answer": "自己欺騙自己，以為別人不知道",
+     "explain": "掩耳盜鈴：自己欺騙自己，以為別人不知道。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「刻舟求劍」的意思是？",
+     "choices": [
+      "有恆心、堅持到底就能成功",
+      "情況變了，仍用舊方法辦事",
+      "借別人的勢力去嚇唬人",
+      "前後說法互相抵觸"
+     ],
+     "answer": "情況變了，仍用舊方法辦事",
+     "explain": "刻舟求劍：情況變了，仍用舊方法辦事。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「自相矛盾」的意思是？",
+     "choices": [
+      "前後說法互相抵觸",
+      "做一件事同時得到兩個好處",
+      "借別人的勢力去嚇唬人",
+      "有恆心、堅持到底就能成功"
+     ],
+     "answer": "前後說法互相抵觸",
+     "explain": "自相矛盾：前後說法互相抵觸。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「狐假虎威」的意思是？",
+     "choices": [
+      "有恆心、堅持到底就能成功",
+      "做一件事同時得到兩個好處",
+      "做事之前已有周詳計劃",
+      "借別人的勢力去嚇唬人"
+     ],
+     "answer": "借別人的勢力去嚇唬人",
+     "explain": "狐假虎威：借別人的勢力去嚇唬人。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「愚公移山」的意思是？",
+     "choices": [
+      "有恆心、堅持到底就能成功",
+      "做一件事同時得到兩個好處",
+      "做事之前已有周詳計劃",
+      "沒有本領的人混在裏面充數"
+     ],
+     "answer": "有恆心、堅持到底就能成功",
+     "explain": "愚公移山：有恆心、堅持到底就能成功。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「一箭雙鵰」的意思是？",
+     "choices": [
+      "只看重外表而忽略真正價值",
+      "做事之前已有周詳計劃",
+      "沒有本領的人混在裏面充數",
+      "做一件事同時得到兩個好處"
+     ],
+     "answer": "做一件事同時得到兩個好處",
+     "explain": "一箭雙鵰：做一件事同時得到兩個好處。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「胸有成竹」的意思是？",
+     "choices": [
+      "沒有本領的人混在裏面充數",
+      "只看重外表而忽略真正價值",
+      "做事之前已有周詳計劃",
+      "疑神疑鬼，自己嚇自己"
+     ],
+     "answer": "做事之前已有周詳計劃",
+     "explain": "胸有成竹：做事之前已有周詳計劃。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「濫竽充數」的意思是？",
+     "choices": [
+      "行動和目標完全相反",
+      "只看重外表而忽略真正價值",
+      "疑神疑鬼，自己嚇自己",
+      "沒有本領的人混在裏面充數"
+     ],
+     "answer": "沒有本領的人混在裏面充數",
+     "explain": "濫竽充數：沒有本領的人混在裏面充數。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「買櫝還珠」的意思是？",
+     "choices": [
+      "疑神疑鬼，自己嚇自己",
+      "對不懂的人講道理，白費唇舌",
+      "只看重外表而忽略真正價值",
+      "行動和目標完全相反"
+     ],
+     "answer": "只看重外表而忽略真正價值",
+     "explain": "買櫝還珠：只看重外表而忽略真正價值。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「杯弓蛇影」的意思是？",
+     "choices": [
+      "疑神疑鬼，自己嚇自己",
+      "行動和目標完全相反",
+      "對不懂的人講道理，白費唇舌",
+      "自己欺騙自己，以為別人不知道"
+     ],
+     "answer": "疑神疑鬼，自己嚇自己",
+     "explain": "杯弓蛇影：疑神疑鬼，自己嚇自己。",
+     "tag": "c-p5-idiom"
+    },
+    {
+     "type": "choice",
+     "prompt": "「南轅北轍」的意思是？",
+     "choices": [
+      "情況變了，仍用舊方法辦事",
+      "自己欺騙自己，以為別人不知道",
+      "對不懂的人講道理，白費唇舌",
+      "行動和目標完全相反"
+     ],
+     "answer": "行動和目標完全相反",
+     "explain": "南轅北轍：行動和目標完全相反。",
+     "tag": "c-p5-idiom"
+    }
+   ]
+  },
+  {
+   "id": "exp-c-p6-figure",
+   "subject": "chinese",
+   "grade": 6,
+   "title": "中文｜修辭辨識",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P6（KS2 修辭）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P6 程度：KS2 修辭。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "用繁體字、香港用語；判斷詞義時把選項代入句子讀一次。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "近義詞題要選「意思最相近」的一項，不是選意思相反的一項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「太陽像一個大火球，高高地掛在天上。」用了哪種修辭？",
+     "choices": [
+      "比喻",
+      "誇張",
+      "擬人",
+      "反問"
+     ],
+     "answer": "比喻",
+     "explain": "用「像」把太陽比作大火球。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「小溪一路唱着歌跑向大海。」用了哪種修辭？",
+     "choices": [
+      "誇張",
+      "設問",
+      "反問",
+      "擬人"
+     ],
+     "answer": "擬人",
+     "explain": "小溪不會唱歌，把小溪當人來寫。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「他等了很久，彷彿過了一整個世紀。」用了哪種修辭？",
+     "choices": [
+      "誇張",
+      "排比",
+      "反問",
+      "設問"
+     ],
+     "answer": "誇張",
+     "explain": "把等待的時間故意說得遠超現實。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「誰不希望有一個快樂的假期呢？」用了哪種修辭？",
+     "choices": [
+      "排比",
+      "對偶",
+      "反問",
+      "設問"
+     ],
+     "answer": "反問",
+     "explain": "答案已藏在問句裏：人人都希望。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「甚麼是毅力？毅力就是不放棄。」用了哪種修辭？",
+     "choices": [
+      "對偶",
+      "排比",
+      "比喻",
+      "設問"
+     ],
+     "answer": "設問",
+     "explain": "自己提問，自己回答。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「他要讀書，要寫字，要練習。」用了哪種修辭？",
+     "choices": [
+      "擬人",
+      "對偶",
+      "比喻",
+      "排比"
+     ],
+     "answer": "排比",
+     "explain": "三個結構相近的分句並列。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「風把窗戶推開了，還調皮地翻動我的書頁。」用了哪種修辭？",
+     "choices": [
+      "反問",
+      "擬人",
+      "誇張",
+      "比喻"
+     ],
+     "answer": "擬人",
+     "explain": "「調皮」是人的性情，用來寫風。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「這個箱子輕得像一片羽毛。」用了哪種修辭？",
+     "choices": [
+      "設問",
+      "誇張",
+      "比喻",
+      "反問"
+     ],
+     "answer": "比喻",
+     "explain": "用「像」把箱子比作羽毛。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「他緊張得心快要跳出來了。」用了哪種修辭？",
+     "choices": [
+      "設問",
+      "誇張",
+      "排比",
+      "反問"
+     ],
+     "answer": "誇張",
+     "explain": "故意把緊張的程度說得不可能。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「難道我們不應該愛護環境嗎？」用了哪種修辭？",
+     "choices": [
+      "對偶",
+      "反問",
+      "設問",
+      "排比"
+     ],
+     "answer": "反問",
+     "explain": "答案已藏在問句裏：應該愛護。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「春風吹綠了田野，細雨潤濕了山坡。」用了哪種修辭？",
+     "choices": [
+      "排比",
+      "設問",
+      "比喻",
+      "對偶"
+     ],
+     "answer": "對偶",
+     "explain": "上下兩句字數相同、結構相對。",
+     "tag": "c-p6-figure"
+    },
+    {
+     "type": "choice",
+     "prompt": "「甚麼是誠實？誠實就是不說謊。」用了哪種修辭？",
+     "choices": [
+      "對偶",
+      "擬人",
+      "設問",
+      "比喻"
+     ],
+     "answer": "設問",
+     "explain": "自己提問，自己回答。",
+     "tag": "c-p6-figure"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p1-body",
+   "subject": "general",
+   "grade": 1,
+   "title": "常識｜身體與感官",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P1（KS1 健康與生活）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P1 程度：KS1 健康與生活。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來看東西？",
+     "choices": [
+      "鼻子",
+      "耳朵",
+      "舌頭",
+      "眼睛"
+     ],
+     "answer": "眼睛",
+     "explain": "看東西 → 眼睛。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來聽聲音？",
+     "choices": [
+      "耳朵",
+      "皮膚",
+      "舌頭",
+      "鼻子"
+     ],
+     "answer": "耳朵",
+     "explain": "聽聲音 → 耳朵。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來聞氣味？",
+     "choices": [
+      "鼻子",
+      "皮膚",
+      "舌頭",
+      "牙齒"
+     ],
+     "answer": "鼻子",
+     "explain": "聞氣味 → 鼻子。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來嘗味道？",
+     "choices": [
+      "肺",
+      "舌頭",
+      "皮膚",
+      "牙齒"
+     ],
+     "answer": "舌頭",
+     "explain": "嘗味道 → 舌頭。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來感受冷熱？",
+     "choices": [
+      "皮膚",
+      "心臟",
+      "牙齒",
+      "肺"
+     ],
+     "answer": "皮膚",
+     "explain": "感受冷熱 → 皮膚。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來咀嚼食物？",
+     "choices": [
+      "胃",
+      "牙齒",
+      "肺",
+      "心臟"
+     ],
+     "answer": "牙齒",
+     "explain": "咀嚼食物 → 牙齒。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來吸入氧氣？",
+     "choices": [
+      "手",
+      "胃",
+      "心臟",
+      "肺"
+     ],
+     "answer": "肺",
+     "explain": "吸入氧氣 → 肺。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來輸送血液？",
+     "choices": [
+      "手",
+      "心臟",
+      "腳",
+      "胃"
+     ],
+     "answer": "心臟",
+     "explain": "輸送血液 → 心臟。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來消化食物？",
+     "choices": [
+      "腦",
+      "手",
+      "胃",
+      "腳"
+     ],
+     "answer": "胃",
+     "explain": "消化食物 → 胃。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來拿取物件？",
+     "choices": [
+      "腦",
+      "腳",
+      "手",
+      "眼睛"
+     ],
+     "answer": "手",
+     "explain": "拿取物件 → 手。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來走路跑步？",
+     "choices": [
+      "耳朵",
+      "腳",
+      "眼睛",
+      "腦"
+     ],
+     "answer": "腳",
+     "explain": "走路跑步 → 腳。",
+     "tag": "g-p1-body"
+    },
+    {
+     "type": "choice",
+     "prompt": "我們主要用哪一個來思考記憶？",
+     "choices": [
+      "腦",
+      "鼻子",
+      "眼睛",
+      "耳朵"
+     ],
+     "answer": "腦",
+     "explain": "思考記憶 → 腦。",
+     "tag": "g-p1-body"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p2-nature",
+   "subject": "general",
+   "grade": 2,
+   "title": "常識｜植物與小動物",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P2（KS1 環境與生活）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P2 程度：KS1 環境與生活。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "負責／會「吸收水分和養分」的是哪一項？",
+     "choices": [
+      "根",
+      "葉",
+      "莖",
+      "花"
+     ],
+     "answer": "根",
+     "explain": "吸收水分和養分 → 根。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「製造養分」的是哪一項？",
+     "choices": [
+      "莖",
+      "葉",
+      "種子",
+      "花"
+     ],
+     "answer": "葉",
+     "explain": "製造養分 → 葉。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「結成果實」的是哪一項？",
+     "choices": [
+      "樹皮",
+      "種子",
+      "花",
+      "莖"
+     ],
+     "answer": "花",
+     "explain": "結成果實 → 花。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「輸送水分」的是哪一項？",
+     "choices": [
+      "蜜蜂",
+      "樹皮",
+      "種子",
+      "莖"
+     ],
+     "answer": "莖",
+     "explain": "輸送水分 → 莖。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「發芽長成新植物」的是哪一項？",
+     "choices": [
+      "種子",
+      "蜜蜂",
+      "蝴蝶",
+      "樹皮"
+     ],
+     "answer": "種子",
+     "explain": "發芽長成新植物 → 種子。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「保護樹幹」的是哪一項？",
+     "choices": [
+      "蝴蝶",
+      "蚯蚓",
+      "蜜蜂",
+      "樹皮"
+     ],
+     "answer": "樹皮",
+     "explain": "保護樹幹 → 樹皮。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「幫花朵傳播花粉」的是哪一項？",
+     "choices": [
+      "蜜蜂",
+      "青蛙",
+      "蚯蚓",
+      "蝴蝶"
+     ],
+     "answer": "蜜蜂",
+     "explain": "幫花朵傳播花粉 → 蜜蜂。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「吸食花蜜」的是哪一項？",
+     "choices": [
+      "向日葵",
+      "青蛙",
+      "蚯蚓",
+      "蝴蝶"
+     ],
+     "answer": "蝴蝶",
+     "explain": "吸食花蜜 → 蝴蝶。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「令泥土鬆軟」的是哪一項？",
+     "choices": [
+      "仙人掌",
+      "青蛙",
+      "蚯蚓",
+      "向日葵"
+     ],
+     "answer": "蚯蚓",
+     "explain": "令泥土鬆軟 → 蚯蚓。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「捕食害蟲」的是哪一項？",
+     "choices": [
+      "仙人掌",
+      "青蛙",
+      "根",
+      "向日葵"
+     ],
+     "answer": "青蛙",
+     "explain": "捕食害蟲 → 青蛙。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「向着太陽轉動」的是哪一項？",
+     "choices": [
+      "向日葵",
+      "仙人掌",
+      "葉",
+      "根"
+     ],
+     "answer": "向日葵",
+     "explain": "向着太陽轉動 → 向日葵。",
+     "tag": "g-p2-nature"
+    },
+    {
+     "type": "choice",
+     "prompt": "負責／會「把葉子變成刺以減少水分流失」的是哪一項？",
+     "choices": [
+      "根",
+      "葉",
+      "仙人掌",
+      "花"
+     ],
+     "answer": "仙人掌",
+     "explain": "把葉子變成刺以減少水分流失 → 仙人掌。",
+     "tag": "g-p2-nature"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p3-weather",
+   "subject": "general",
+   "grade": 3,
+   "title": "常識｜天氣與四季",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P3（KS1 科學探究）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P3 程度：KS1 科學探究。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「量度氣溫」指的是哪一項？",
+     "choices": [
+      "溫度計",
+      "彩虹",
+      "風向標",
+      "雨量器"
+     ],
+     "answer": "溫度計",
+     "explain": "量度氣溫 → 溫度計。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「量度雨量」指的是哪一項？",
+     "choices": [
+      "風向標",
+      "雷聲",
+      "彩虹",
+      "雨量器"
+     ],
+     "answer": "雨量器",
+     "explain": "量度雨量 → 雨量器。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「顯示風向」指的是哪一項？",
+     "choices": [
+      "雷聲",
+      "露水",
+      "風向標",
+      "彩虹"
+     ],
+     "answer": "風向標",
+     "explain": "顯示風向 → 風向標。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「陽光穿過小水滴形成」指的是哪一項？",
+     "choices": [
+      "雷聲",
+      "露水",
+      "霜",
+      "彩虹"
+     ],
+     "answer": "彩虹",
+     "explain": "陽光穿過小水滴形成 → 彩虹。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「閃電之後才聽到」指的是哪一項？",
+     "choices": [
+      "露水",
+      "颱風",
+      "雷聲",
+      "霜"
+     ],
+     "answer": "雷聲",
+     "explain": "閃電之後才聽到 → 雷聲。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「清晨水汽在草葉上凝結」指的是哪一項？",
+     "choices": [
+      "颱風",
+      "濕度",
+      "霜",
+      "露水"
+     ],
+     "answer": "露水",
+     "explain": "清晨水汽在草葉上凝結 → 露水。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「寒冷時水汽直接結成冰晶」指的是哪一項？",
+     "choices": [
+      "濕度",
+      "天文台",
+      "颱風",
+      "霜"
+     ],
+     "answer": "霜",
+     "explain": "寒冷時水汽直接結成冰晶 → 霜。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「帶來強風和暴雨」指的是哪一項？",
+     "choices": [
+      "颱風",
+      "天文台",
+      "雨",
+      "濕度"
+     ],
+     "answer": "颱風",
+     "explain": "帶來強風和暴雨 → 颱風。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「空氣中水汽的多少」指的是哪一項？",
+     "choices": [
+      "濕度",
+      "春夏秋冬",
+      "雨",
+      "天文台"
+     ],
+     "answer": "濕度",
+     "explain": "空氣中水汽的多少 → 濕度。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「發出天氣警告」指的是哪一項？",
+     "choices": [
+      "春夏秋冬",
+      "天文台",
+      "雨",
+      "溫度計"
+     ],
+     "answer": "天文台",
+     "explain": "發出天氣警告 → 天文台。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「雲裏的小水滴變重落下」指的是哪一項？",
+     "choices": [
+      "溫度計",
+      "春夏秋冬",
+      "雨",
+      "雨量器"
+     ],
+     "answer": "雨",
+     "explain": "雲裏的小水滴變重落下 → 雨。",
+     "tag": "g-p3-weather"
+    },
+    {
+     "type": "choice",
+     "prompt": "「四季依次是」指的是哪一項？",
+     "choices": [
+      "雨量器",
+      "溫度計",
+      "春夏秋冬",
+      "風向標"
+     ],
+     "answer": "春夏秋冬",
+     "explain": "四季依次是 → 春夏秋冬。",
+     "tag": "g-p3-weather"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p4-science",
+   "subject": "general",
+   "grade": 4,
+   "title": "常識｜光、聲與用電安全",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P4（KS2 科學科：光、聲、電）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P4 程度：KS2 科學科：光、聲、電。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「把光反射回來」指的是哪一項？",
+     "choices": [
+      "鏡子",
+      "振動",
+      "影子",
+      "透明玻璃"
+     ],
+     "answer": "鏡子",
+     "explain": "把光反射回來 → 鏡子。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「光被物件擋住而形成」指的是哪一項？",
+     "choices": [
+      "振動",
+      "透明玻璃",
+      "影子",
+      "真空"
+     ],
+     "answer": "影子",
+     "explain": "光被物件擋住而形成 → 影子。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「可以讓光穿過」指的是哪一項？",
+     "choices": [
+      "振動",
+      "真空",
+      "透明玻璃",
+      "電池"
+     ],
+     "answer": "透明玻璃",
+     "explain": "可以讓光穿過 → 透明玻璃。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「聲音由物件產生」指的是哪一項？",
+     "choices": [
+      "真空",
+      "電池",
+      "振動",
+      "開關"
+     ],
+     "answer": "振動",
+     "explain": "聲音由物件產生 → 振動。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「不能傳播聲音」指的是哪一項？",
+     "choices": [
+      "塑膠外層",
+      "電池",
+      "開關",
+      "真空"
+     ],
+     "answer": "真空",
+     "explain": "不能傳播聲音 → 真空。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「提供電力」指的是哪一項？",
+     "choices": [
+      "開關",
+      "電池",
+      "電器",
+      "塑膠外層"
+     ],
+     "answer": "電池",
+     "explain": "提供電力 → 電池。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「控制電路的開與關」指的是哪一項？",
+     "choices": [
+      "塑膠外層",
+      "開關",
+      "避雷針",
+      "電器"
+     ],
+     "answer": "開關",
+     "explain": "控制電路的開與關 → 開關。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「包着電線防止漏電」指的是哪一項？",
+     "choices": [
+      "避雷針",
+      "電器",
+      "塑膠外層",
+      "放大鏡"
+     ],
+     "answer": "塑膠外層",
+     "explain": "包着電線防止漏電 → 塑膠外層。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「濕手時不應接觸」指的是哪一項？",
+     "choices": [
+      "電器",
+      "放大鏡",
+      "稜鏡",
+      "避雷針"
+     ],
+     "answer": "電器",
+     "explain": "濕手時不應接觸 → 電器。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「把雷電引到地下」指的是哪一項？",
+     "choices": [
+      "鏡子",
+      "避雷針",
+      "稜鏡",
+      "放大鏡"
+     ],
+     "answer": "避雷針",
+     "explain": "把雷電引到地下 → 避雷針。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「把光線聚集起來」指的是哪一項？",
+     "choices": [
+      "影子",
+      "放大鏡",
+      "稜鏡",
+      "鏡子"
+     ],
+     "answer": "放大鏡",
+     "explain": "把光線聚集起來 → 放大鏡。",
+     "tag": "g-p4-science"
+    },
+    {
+     "type": "choice",
+     "prompt": "「把白光分成七種顏色」指的是哪一項？",
+     "choices": [
+      "透明玻璃",
+      "影子",
+      "稜鏡",
+      "鏡子"
+     ],
+     "answer": "稜鏡",
+     "explain": "把白光分成七種顏色 → 稜鏡。",
+     "tag": "g-p4-science"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p5-space",
+   "subject": "general",
+   "grade": 5,
+   "title": "常識｜太陽系與地球",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P5（KS2 科學科：地球與宇宙）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P5 程度：KS2 科學科：地球與宇宙。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「自己會發光的天體」指的是哪一項？",
+     "choices": [
+      "月球",
+      "太陽",
+      "地球自轉",
+      "地球"
+     ],
+     "answer": "太陽",
+     "explain": "自己會發光的天體 → 太陽。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「繞着太陽運行的天體」指的是哪一項？",
+     "choices": [
+      "月球",
+      "地球公轉",
+      "地球自轉",
+      "地球"
+     ],
+     "answer": "地球",
+     "explain": "繞着太陽運行的天體 → 地球。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「繞着地球運行的天體」指的是哪一項？",
+     "choices": [
+      "水星",
+      "地球自轉",
+      "地球公轉",
+      "月球"
+     ],
+     "answer": "月球",
+     "explain": "繞着地球運行的天體 → 月球。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「形成日夜交替」指的是哪一項？",
+     "choices": [
+      "地球自轉",
+      "水星",
+      "地球公轉",
+      "木星"
+     ],
+     "answer": "地球自轉",
+     "explain": "形成日夜交替 → 地球自轉。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「形成四季變化」指的是哪一項？",
+     "choices": [
+      "水星",
+      "地球公轉",
+      "木星",
+      "日蝕"
+     ],
+     "answer": "地球公轉",
+     "explain": "形成四季變化 → 地球公轉。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「距離太陽最近的行星」指的是哪一項？",
+     "choices": [
+      "地心吸力",
+      "水星",
+      "日蝕",
+      "木星"
+     ],
+     "answer": "水星",
+     "explain": "距離太陽最近的行星 → 水星。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「太陽系中最大的行星」指的是哪一項？",
+     "choices": [
+      "日蝕",
+      "地心吸力",
+      "火箭",
+      "木星"
+     ],
+     "answer": "木星",
+     "explain": "太陽系中最大的行星 → 木星。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「夜間把陽光反射到地球、本身不會發光的天體」指的是哪一項？",
+     "choices": [
+      "八",
+      "地心吸力",
+      "月球",
+      "火箭"
+     ],
+     "answer": "月球",
+     "explain": "夜間把陽光反射到地球、本身不會發光的天體 → 月球。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「月球擋住太陽時出現」指的是哪一項？",
+     "choices": [
+      "火箭",
+      "八",
+      "太陽",
+      "日蝕"
+     ],
+     "answer": "日蝕",
+     "explain": "月球擋住太陽時出現 → 日蝕。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「令物件向地面落下」指的是哪一項？",
+     "choices": [
+      "八",
+      "地球",
+      "太陽",
+      "地心吸力"
+     ],
+     "answer": "地心吸力",
+     "explain": "令物件向地面落下 → 地心吸力。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「載人離開地球的工具」指的是哪一項？",
+     "choices": [
+      "月球",
+      "地球",
+      "太陽",
+      "火箭"
+     ],
+     "answer": "火箭",
+     "explain": "載人離開地球的工具 → 火箭。",
+     "tag": "g-p5-space"
+    },
+    {
+     "type": "choice",
+     "prompt": "「太陽系行星的總數」指的是哪一項？",
+     "choices": [
+      "月球",
+      "地球",
+      "八",
+      "地球自轉"
+     ],
+     "answer": "八",
+     "explain": "太陽系行星的總數 → 八。",
+     "tag": "g-p5-space"
+    }
+   ]
+  },
+  {
+   "id": "exp-g-p6-community",
+   "subject": "general",
+   "grade": 6,
+   "title": "常識｜社區生活與理財",
+   "intro": [
+    "本單元共 12 題，程度對準香港小學 P6（KS2 人文科：社會與生活）。",
+    "題目為原創編寫，答案由程式或詞表對照產生；答錯時會顯示解釋。"
+   ],
+   "lesson": {
+    "points": [
+     "本單元對準香港小學 P6 程度：KS2 人文科：社會與生活。",
+     "先看清題目問的是甚麼，再逐項排除不合適的選項；不要只看第一個順眼的答案。",
+     "把課堂學過的科學概念連到日常生活，想一想平日見過的現象。"
+    ],
+    "pitfalls": [
+     "作答前先留意題目中的關鍵字（例如「不屬於」「相反」「最接近」），避免選錯方向。",
+     "題目問的是「主要功能／成因」，不要選只是「相關」的選項。"
+    ]
+   },
+   "questions": [
+    {
+     "type": "choice",
+     "prompt": "「借閱圖書」會用到／指的是哪一項？",
+     "choices": [
+      "醫院",
+      "消防局",
+      "圖書館",
+      "郵局"
+     ],
+     "answer": "圖書館",
+     "explain": "借閱圖書 → 圖書館。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「治理病人」會用到／指的是哪一項？",
+     "choices": [
+      "警署",
+      "醫院",
+      "消防局",
+      "郵局"
+     ],
+     "answer": "醫院",
+     "explain": "治理病人 → 醫院。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「寄送信件」會用到／指的是哪一項？",
+     "choices": [
+      "警署",
+      "消防局",
+      "郵局",
+      "回收箱"
+     ],
+     "answer": "郵局",
+     "explain": "寄送信件 → 郵局。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「滅火和救援」會用到／指的是哪一項？",
+     "choices": [
+      "回收箱",
+      "交通燈",
+      "消防局",
+      "警署"
+     ],
+     "answer": "消防局",
+     "explain": "滅火和救援 → 消防局。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「維持治安」會用到／指的是哪一項？",
+     "choices": [
+      "收據",
+      "交通燈",
+      "回收箱",
+      "警署"
+     ],
+     "answer": "警署",
+     "explain": "維持治安 → 警署。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「把可回收物分開」會用到／指的是哪一項？",
+     "choices": [
+      "儲蓄",
+      "交通燈",
+      "收據",
+      "回收箱"
+     ],
+     "answer": "回收箱",
+     "explain": "把可回收物分開 → 回收箱。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「過馬路前要留意」會用到／指的是哪一項？",
+     "choices": [
+      "儲蓄",
+      "預算",
+      "交通燈",
+      "收據"
+     ],
+     "answer": "交通燈",
+     "explain": "過馬路前要留意 → 交通燈。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「買東西後作憑證」會用到／指的是哪一項？",
+     "choices": [
+      "儲蓄",
+      "消費者",
+      "預算",
+      "收據"
+     ],
+     "answer": "收據",
+     "explain": "買東西後作憑證 → 收據。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「把錢存起來以備不時之需」會用到／指的是哪一項？",
+     "choices": [
+      "儲蓄",
+      "預算",
+      "消費者",
+      "八達通"
+     ],
+     "answer": "儲蓄",
+     "explain": "把錢存起來以備不時之需 → 儲蓄。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「事先計劃開支」會用到／指的是哪一項？",
+     "choices": [
+      "八達通",
+      "消費者",
+      "圖書館",
+      "預算"
+     ],
+     "answer": "預算",
+     "explain": "事先計劃開支 → 預算。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「購買商品和服務的人」會用到／指的是哪一項？",
+     "choices": [
+      "圖書館",
+      "八達通",
+      "消費者",
+      "醫院"
+     ],
+     "answer": "消費者",
+     "explain": "購買商品和服務的人 → 消費者。",
+     "tag": "g-p6-community"
+    },
+    {
+     "type": "choice",
+     "prompt": "「乘搭公共交通常用」會用到／指的是哪一項？",
+     "choices": [
+      "八達通",
+      "圖書館",
+      "醫院",
+      "郵局"
+     ],
+     "answer": "八達通",
+     "explain": "乘搭公共交通常用 → 八達通。",
+     "tag": "g-p6-community"
+    }
+   ]
+  }
+ ]
+}

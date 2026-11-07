@@ -79,9 +79,17 @@ CSV 第一列是標題列：`prompt, answer, wrong1, wrong2, wrong3, explain, ta
 
 > 不要把來源不明、沒有授權或抄自課本／TSA／坊間練習的題目放進來。沒有授權聲明的 GitHub 倉庫，法律上等於「保留所有權利」，不可以使用。
 
-## 數學為何不用內容包
+## 數學內容包
 
-數學題由程式按參數即時生成（`apps/web/src/lib/content/math.ts`），題量無限，且答案由程式計算，不會有抄錄錯誤。新增生成器時請在 `src/lib/__tests__/content.test.ts` 補測試（測試會對每個單元用大量隨機種子檢查答案自洽，並對加減乘除用獨立算法驗算）。
+數學主力仍是程式按參數即時生成（`apps/web/src/lib/content/math.ts`）：題量無限，答案由程式計算，不會有抄錄錯誤。新增生成器時請在 `src/lib/__tests__/content.test.ts` 補測試（測試會對每個單元用大量隨機種子檢查答案自洽，並對加減乘除用獨立算法驗算）。
+
+若要用內容包放固定的數學題（例如配合特定教材的補充練習），schema 是允許的，但有三個限制：
+
+1. **必須自帶 `lesson`**：`units[].lesson` 要有 `points`（≥2 條）與 `pitfalls`（≥1 條）。CI 的 `content.test.ts` 會檢查所有數學單元都有完整教學重點；內容包沒有對應的內建 `LESSONS` 條目，缺了就會失敗。
+2. **題數要夠**：預設練習 10 題，靜態題庫每單元建議至少 20 題，否則每次練習高度重複。需要大量題目時應改寫成生成器。
+3. **沒有 `fraction` 題型**：上傳／資料夾內容包的 schema 只接受 `choice`、`text`、`number`；分數題要改寫成選擇題或文字答案（`accept` 可列等價寫法）。
+
+靜態數學題的答案不會被 CI 逐題驗算，上傳前請自行用獨立算法核對（`content/hk-original-expansion.json` 產生時已對可解析的算式做反向驗算）。
 
 ## 授權
 
