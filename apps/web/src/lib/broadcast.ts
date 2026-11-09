@@ -16,10 +16,10 @@ export const unsubscribeUrl = (email: string) => `${APP_URL()}/api/unsubscribe?e
 export const verifyUnsub = (email: string, t: string) => safeEqual(unsubSig(email), t);
 
 /** 解析收件人。老師只能對自己班的學生及其已綁定的家長廣播；管理員可按角色、班級或全體。 */
-export function resolveRecipients(sender: SessionUser, aud: Audience): { id: string; role: string; email: string | null; verified: boolean }[] {
+export function resolveRecipients(sender: SessionUser, aud: Audience): { id: string; role: string; email: string | null; verified: boolean; displayName: string }[] {
   const db = getDb();
-  const cols = { id: users.id, role: users.role, email: users.email, verified: users.emailVerifiedAt };
-  let rows: { id: string; role: string; email: string | null; verified: number | null }[] = [];
+  const cols = { id: users.id, role: users.role, email: users.email, verified: users.emailVerifiedAt, displayName: users.displayName };
+  let rows: { id: string; role: string; email: string | null; verified: number | null; displayName: string }[] = [];
   if (sender.role === 'teacher') {
     const own = db.select({ id: classes.id }).from(classes).where(eq(classes.ownerId, sender.id)).all().map((c) => c.id);
     const target = aud.classIds?.length ? aud.classIds.filter((c) => own.includes(c)) : own;
@@ -46,7 +46,7 @@ export function resolveRecipients(sender: SessionUser, aud: Audience): { id: str
   } else throw new HttpError(403, '沒有權限發送廣播');
   const seen = new Map<string, (typeof rows)[number]>();
   for (const r of rows) if (r.id !== sender.id) seen.set(r.id, r);
-  return [...seen.values()].map((r) => ({ id: r.id, role: r.role, email: r.email, verified: !!r.verified }));
+  return [...seen.values()].map((r) => ({ id: r.id, role: r.role, email: r.email, verified: !!r.verified, displayName: r.displayName }));
 }
 
 export function createBroadcast(sender: SessionUser, input: { title: string; body: string; audience: Audience; sendEmail: boolean; pinned: boolean; expiresAt?: number | null }) {
@@ -64,7 +64,7 @@ export function createBroadcast(sender: SessionUser, input: { title: string; bod
       const unsub = new Set(tx.select().from(unsubscribes).all().map((u) => u.email));
       for (const r of recipients) {
         if (r.role === 'student' || !r.email || !r.verified || unsub.has(r.email)) continue;
-        const m = broadcastMail({ org, title: input.title, body: input.body, unsubscribeUrl: unsubscribeUrl(r.email) });
+        const m = broadcastMail({ org, title: input.title, body: input.body, unsubscribeUrl: unsubscribeUrl(r.email), name: r.displayName });
         tx.insert(emailQueue).values({ id: randomUUID(), broadcastId: id, toEmail: r.email, subject: m.subject, html: m.html, text: m.text, nextAt: now, createdAt: now }).run();
         queued++;
       }

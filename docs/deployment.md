@@ -28,6 +28,67 @@ docker compose logs app        # 看「設定碼」
 - 如果宿主機啟用 SELinux（CentOS／Fedora／RHEL 系），寫成 `./data:/data:Z`。
 - compose 的 `cap_add`（CHOWN、DAC_OVERRIDE、SETUID、SETGID）不能刪：入口腳本靠它們修正權限並降權。沒有這四個能力時，程式仍會啟動，但會以 root 運行並在日誌印出警告。
 
+### 用 Dockge／Portainer 等面板部署
+
+這類面板本質上是「幫你管理 `docker compose` 的目錄」：預設每個 stack 對應 `/opt/stacks/<stack 名>/` 裏的 `docker-compose.yml`，**stack 名就是目錄名**。這裏有兩個很容易混淆的「名字」，先分清楚：
+
+| 名稱 | 由誰決定 | 例子 | 用途 |
+|---|---|---|---|
+| Compose **project name** | compose 檔頂層 `name:`（或 `COMPOSE_PROJECT_NAME`） | `hk-primary-learn` | 所有資源的**前綴**：容器 `hk-primary-learn-app-1`、volume `hk-primary-learn_data`、網絡 `hk-primary-learn_default` |
+| 面板的 **stack 名** | stack 目錄名 | `/opt/stacks/app` → `app` | 面板自己用來辨識、分組、對應目錄 |
+
+**`docker-compose.yml` 頂層的 `name: hk-primary-learn` 是 Compose project name（資源前綴），不是容器名**，不要把它當成單一容器的名稱去改。本專案把 project name 寫死，所以 volume 固定叫 `hk-primary-learn_data`。
+
+#### 症狀：面板顯示「未啟動」，但服務其實正常
+
+若你把 compose 檔放到 `/opt/stacks/app/`（stack 名 `app`），會出現這種「看起來壞了、其實沒事」的狀態：
+
+- `docker compose ls` 回傳的 `Name` 是 `hk-primary-learn`（來自 `name:`），**對不上**面板預期的目錄名 `app`；
+- Dockge 的 `updateStatus()` 拿目錄名去比對這份清單，找不到對應的 project，就把狀態判定為 `UNKNOWN`，UI 顯示「未啟動」；
+- 但容器一直好好地在跑：`docker ps` 會看到 `hk-primary-learn-app-1` 是 `healthy`，網站也開得到。
+
+換句話說：**這是面板對不上名字，不是服務掛掉，資料也沒有不見**。不要因此緊張地按「刪除」重建。
+
+#### 解法：把 stacks 目錄改名，對齊 project name
+
+最安全的做法是讓目錄名等於 project name：
+
+```bash
+# 先確認實際的 project name
+docker compose ls --all --format json
+# 再把 stack 目錄改成同名（以 Dockge 預設 /opt/stacks 為例）
+sudo mv /opt/stacks/app /opt/stacks/hk-primary-learn
+```
+
+面板是透過 **bind mount** 直接讀宿主機的 stacks 目錄，改目錄名**即時生效**；**compose 檔、容器、volume 統統不用動、也不會重建**（project name 沒變，Docker 認得的還是同一組資源）。回到面板重新整理，狀態就會從 `UNKNOWN` 變回 `RUNNING`。
+
+#### 兩個千萬不要
+
+1. **不要為了遷就面板而刪掉 compose 頂層的 `name:`，也不要設 `COMPOSE_PROJECT_NAME=app`。** 這看似「讓名字對上」，其實是**把 project 改名**：volume 會從 `hk-primary-learn_data` 變成 `app_data`，容器內 `/data` 指向一個全新的空 volume，SQLite `app.db` 看起來就像被清空（資料其實還在舊 volume，但所有設定、帳號、練習記錄都「不見了」，`.secret` 也換了一把，郵件 API Key 無法解密）。
+2. **不要在面板按「刪除」再重建 stack。** 面板的刪除通常會連 volume 一起帶走（`docker compose down -v`），這才真的會把資料庫刪掉。上面的「未啟動」只是誤判，資料一直都在。
+
+#### 升級：別只靠面板的 Update
+
+Dockge 的 `Stack.update()` 在狀態不是 `RUNNING` 時（也就是上面那種 `UNKNOWN`）**只會 pull 新鏡像、不會重啟容器**，按了常常以為升級了，其實還在跑舊版。即使狀態正常，也建議用 SSH 明確執行：
+
+```bash
+cd /opt/stacks/hk-primary-learn      # 或你的 compose 檔所在目錄
+docker compose pull && docker compose up -d
+```
+
+#### 驗證指令
+
+```bash
+# 列出所有 compose project，看 Name 是否等於 stack 目錄名
+docker compose ls --all --format json
+
+# 看容器實際狀態（healthy 就代表服務正常，不必理會面板的 UNKNOWN）
+docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+
+# 確認資料 volume 還在，且前綴是 hk-primary-learn
+docker volume ls --format '{{.Name}}' | grep hk-primary-learn
+```
+
 ## 2. HTTPS（正式使用必做）
 
 沒有 HTTPS，密碼會以明文在網絡上傳輸。選一種：
@@ -114,7 +175,7 @@ docker compose up -d --build        # 或：docker compose pull && docker compos
 2. 鏡像會出現在你的 GitHub **Packages**。預設是私有的：
    - 讓 VPS 免登入拉取：Package settings → Change visibility → Public；
    - 或保持私有，在每台 VPS 登入一次：`echo <token> | docker login ghcr.io -u <用戶名> --password-stdin`（token 需要 `read:packages` 權限）。
-3. 在 VPS 用 `deploy/docker-compose.yml`（只拉鏡像、不建置），`.env` 裡設 `APP_IMAGE=ghcr.io/你的用戶名/hk-primary-learn:latest`（全小寫）。
+3. 在 VPS 用 `deploy/docker-compose.yml`（只拉鏡像、不建置），`.env` 裡設 `APP_IMAGE=ghcr.io/qzqmn/primary-learn:latest`（全小寫）。
 
 **之後的日常**：改程式 → push 到 main → 等 Actions 綠燈（鏡像自動更新）→ VPS 上 `docker compose pull && docker compose up -d`。想固定在某個版本，就把 `APP_IMAGE` 設成 `…:1.2.3` 或 `…:sha-xxxxxxx`；出問題時改回上一個標籤即可回退（資料庫遷移只向前，回退前請先備份）。
 

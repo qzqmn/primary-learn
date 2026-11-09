@@ -1,7 +1,10 @@
 import { getSqlite } from './db';
+import { allUnits } from './content/registry';
+import { SUBJECT_LABEL, type Subject } from './content/types';
 
 const DAY = 86_400_000;
 const hkDate = (ms: number) => new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Hong_Kong' }).format(new Date(ms));
+const SUBJECTS: Subject[] = ['math', 'english', 'chinese', 'general'];
 
 export type UnitProgress = { unitId: string; answered: number; correct: number; accuracy: number; stars: number };
 
@@ -110,5 +113,81 @@ export function teacherOverview(classIds: string[]) {
     activeWeek: n(`SELECT COUNT(DISTINCT user_id) AS n FROM attempt_answers WHERE user_id IN (${ids}) AND ts > ?`, week),
     answersWeek: ans.n,
     accuracyWeek: ans.n ? ans.c / ans.n : null,
+  };
+}
+
+/** 學習熱圖：4 科 × P1–P6，每格彙總該格所有單元的作答數與正確率 */
+export type HeatCell = { subject: Subject; grade: number; answered: number; correct: number; accuracy: number | null };
+
+export function heatmapData(userId: string): Map<string, HeatCell> {
+  const cellOf = new Map<string, string>();
+  for (const u of allUnits()) cellOf.set(u.id, `${u.subject}:${u.grade}`);
+  const cells = new Map<string, HeatCell>();
+  for (const s of SUBJECTS) {
+    for (let g = 1; g <= 6; g++) cells.set(`${s}:${g}`, { subject: s, grade: g, answered: 0, correct: 0, accuracy: null });
+  }
+  const rows = getSqlite()
+    .prepare('SELECT unit_id AS unitId, COUNT(*) AS n, COALESCE(SUM(correct),0) AS c FROM attempt_answers WHERE user_id = ? GROUP BY unit_id')
+    .all(userId) as { unitId: string; n: number; c: number }[];
+  for (const r of rows) {
+    const key = cellOf.get(r.unitId);
+    if (!key) continue;
+    const cell = cells.get(key);
+    if (!cell) continue;
+    cell.answered += r.n;
+    cell.correct += r.c;
+  }
+  for (const cell of cells.values()) cell.accuracy = cell.answered ? cell.correct / cell.answered : null;
+  return cells;
+}
+
+/** 家長只讀週報：近 7 日作答／正確率、連續日數、各科正確率、最近 5 次練習（純查詢，不含題目答案） */
+export type SubjectAccuracy = { subject: Subject; label: string; answered: number; correct: number; accuracy: number | null };
+export type RecentPractice = { id: string; kind: string; unitId: string; total: number; correct: number; startedAt: number; finishedAt: number | null };
+export type WeeklyReport = {
+  answered: number;
+  correct: number;
+  accuracy: number | null;
+  streak: number;
+  subjects: SubjectAccuracy[];
+  recent: RecentPractice[];
+};
+
+export function parentWeeklyReport(studentId: string, now = Date.now()): WeeklyReport {
+  const db = getSqlite();
+  const week = db
+    .prepare('SELECT COUNT(*) AS n, COALESCE(SUM(correct),0) AS c FROM attempt_answers WHERE user_id = ? AND ts > ?')
+    .get(studentId, now - 7 * DAY) as { n: number; c: number };
+
+  const subjectOf = new Map<string, Subject>();
+  for (const u of allUnits()) subjectOf.set(u.id, u.subject);
+  const acc = new Map<Subject, { n: number; c: number }>();
+  for (const s of SUBJECTS) acc.set(s, { n: 0, c: 0 });
+  const byUnit = db
+    .prepare('SELECT unit_id AS unitId, COUNT(*) AS n, COALESCE(SUM(correct),0) AS c FROM attempt_answers WHERE user_id = ? GROUP BY unit_id')
+    .all(studentId) as { unitId: string; n: number; c: number }[];
+  for (const r of byUnit) {
+    const s = subjectOf.get(r.unitId);
+    if (!s) continue;
+    const a = acc.get(s)!;
+    a.n += r.n;
+    a.c += r.c;
+  }
+  const subjects = SUBJECTS.map((s) => {
+    const a = acc.get(s)!;
+    return { subject: s, label: SUBJECT_LABEL[s], answered: a.n, correct: a.c, accuracy: a.n ? a.c / a.n : null };
+  });
+
+  const recent = db
+    .prepare('SELECT id, kind, unit_id AS unitId, total, correct, started_at AS startedAt, finished_at AS finishedAt FROM attempts WHERE user_id = ? ORDER BY started_at DESC LIMIT 5')
+    .all(studentId) as RecentPractice[];
+
+  return {
+    answered: week.n,
+    correct: week.c,
+    accuracy: week.n ? week.c / week.n : null,
+    streak: streakDays(studentId, now),
+    subjects,
+    recent,
   };
 }

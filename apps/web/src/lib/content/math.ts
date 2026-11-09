@@ -1,4 +1,4 @@
-import type { Unit, GenQuestion } from './types';
+import type { Unit, GenQuestion, Lesson } from './types';
 import type { Rng } from './rng';
 import { NAMES, dec, gcd, frac, reduce, num, fractionQ, textQ, choice } from './helpers';
 
@@ -163,6 +163,110 @@ const p6circle: G[] = [
   (r) => { const d = r.int(3, 20); return num(`圓的直徑是 ${d} 厘米，圓周是多少厘米？（π 取 3.14）`, dec(314 * d, 2), 'p6-circle', `圓周 = π × 直徑 = 3.14 × ${d}`, '厘米'); },
 ];
 
+// ───────── C2 參數化題庫：mx- 前綴，自帶 lesson，難度對齊既有 P1–P6 分級 ─────────
+const MU = (id: string, grade: number, title: string, intro: string[], tags: string[], gens: G[], lesson: Lesson): Unit => ({
+  id, subject: 'math', grade, title, intro, tags, gens, source: 'builtin', lesson,
+});
+
+const mxP1: G[] = [
+  (r) => { const a = r.int(1, 19), b = r.int(1, 20 - a); return num(`計算：${a} + ${b} = ?`, a + b, 'mx-p1-add20', `由 ${a} 開始向上數 ${b} 個，得 ${a + b}。`); },
+  (r) => { const a = r.int(2, 20), b = r.int(1, a - 1); return num(`計算：${a} − ${b} = ?`, a - b, 'mx-p1-sub20', `由 ${a} 向後數 ${b} 個，得 ${a - b}。`); },
+  (r) => { const n = r.pick(NAMES), a = r.int(1, 15), b = r.int(1, 20 - a); return num(`${n}有 ${a} 粒糖，再得到 ${b} 粒，共有多少粒？`, a + b, 'mx-p1-add20', `${a} + ${b} = ${a + b}`, '粒'); },
+  (r) => { const b = r.int(2, 9), s = r.int(b + 1, 20); return num(`□ + ${b} = ${s}，□ 是多少？`, s - b, 'mx-p1-add20', `${s} − ${b} = ${s - b}`); },
+  (r) => { const a = r.int(2, 9), b = r.int(2, 9); return choice(r, `選出 ${a} + ${b} 的正確答案`, String(a + b), [String(a + b + 1), String(a + b - 1), String(a + b + 2)], 'mx-p1-add20', `${a} + ${b} = ${a + b}。`); },
+];
+
+const mxP2: G[] = [
+  (r) => { const a = r.pick([2, 3, 4, 5, 10]), b = r.int(1, 10); return num(`計算：${a} × ${b} = ?`, a * b, 'mx-p2-times', `${a} 個 ${b} 相加 = ${a * b}。`); },
+  (r) => { const n = r.pick(NAMES), a = r.pick([2, 3, 4, 5, 10]), b = r.int(2, 9); return num(`每盒有 ${a} 枝鉛筆，${n}買了 ${b} 盒，共有多少枝？`, a * b, 'mx-p2-times', `${a} × ${b} = ${a * b}`, '枝'); },
+  (r) => { const a = r.pick([2, 3, 4, 5, 10]), b = r.int(2, 9); return num(`${a * b} 是 ${a} 的幾倍？`, b, 'mx-p2-times', `${a} × ${b} = ${a * b}`, '倍'); },
+  (r) => { const a = r.pick([2, 3, 4, 5, 10]), b = r.int(1, 10); return choice(r, `選出 ${a} × ${b} 的正確答案`, String(a * b), [String(a * b + a), String(a * b - a), String(a * b + 1)], 'mx-p2-times', `背熟 ${a} 的乘法口訣。`); },
+  (r) => { const a = r.pick([2, 3, 4, 5, 10]), b = r.int(2, 9), c = r.int(1, 9); return num(`計算：${a} × ${b} + ${c} = ?`, a * b + c, 'mx-p2-times', `先算 ${a} × ${b} = ${a * b}，再加 ${c}。`); },
+];
+
+const mxP3: G[] = [
+  (r) => { const a = r.int(100, 899), b = r.int(100, 999 - a); return num(`計算：${a} + ${b} = ?`, a + b, 'mx-p3-add3', '直式相加，個位滿 10 要向十位進 1。'); },
+  (r) => { const a = r.int(300, 999), b = r.int(100, a - 1); return num(`計算：${a} − ${b} = ?`, a - b, 'mx-p3-sub3', '直式相減，個位不夠減要向十位退 1。'); },
+  (r) => { const b = r.int(2, 9), q = r.int(3, 20); return num(`計算：${b * q} ÷ ${b} = ?`, q, 'mx-p3-div', `想 ${b} × □ = ${b * q}。`); },
+  (r) => { const b = r.int(2, 9), q = r.int(3, 12), rem = r.int(1, b - 1), a = b * q + rem; return num(`${a} ÷ ${b} 的商是多少？`, q, 'mx-p3-div-rem', `${b} × ${q} = ${b * q}，餘 ${rem}，所以商是 ${q}。`); },
+  (r) => { const a = r.int(100, 800), b = r.int(100, 999 - a); return choice(r, `選出 ${a} + ${b} 的正確答案`, String(a + b), [String(a + b + 10), String(a + b - 10), String(a + b + 1)], 'mx-p3-add3', `直式相加得 ${a + b}。`); },
+];
+
+const mxP4: G[] = [
+  (r) => { const a = r.int(2, 20), b = r.int(2, 9), c = r.int(2, 9); return num(`計算：${a} + ${b} × ${c} = ?`, a + b * c, 'mx-p4-order', `先乘後加：${b} × ${c} = ${b * c}。`); },
+  (r) => { const a = r.int(3, 15), b = r.int(2, 12), c = r.int(2, 9); return num(`計算：(${a} + ${b}) × ${c} = ?`, (a + b) * c, 'mx-p4-order', `先算括號：${a} + ${b} = ${a + b}。`); },
+  (r) => { const a = r.int(2, 9), b = r.int(2, 9), c = r.int(1, Math.min(9, a * b - 1)); return num(`計算：${a} × ${b} − ${c} = ?`, a * b - c, 'mx-p4-order', `先乘後減：${a} × ${b} = ${a * b}。`); },
+  (r) => { const b = r.int(2, 9), q = r.int(2, 12), d = r.int(1, 9), a = b * q + d; return num(`計算：(${a} − ${d}) ÷ ${b} = ?`, q, 'mx-p4-order', `括號內 ${a} − ${d} = ${a - d}。`); },
+  (r) => { const a = r.int(2, 20), b = r.int(2, 9), c = r.int(2, 9); return choice(r, `選出 ${a} + ${b} × ${c} 的正確答案`, String(a + b * c), [String(a + b * c + 1), String(a + b * c + 2), String(a + b * c - 1)], 'mx-p4-order', `先算 ${b} × ${c} = ${b * c}。`); },
+];
+
+const mxP5: G[] = [
+  (r) => { const p = r.int(1, 99); return num(`把 ${dec(p, 2)} 寫成百分數（只填數字，不用寫 %）`, p, 'mx-p5-percent', `${dec(p, 2)} = ${p}/100 = ${p}%`, '%'); },
+  (r) => { const p = r.pick([10, 20, 25, 40, 50, 75]), base = r.pick([40, 60, 80, 120, 200, 240]); return num(`${base} 的 ${p}% 是多少？`, (base * p) / 100, 'mx-p5-percent-of', `${base} × ${p}/100 = ${(base * p) / 100}`); },
+  (r) => { const a = r.int(11, 99), b = r.int(11, 99); return num(`計算：${dec(a, 1)} × ${dec(b, 1)} = ?`, dec(a * b, 2), 'mx-p5-decimal-mul', `先當整數 ${a} × ${b} = ${a * b}，再補回 2 位小數。`); },
+  (r) => { const p = r.pick([20, 25, 40, 50, 60, 75, 80]); const [n, d] = reduce(p, 100); return fractionQ(`把 ${p}% 化成最簡分數。`, frac(n, d), 'mx-p5-percent-fraction', `${p}% = ${p}/100，分子分母同除以 ${gcd(p, 100)}。`); },
+  (r) => { const b = r.int(2, 9), q = r.int(11, 60); return num(`計算：${dec(b * q, 1)} ÷ ${b} = ?`, dec(q, 1), 'mx-p5-decimal-div', `${dec(b * q, 1)} ÷ ${b} = ${dec(q, 1)}。`); },
+];
+
+const mxP6: G[] = [
+  (r) => { const [a, b] = r.pick([[2, 3], [3, 5], [1, 4], [3, 4], [2, 5], [4, 7]] as const), g = r.int(2, 9); return choice(r, `把 ${a * g}:${b * g} 化成最簡整數比`, `${a}:${b}`, [`${a * g}:${b * g}`, `${b}:${a}`, `${a}:${b * 2}`], 'mx-p6-ratio', `兩數同除以 ${g} 得 ${a}:${b}。`); },
+  (r) => { const price = r.pick([100, 200, 400, 500, 800]), off = r.pick([10, 20, 25, 30, 40]); return num(`原價 $${price}，減價 ${off}%，售價是多少元？`, (price * (100 - off)) / 100, 'mx-p6-discount', `售價 = ${price} × ${100 - off}% = ${(price * (100 - off)) / 100}`, '元'); },
+  (r) => { const v = r.pick([40, 50, 60, 80]), t = r.int(2, 6); return num(`汽車每小時行 ${v} 公里，${t} 小時共行多少公里？`, v * t, 'mx-p6-speed', `路程 = 速率 × 時間 = ${v} × ${t}`, '公里'); },
+  (r) => { const a = r.int(2, 9), x = r.int(2, 15), b = r.int(1, 20); return num(`解方程：${a}x + ${b} = ${a * x + b}，x = ?`, x, 'mx-p6-equation', `${a}x = ${a * x + b} − ${b} = ${a * x}，所以 x = ${x}。`); },
+  (r) => { const rad = r.int(2, 15); return num(`圓的半徑是 ${rad} 厘米，圓周是多少厘米？（π 取 3.14）`, dec(2 * 314 * rad, 2), 'mx-p6-circle', `圓周 = 2 × 3.14 × ${rad}`, '厘米'); },
+];
+
+const MX_UNITS: Unit[] = [
+  MU('mx-p1-addsub20', 1, '20 以內加減（參數化）', ['把兩個數合起來用加法；拿走一部分用減法。'], ['mx-p1-add20', 'mx-p1-sub20'], mxP1, {
+    points: [
+      '20 以內的加法可以用「湊十法」：先把其中一個數補到 10，再把剩下的加起來。',
+      '減法可以想成加法的倒轉：要算 13 − 5，就找「5 加多少等於 13」。',
+      '看到「共有」「剩下」先判斷用加還是減，再把題目的數字代入算式。',
+    ],
+    pitfalls: ['把「飛走／用去」誤用加法；題目說拿走一部分時要用減法。', '進位或退位時漏算十位，建議畫圈逐一點數檢查。'],
+  }),
+  MU('mx-p2-times', 2, '2、3、4、5、10 的乘法（參數化）', ['乘法是相同數目連加的快捷方法。'], ['mx-p2-times'], mxP2, {
+    points: [
+      '乘法是相同數目連加的快捷方法，例如 4 × 3 就是 4 + 4 + 4 = 12。',
+      '熟記 2、3、4、5、10 的乘法口訣；任何整數乘 10 只要在末尾補一個 0。',
+      '「幾倍」的問題用乘法；反過來求倍數時，用除法想「□ × a = 積」。',
+    ],
+    pitfalls: ['把 a × b 與 a + b 混淆，尤其 2 × 2 與 2 + 2 答案相同時最容易忽略差別。', '算式中同時有「×」與「+」時，忘記先乘後加。'],
+  }),
+  MU('mx-p3-addsubdiv', 3, '三位數加減與基本除法（參數化）', ['大數加減要對齊數位；除法是乘法的倒轉。'], ['mx-p3-add3', 'mx-p3-sub3', 'mx-p3-div', 'mx-p3-div-rem'], mxP3, {
+    points: [
+      '三位數加減要寫直式，把個位、十位、百位對齊；滿 10 進位、不夠減退位。',
+      '除法是乘法的倒轉：算 56 ÷ 7 時，想 7 × □ = 56。',
+      '不能整除時，餘數一定比除數小；先求商，再用「被除數 − 除數 × 商」求餘數。',
+    ],
+    pitfalls: ['直式沒有對齊數位，或進位／退位忘記加減 1。', '把餘數當成商，或寫出比除數還大的餘數。'],
+  }),
+  MU('mx-p4-order', 4, '四則混合與運算次序（參數化）', ['先括號、再乘除、最後加減。'], ['mx-p4-order'], mxP4, {
+    points: [
+      '四則混合的次序：先算括號，再算乘除（由左至右），最後才算加減。',
+      '沒有括號時，先乘除後加減；有括號一定要先處理括號內的結果。',
+      '把每一步的結果寫在算式下方，驗算時逐一步驟比對，較容易找出錯處。',
+    ],
+    pitfalls: ['從左到右一路算到底，忽略「先乘除後加減」。', '括號漏乘，例如把 (3 + 4) × 5 錯算成 3 + 4 × 5。'],
+  }),
+  MU('mx-p5-pctdec', 5, '百分數與小數（參數化）', ['百分數是分母為 100 的分數；小數相乘要注意小數位。'], ['mx-p5-percent', 'mx-p5-percent-of', 'mx-p5-decimal-mul', 'mx-p5-decimal-div', 'mx-p5-percent-fraction'], mxP5, {
+    points: [
+      '百分數是分母為 100 的分數：35% = 35/100 = 0.35，三種寫法可以互相轉換。',
+      '求「某數的百分之幾」用乘法：base × p ÷ 100；反過來求百分比時用除法再乘 100。',
+      '小數相乘先當整數計算，再數兩個因數共有幾位小數，最後補回小數點。',
+    ],
+    pitfalls: ['把 0.5 寫成 5% 而不是 50%；小數轉百分數要乘 100。', '小數乘法漏數小數位，或小數加減沒有對齊小數點。'],
+  }),
+  MU('mx-p6-mixed', 6, '比、折扣、速率、方程與圓周（參數化）', ['綜合運用比、百分數、速率與圓周公式。'], ['mx-p6-ratio', 'mx-p6-discount', 'mx-p6-speed', 'mx-p6-equation', 'mx-p6-circle'], mxP6, {
+    points: [
+      '比可以像分數般約簡；按比分配時先求總份數，再求每份是多少。',
+      '減價 p% 即售價為原價的 (100 − p)%；速率、路程、時間的關係是「路程 = 速率 × 時間」。',
+      '解方程要保持兩邊平衡，先移走常數項再除以 x 前面的係數；圓周 = 2 × π × 半徑。',
+    ],
+    pitfalls: ['折扣題把「減價 20%」誤算成原價乘 20%，正確是乘 80%。', '解方程移項時忘記變號，或把圓周與圓面積公式混用。'],
+  }),
+];
+
 export const MATH_UNITS: Unit[] = [
   U('m1-add20', 1, '20 以內加法', ['把兩個數合起來，用加法。例：8 + 5，先把 8 湊成 10（需要 2），5 分成 2 和 3，10 + 3 = 13。'], ['p1-add20'], p1add),
   U('m1-sub20', 1, '20 以內減法', ['拿走一部分，用減法。可以想「加法倒轉」：13 − 5，因為 5 + 8 = 13，所以答案是 8。'], ['p1-sub20'], p1sub),
@@ -191,4 +295,5 @@ export const MATH_UNITS: Unit[] = [
   U('m6-speed', 6, '速率', ['速率 = 路程 ÷ 時間；路程 = 速率 × 時間；時間 = 路程 ÷ 速率。留意單位要一致。'], ['p6-speed'], p6speed),
   U('m6-algebra', 6, '簡易方程', ['解方程要保持天秤平衡：兩邊做相同的運算。先把常數項移走，再除以 x 前面的數。'], ['p6-equation'], p6alg),
   U('m6-circle', 6, '圓周與圓面積', ['圓周 = 2 × π × 半徑 = π × 直徑；圓面積 = π × 半徑 × 半徑。本題庫取 π = 3.14。'], ['p6-circle'], p6circle),
+  ...MX_UNITS,
 ];

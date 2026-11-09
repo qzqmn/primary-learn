@@ -7,7 +7,7 @@ Open-source teaching and practice platform for **Hong Kong primary school (P1–
 ## Quick start
 
 ```bash
-git clone https://github.com/OWNER/hk-primary-learn.git && cd hk-primary-learn
+git clone https://github.com/qzqmn/primary-learn.git && cd primary-learn
 cp .env.example .env
 docker compose up -d --build
 docker compose logs app        # shows the one-time setup code
@@ -27,7 +27,7 @@ Open `http://<server-ip>:3000`, enter the setup code and create the admin accoun
 
 ## Deploy from a published image (no source on the VPS)
 
-Pushing to `main` runs tests, then **publishes a multi-arch image to GHCR automatically** (`ghcr.io/<you>/hk-primary-learn:latest`, plus `:sha-…`; `v1.2.3` tags add `:1.2.3`). Pull requests only run tests. On the VPS, use `deploy/docker-compose.yml` with `APP_IMAGE=ghcr.io/<you>/hk-primary-learn:latest` in `.env`, then `docker compose up -d`; upgrade with `docker compose pull && docker compose up -d`. Packages are private by default: make the package public or `docker login ghcr.io` with a `read:packages` token. Details: [deployment guide](docs/deployment.md#6-發佈自己的鏡像github-actions).
+Pushing to `main` runs tests, then **publishes a multi-arch image to GHCR automatically** (`ghcr.io/qzqmn/primary-learn:latest`, plus `:sha-…`; `v1.2.3` tags add `:1.2.3`). Pull requests only run tests. On the VPS, use `deploy/docker-compose.yml` with `APP_IMAGE=ghcr.io/qzqmn/primary-learn:latest` in `.env`, then `docker compose up -d`; upgrade with `docker compose pull && docker compose up -d`. Packages are private by default: make the package public or `docker login ghcr.io` with a `read:packages` token. Details: [deployment guide](docs/deployment.md#6-發佈自己的鏡像github-actions).
 
 ## Development
 

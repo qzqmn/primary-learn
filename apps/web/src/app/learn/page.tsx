@@ -6,6 +6,7 @@ import { assignments, attempts, classes, users } from '@/lib/db/schema';
 import { allUnits, findUnit } from '@/lib/content/registry';
 import { SUBJECT_LABEL, type Subject } from '@/lib/content/types';
 import { streakDays, unitProgress } from '@/lib/stats';
+import { countDue } from '@/lib/srs';
 import { noticesFor } from '@/lib/broadcast';
 import { Card, Stars, hk } from '@/components/kit';
 import { Notices } from '@/components/Notices';
@@ -24,6 +25,7 @@ export default async function LearnHome({ searchParams }: { searchParams: Promis
   const progress = unitProgress(me.id);
   const units = allUnits().filter((u) => u.subject === subject && u.grade === grade);
   const streak = streakDays(me.id);
+  const due = countDue(me.id);
 
   const asg = cls ? db.select().from(assignments).where(eq(assignments.classId, cls.id)).orderBy(desc(assignments.createdAt)).limit(10).all() : [];
   const done = new Set(
@@ -43,15 +45,31 @@ export default async function LearnHome({ searchParams }: { searchParams: Promis
         {streak > 0 && <p className="rounded-full bg-hi px-3 py-1 text-sm font-bold">🔥 連續 {streak} 日</p>}
       </div>
 
+      <Card
+        title={`今日複習 ${due} 題`}
+        action={<Link href="/learn/review" className="rounded-lg bg-ballpoint px-3 py-1.5 text-sm font-semibold text-white hover:bg-ballpoint-dark">開始複習 →</Link>}
+      >
+        <p className="text-sm text-ink-soft">
+          間隔重複（SRS）會把答錯的題目排入複習日程：答對就逐步拉長間隔，答錯就隔天再練。
+          {due > 0 ? `目前有 ${due} 題到期，趁記憶猶新把它們清掉吧！` : '目前沒有到期題目，保持得很好！'}
+        </p>
+        <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold">
+          <Link href="/learn/heatmap" className="text-ballpoint underline underline-offset-2">4 科 × P1–P6 學習熱圖 →</Link>
+          <Link href="/learn/papers" className="text-ballpoint underline underline-offset-2">試卷 →</Link>
+          <Link href="/learn/badges" className="text-ballpoint underline underline-offset-2">我的徽章 →</Link>
+          <Link href="/learn/mistakes" className="text-ballpoint underline underline-offset-2">錯題本 →</Link>
+        </div>
+      </Card>
+
       {todo.length > 0 && (
         <Card title="老師派的功課">
           <ul className="space-y-2">
             {todo.map((a) => (
               <li key={a.id}>
-                <Link href={`/learn/unit/${a.unitId}?a=${a.id}`} className="flex items-center justify-between gap-3 rounded-lg border-2 border-line px-3 py-3 hover:border-ballpoint">
+                <Link href={a.mode === 'fixed' && a.paperId ? `/learn/papers?a=${a.id}` : `/learn/unit/${a.unitId}?a=${a.id}`} className="flex items-center justify-between gap-3 rounded-lg border-2 border-line px-3 py-3 hover:border-ballpoint">
                   <span>
-                    <span className="block font-semibold">{a.title}</span>
-                    <span className="text-sm text-ink-soft">{findUnit(a.unitId)?.title} · {a.count} 題{a.dueAt ? ` · 限期 ${hk(a.dueAt, false)}` : ''}</span>
+                    <span className="block font-semibold">{a.title}{a.mode === 'fixed' && <span className="ml-2 rounded-full bg-hi px-2 py-0.5 align-middle text-xs">固定卷</span>}</span>
+                    <span className="text-sm text-ink-soft">{a.mode === 'fixed' ? '固定卷面 · 題序與配分固定' : findUnit(a.unitId)?.title} · {a.count} 題{a.timeLimitMin ? ` · 時限 ${a.timeLimitMin} 分鐘` : ''}{a.dueAt ? ` · 限期 ${hk(a.dueAt, false)}` : ''}</span>
                   </span>
                   <span className="font-bold text-ballpoint">開始</span>
                 </Link>

@@ -1,9 +1,12 @@
 name: Release
 
-# 推送版本標籤（例如 v0.1.0）即建置多架構鏡像並推送到 GitHub Container Registry
+# 與 ci.yml 的分工（修復 v*.*.* tag 重複發版）：
+#   - ci.yml：push 到 main 或 v*.*.* tag 時跑完整 test → docker → publish，
+#     由 publish job 產生 :latest、:sha-xxxxxxx，以及版本 tag 的 :1.2.3、:1.2。
+#   - 本檔原本也監聽 push tags，同一個 tag 會同時觸發兩條工作流程、
+#     重複建置並推送同一批鏡像。改為只保留 workflow_dispatch，供需要手動補發／
+#     重建鏡像時使用；ci.yml 的測試與發佈邏輯完全不動。
 on:
-  push:
-    tags: ["v*.*.*"]
   workflow_dispatch:
 
 permissions:

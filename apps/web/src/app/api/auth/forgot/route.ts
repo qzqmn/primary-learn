@@ -22,7 +22,7 @@ export const POST = api(async (req) => {
     try {
       const code = issueOtp(user.email, 'reset_password');
       const org = orgName();
-      sendMailBackground({ to: user.email, purpose: 'reset_password', ...codeMail({ org, purpose: 'reset_password', code, minutes: OTP_TTL_MIN }) });
+      sendMailBackground({ to: user.email, purpose: 'reset_password', ...codeMail({ org, purpose: 'reset_password', code, minutes: OTP_TTL_MIN, name: user.displayName }) });
       audit({ actorId: user.id, action: 'password.reset_requested', ip });
     } catch {
       /* 冷卻中等情況：同樣不對外透露 */
