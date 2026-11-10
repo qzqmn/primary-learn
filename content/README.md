@@ -8,7 +8,7 @@
 | 檔案 | 內容 |
 | --- | --- |
 | `official-chinese.json`、`official-english.json`、`official-general.json` | 官方示例 |
-| `hk-original-expansion.json` | 原創擴充包：4 科 × P1–P6 共 24 個單元、288 題；題目以自撰詞表與確定性參數表生成，未取自任何課本、坊間練習、TSA 試卷或第三方題庫。CC BY-SA 4.0 |
+| `hk-original-expansion.json` | 原創擴充包 v2：4 科 × P1–P6 共 24 個單元、每單元 40 題（**960 題**）；題目以自撰詞表與確定性參數表生成，未取自任何課本、坊間練習、TSA 試卷或第三方題庫。CC BY-SA 4.0 |
 
 **同一份題目請二選一，不要同時放進 `content/` 又從後台上傳。** `loadCatalog()` 以 unit id 去重，兩邊同時存在時後載入的那份會被略過並記為錯誤（測試 `expect(errors).toEqual([])` 會失敗）；反過來，先放資料夾再上傳同一份 JSON，後台會回 409「單元 ID 已被使用」。
 
