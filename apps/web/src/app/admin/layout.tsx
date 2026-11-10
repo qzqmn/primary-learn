@@ -18,6 +18,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     { href: '/admin', label: '總覽' },
     { href: '/admin/classes', label: '班級與學生' },
     { href: '/admin/broadcasts', label: '廣播通知' },
+    { href: '/admin/papers', label: '試卷' },
     ...(isAdmin
       ? [
           { href: '/admin/people', label: '老師與家長' },

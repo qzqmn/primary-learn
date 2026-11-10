@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-# 建置：docker build -f docker/Dockerfile -t hk-primary-learn .   （在倉庫根目錄執行）
+# 建置：docker build -f docker/Dockerfile -t primary-learn .   （在倉庫根目錄執行）
 # 支援 linux/amd64 與 linux/arm64（用 buildx，見 .github/workflows/release.yml）
 
 FROM node:22-bookworm-slim AS deps
@@ -17,7 +17,7 @@ FROM node:22-bookworm-slim AS runtime
 LABEL org.opencontainers.image.title="學童通 HK Primary Learn" \
       org.opencontainers.image.description="香港小學 P1–P6 開源教學與練習平台" \
       org.opencontainers.image.licenses="AGPL-3.0-only" \
-      org.opencontainers.image.source="https://github.com/OWNER/hk-primary-learn"
+      org.opencontainers.image.source="https://github.com/qzqmn/primary-learn"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \

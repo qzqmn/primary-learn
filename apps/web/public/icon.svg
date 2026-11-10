@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="t">
+  <title id="t">學童通</title>
+  <rect width="192" height="192" rx="36" fill="#2347c5"/>
+  <path d="M96 54c-13-9-30-13-50-11v92c20-2 37 2 50 11 13-9 30-13 50-11V43c-20-2-37 2-50 11z" fill="#ffffff"/>
+  <path d="M96 54v92" stroke="#2347c5" stroke-width="5" stroke-linecap="round"/>
+  <g stroke="#2347c5" stroke-width="6" stroke-linecap="round" opacity=".55">
+    <path d="M58 76h24M58 96h24M58 116h20"/>
+    <path d="M110 76h24M110 96h24M110 116h20"/>
+  </g>
+</svg>

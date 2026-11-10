@@ -43,8 +43,8 @@
 有兩種部署方式：**（一）在 VPS 上從原始碼建置**（最簡單，下面這節）；**（二）VPS 只拉 GitHub Actions 發佈的鏡像**（見後面）。需要 Docker 和 Docker Compose。
 
 ```bash
-git clone https://github.com/OWNER/hk-primary-learn.git   # 改成你的倉庫
-cd hk-primary-learn
+git clone https://github.com/qzqmn/primary-learn.git
+cd primary-learn
 cp .env.example .env
 docker compose up -d --build
 docker compose logs app          # 找到「設定碼 (Setup code)」
@@ -58,7 +58,7 @@ docker compose logs app          # 找到「設定碼 (Setup code)」
 
 ### 部署方式二：VPS 只拉鏡像（不需要原始碼）
 
-**推到 GitHub 的 `main` 分支後**，GitHub Actions 會先跑測試和 Docker 煙霧測試，**通過後自動建置 `amd64` + `arm64` 鏡像並發佈到 GHCR**（`ghcr.io/<你的用戶名>/hk-primary-learn:latest`，另有 `:sha-xxxxxxx`；推 `v1.2.3` 標籤時再多 `:1.2.3`、`:1.2`）。Pull request 只跑測試，不發佈。
+**推到 GitHub 的 `main` 分支後**，GitHub Actions 會先跑測試和 Docker 煙霧測試，**通過後自動建置 `amd64` + `arm64` 鏡像並發佈到 GHCR**（`ghcr.io/qzqmn/primary-learn:latest`，另有 `:sha-xxxxxxx`；推 `v1.2.3` 標籤時再多 `:1.2.3`、`:1.2`）。Pull request 只跑測試，不發佈。
 
 第一次發佈後：
 
@@ -68,9 +68,9 @@ docker compose logs app          # 找到「設定碼 (Setup code)」
 2. 在 VPS 上（不用 clone 倉庫，只需要兩個檔案）：
 
 ```bash
-mkdir hk-primary-learn && cd hk-primary-learn
+mkdir primary-learn && cd primary-learn
 # 把倉庫的 deploy/docker-compose.yml 存成 docker-compose.yml，.env.example 存成 .env（用 scp 或 curl 都可以）
-# 編輯 .env：APP_IMAGE=ghcr.io/你的用戶名/hk-primary-learn:latest（全小寫），並設定 APP_URL、TRUST_PROXY
+# 編輯 .env：APP_IMAGE=ghcr.io/qzqmn/primary-learn:latest（全小寫），並設定 APP_URL、TRUST_PROXY
 docker compose up -d
 docker compose logs app          # 找設定碼
 ```
@@ -139,17 +139,60 @@ npm run check               # 型別檢查 + 單元測試 + 建置 + 端到端�
 
 技術棧：Next.js（App Router）+ TypeScript、SQLite（better-sqlite3）+ Drizzle ORM、Tailwind CSS、Argon2id、Zod、Vitest。
 
-## 已知限制與路線圖
+## 雙語介面覆蓋範圍
 
-誠實列出**尚未實作**的部分：
+目前是**部分雙語（partial i18n）**，不是全站雙語，請勿誤解：
 
-- 英文介面、粵拼／拼音切換
-- 管理員／老師的 TOTP 二步驗證
-- 間隔重複（SRS）、徽章、PWA 離線與安裝
-- 網頁逐題編輯題庫（目前可上傳 JSON 內容包，但不能在網頁上逐題修改）、郵件模板編輯、老師邀請連結
-- 瀏覽器推送、AI 輔助出題、按保留期限自動刪除舊資料
-- 嚴格的 Content-Security-Policy（目前只設定了基本安全標頭）
-- 英文、中文、常識的題量仍小（見上面「題庫現況」）；沒有閱讀理解（需要長篇文章，尚未製作）
+- **已覆蓋**：`apps/web/src/lib/i18n.ts` 的繁中／英字典，含主要導覽、通用按鈕、標題與語言標籤；`LocaleSwitch` 切換器本身的文案；切換後寫入 `localStorage` 與 cookie（`hkpl-locale`），並同步更新 `<html lang>`。切換器放在根 `layout.tsx`，因此所有頁面（登入、學生、老師後台、家長）都會出現。
+- **尚未覆蓋**：各頁面的內文、表單標籤、錯誤訊息、報告、題庫與練習題目仍是繁中；伺服端頁面（RSC）固定以繁中渲染，切換語系不會翻譯這些內容；`admin/layout.tsx`、`learn/layout.tsx`、`parent/layout.tsx` 的導覽列也未接入 `t()`。徽章頁 `/learn/badges` 同為繁中伺服端頁面。
+- **後續工作**：把各 layout／頁面的可見字串改為 `t()` key；伺服端語系需由 cookie 傳入並做 SSR 翻譯（或改由客戶端邊界渲染）；補齊字典其餘字串，並評估題目／內容包的雙語結構。
+- **使用方式**：`t()` 讀的是模組級語系，元件需同時呼叫 `useLocale()` 才會在切換時重新渲染；刻意不使用 context，降低導入成本。
+
+## 本輪更新（v0.2.3 之後，尚未發版）
+
+完整逐項清單見 [CHANGELOG.md](CHANGELOG.md)。這輪把先前清單上**所有**項目一次做完，分四塊：
+
+### A. 管理後台
+
+- **A1 上傳前預覽＋兩步確認**：`POST /api/admin/content/validate` 先解析並回傳 4 科 × P1–P6 落格、題數、授權、單元 ID 衝突；按「確認上傳」才真正寫入，不再選檔即生效。
+- **A2 內容包詳情頁**：`/admin/content/[name]` 可展開 `unit → 題目`（題面、選項、答案、解釋、tag），僅管理員可見；目錄包與資料庫上傳包都可看。
+- **A3 逐題編輯**：`PATCH /api/admin/content/[name]/question` 修改單題並寫入 `auditLogs`；**只適用資料庫上傳包**，`content/` 目錄包仍須改檔重部署。
+- **A4 衝突醒目提示**：後台矩陣上方直接列出重複的 unit id，並提供「停用上傳包」按鈕，不必再到頁面底部找 `cat.errors`。
+- **A5 授權與來源治理**：`contentPacks` 新增授權條文連結、原始來源、取用日期、改編說明、覆核欄位；學生端單元頁顯示「授權條款／原始來源／取用日期／改編說明」，並顯示逐題 `source`。
+- **A6 人工抽檢覆核**：詳情頁可抽 5 題試做並標記「已人工覆核」，後台列表顯示「未覆核」狀態。自動測試能證明分配到哪一格，**測不到難度與超綱**，這一步仍須人工。
+
+### B. 學生／老師／家長
+
+- **B1 間隔重複（SRS）**：`lib/srs.ts`（SM-2 排程）、`srsCards` 表、`/api/learn/review`、`/learn/review` 每日複習；答對拉長間隔、答錯重置並記 lapses。錯題本不再只是「再做一次」。
+- **B2 學習熱圖**：`/learn/heatmap` 顯示 4 科 × P1–P6 的正確率與弱點格。
+- **B3 固定卷面功課**：`assignments` 新增 `mode`／`paperId`／`timeLimitMin`／`pointsPerQuestion`，固定題序、時限倒數、按分計分，並把 `assignmentId` 串回 `attempts`。
+- **B4 PWA／徽章／雙語**：manifest＋版本化 Service Worker（`/api/` 與含答案回應不快取）；5 種徽章由 `POST /api/learn/finish` 頒發，學生首頁有入口；繁中／英切換器與共用字典。**雙語僅覆蓋共用字串**，見上節。
+- **B5 家長只讀週報**：`/api/parent/report` 提供本週練習摘要，家長頁只讀、不能改答案。
+
+### C. 試卷、題庫與部署文件
+
+- **C1 試卷（三種方案一次做齊）**：`papers` 表＋4 支 API＋後台審核頁＋學生作答頁。`lib/papers.ts` 的合規閘只接受①教師原創卷（須原創聲明）②明確開放授權卷（須 `license`／`licenseUrl`／`retrievedAt`）③只存外連、不存題目的索引卷；**NC／ND／無授權、課本／TSA／補習社／商業試卷一律拒絕**。所有卷須 `approved` 才能作答，學生只看到已審核且公開／所屬班級的卷。
+- **C2 參數化數學**：新增 6 個 `mx-pN-*` 單元（P1–P6 各一），以 `gens` 即時產生無限題、自帶 `lesson`，難度對齊既有內建分級；先前 288 道靜態題保留，兩者不衝突。
+- **C3 部署文件**：[docs/deployment.md](docs/deployment.md) 補上 Dockge／Portainer 的 `name:` 與 stack 目錄名誤判、「未啟動」但不影響服務、安全改名法、不可改 project name 的原因，以及升級要用 `docker compose pull && up -d`。
+
+### D. 非功能
+
+- **TOTP 二步驗證**：`/account/totp` 綁定／啟用／停用，登入第二段驗證，含限流與審計（`totpSecrets`）。
+- **資料保留**：後台設定保留天數，先預覽筆數再手動執行，清理 `attempts`／`attemptAnswers`／`emailLogs`／`auditLogs`；帳號、錯題、題庫永不因保留期刪除。
+- **郵件模板編輯**：後台可改驗證信與廣播信的主旨／內文，`lib/mail/templates.ts` 讀取覆寫。
+- **老師邀請連結**：`/api/admin/invites` 產生限次、限時連結，`/invite/[code]` 兌換並寫審計。
+- **發版與安全**：`release.yml` 改為僅手動觸發，終結 `v*.*.*` tag 重複發版；CSP 移除 `'unsafe-eval'`、補上 `object-src`／`base-uri`／`frame-ancestors`；GHCR 鏡像名與 clone 路徑統一為 `qzqmn/primary-learn`；補上 `CHANGELOG.md`。
+
+### 尚未完成（誠實保留）
+
+- **全站雙語**：只有共用字典與切換器會切換；各頁內文、表單、錯誤訊息、報告、題目仍是繁中，伺服端頁面固定繁中渲染。見「雙語介面覆蓋範圍」。
+- **嚴格 CSP**：`script-src` 仍保留 `'unsafe-inline'`，須待 Next.js inline script nonce 化才能移除。
+- 粵拼／拼音切換、瀏覽器推送、AI 輔助出題、閱讀理解長文題；英文／中文／常識題量仍相對少（見「題庫現況」）。
+- **資料保留目前是手動**：後台按鈕才會執行，沒有 cron／排程自動清理。
+- **逐題編輯只對 DB 上傳包有效**：隨系統附帶的目錄包（`content/`）仍須改檔並重新部署。
+- **試卷合規閘是程式規則，不是法律保證**：授權真偽與「是否真的開放授權」仍須人工查證；公開卷請先走審核。
+- 目錄包／上傳包**不要同時放同一份 JSON**（unit id 會撞車）；`README.en.md` 只同步了倉庫與鏡像名稱，功能說明尚未跟上本輪改動。
+- 本輪功能通過型別檢查、219 個單元測試、正式建置與 HTTP 煙霧測試，但**TOTP、郵件、PWA 安裝、試卷審核流程、Docker 升級仍須在正式環境實測**；本專案未經獨立安全審計。
 
 郵件功能（驗證碼、廣播）依賴你自己的 Resend 帳號與已驗證的域名；程式碼已寫好並測試了「未啟用」和排隊邏輯，但**上線前請你用真實帳號實測一次**（後台有「發送測試郵件」按鈕）。
 

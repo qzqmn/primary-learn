@@ -3,7 +3,7 @@ import { desc, inArray } from 'drizzle-orm';
 import { getDb } from '@/lib/db';
 import { users } from '@/lib/db/schema';
 import { Card, Empty, Table, hk } from '@/components/kit';
-import { NewTeacher, PersonActions } from './PeopleTools';
+import { InviteTools, NewTeacher, PersonActions } from './PeopleTools';
 
 export const dynamic = 'force-dynamic';
 export const metadata = { title: '老師與家長' };
@@ -18,6 +18,7 @@ export default async function PeoplePage() {
     <>
       <h1 className="text-2xl font-bold">老師與家長</h1>
       <Card title="建立老師帳號"><NewTeacher /></Card>
+      <Card title="邀請連結"><InviteTools /></Card>
       <Card title="帳號列表">
         {rows.length === 0 ? (
           <Empty>還沒有老師或家長帳號。</Empty>

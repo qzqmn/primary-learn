@@ -4,7 +4,7 @@ import { desc, eq } from 'drizzle-orm';
 import { pageUser } from '@/lib/pageAuth';
 import { getManagedClass } from '@/lib/access';
 import { getDb } from '@/lib/db';
-import { assignments } from '@/lib/db/schema';
+import { assignments, papers } from '@/lib/db/schema';
 import { allUnits, findUnit } from '@/lib/content/registry';
 import { SUBJECT_LABEL } from '@/lib/content/types';
 import { assignmentStatus, classOverview } from '@/lib/stats';
@@ -25,6 +25,9 @@ export default async function ClassPage({ params }: { params: Promise<{ id: stri
   const students = classOverview(id);
   const asg = getDb().select().from(assignments).where(eq(assignments.classId, id)).orderBy(desc(assignments.createdAt)).all();
   const units = allUnits().filter((u) => u.grade === cls.grade || Math.abs(u.grade - cls.grade) <= 1).map((u) => ({ id: u.id, label: `P${u.grade} ${SUBJECT_LABEL[u.subject]}・${u.title}` }));
+  const allPapers = getDb().select().from(papers).all();
+  const paperList = allPapers.filter((p) => p.status === 'approved' && p.kind !== 'index').map((p) => ({ id: p.id, title: p.title }));
+  const paperTitle = new Map<string, string>(allPapers.map((p): [string, string] => [p.id, p.title]));
 
   return (
     <>
@@ -67,7 +70,7 @@ export default async function ClassPage({ params }: { params: Promise<{ id: stri
       <Card title="新增學生"><AddStudents classId={id} joinCode={cls.joinCode} /></Card>
 
       <Card title="功課">
-        <AssignmentForm classId={id} units={units} />
+        <AssignmentForm classId={id} units={units} papers={paperList} />
         {asg.length > 0 && (
           <ul className="mt-4 space-y-3">
             {asg.map((a) => {
@@ -77,8 +80,18 @@ export default async function ClassPage({ params }: { params: Promise<{ id: stri
                 <li key={a.id} className="rounded-lg border-2 border-line p-3">
                   <div className="flex items-start justify-between gap-3">
                     <div>
-                      <p className="font-semibold">{a.title}</p>
-                      <p className="text-sm text-ink-soft">{findUnit(a.unitId)?.title} · {a.count} 題 · 派發 {hk(a.createdAt, false)}{a.dueAt ? ` · 限期 ${hk(a.dueAt, false)}` : ''}</p>
+                      <p className="font-semibold">
+                        {a.title}
+                        <span className={`ml-2 rounded px-1.5 py-0.5 text-xs ${a.mode === 'fixed' ? 'bg-ballpoint-tint text-ballpoint' : 'bg-paper text-ink-soft'}`}>{a.mode === 'fixed' ? '固定卷' : '隨機'}</span>
+                      </p>
+                      <p className="text-sm text-ink-soft">
+                        {a.mode === 'fixed'
+                          ? `固定卷面 · ${paperTitle.get(a.paperId ?? '') ?? '試卷'} · ${a.count} 題`
+                          : `${findUnit(a.unitId)?.title ?? a.unitId} · ${a.count} 題`}
+                        {a.mode === 'fixed' && a.timeLimitMin ? ` · 時限 ${a.timeLimitMin} 分鐘` : ''}
+                        {a.mode === 'fixed' ? ` · 每題 ${a.pointsPerQuestion} 分` : ''}
+                        · 派發 {hk(a.createdAt, false)}{a.dueAt ? ` · 限期 ${hk(a.dueAt, false)}` : ''}
+                      </p>
                     </div>
                     <DeleteAssignment id={a.id} />
                   </div>

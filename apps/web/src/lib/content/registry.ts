@@ -18,6 +18,7 @@ const choiceQ = z.object({
   answer: z.string().min(1).max(120),
   explain: z.string().max(600).optional(),
   tag: z.string().min(1).max(60),
+  source: z.string().max(300).optional(),
 });
 const textQ = z.object({
   type: z.literal('text'),
@@ -26,6 +27,7 @@ const textQ = z.object({
   accept: z.array(z.string().max(120)).max(10).optional(),
   explain: z.string().max(600).optional(),
   tag: z.string().min(1).max(60),
+  source: z.string().max(300).optional(),
 });
 const numberQ = z.object({
   type: z.literal('number'),
@@ -34,6 +36,7 @@ const numberQ = z.object({
   suffix: z.string().max(20).optional(),
   explain: z.string().max(600).optional(),
   tag: z.string().min(1).max(60),
+  source: z.string().max(300).optional(),
 });
 const question = z
   .discriminatedUnion('type', [choiceQ, textQ, numberQ])
@@ -46,6 +49,11 @@ export const packSchema = z.object({
   license: z.string().min(1, 'license is required').max(60),
   source: z.string().max(300).optional(),
   attribution: z.string().max(300).optional(),
+  /** 授權治理（選填）：授權條文連結、取用日期（ISO 日期）、改編說明、原站連結 */
+  licenseUrl: z.string().url().max(300).optional(),
+  retrievedAt: z.string().max(20).optional(),
+  adaptationNote: z.string().max(500).optional(),
+  sourceUrl: z.string().url().max(300).optional(),
   units: z
     .array(
       z.object({
@@ -82,7 +90,11 @@ export function packToUnits(raw: unknown): Unit[] {
   const p = packSchema.parse(raw);
   return p.units.map((u) => {
     const bank = u.questions as GenQuestion[];
-    return { id: u.id, subject: u.subject, grade: u.grade, title: u.title, intro: u.intro, lesson: u.lesson, tags: [...new Set(bank.map((q) => q.tag))], bank, source: p.pack, license: p.license };
+    return {
+      id: u.id, subject: u.subject, grade: u.grade, title: u.title, intro: u.intro, lesson: u.lesson,
+      tags: [...new Set(bank.map((q) => q.tag))], bank, source: p.pack, license: p.license,
+      licenseUrl: p.licenseUrl, retrievedAt: p.retrievedAt, adaptationNote: p.adaptationNote, sourceUrl: p.sourceUrl,
+    };
   });
 }
 

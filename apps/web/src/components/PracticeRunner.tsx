@@ -5,11 +5,19 @@ import { Button } from '@/components/ui';
 import { send } from '@/lib/client';
 
 export type RunnerQuestion = { type: 'choice' | 'number' | 'fraction' | 'text'; prompt: string; choices?: string[]; tag: string; suffix?: string };
-export type RunnerData = { attemptId: string; kind: string; unit: { id: string; title: string }; questions: RunnerQuestion[] };
+export type RunnerData = {
+  attemptId: string;
+  kind: string;
+  unit: { id: string; title: string };
+  questions: RunnerQuestion[];
+  /** 固定卷面才有：每題配分、時限（分鐘）、指派的功課 id */
+  meta?: { pointsPerQuestion?: number; timeLimitMin?: number | null; assignmentId?: string | null };
+};
 type Feedback = { correct: boolean; answer: string; explain: string | null };
-type Summary = { total: number; answered: number; correct: number; stars: number };
+type Summary = { total: number; answered: number; correct: number; stars: number; score?: number; maxScore?: number };
 
 export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: () => void }) {
+  const timeLimitMin = data.meta?.timeLimitMin ?? null;
   const [idx, setIdx] = useState(0);
   const [value, setValue] = useState('');
   const [fb, setFb] = useState<Feedback | null>(null);
@@ -17,6 +25,9 @@ export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: (
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
   const [summary, setSummary] = useState<Summary | null>(null);
+  const [deadline] = useState<number | null>(() => (timeLimitMin && timeLimitMin > 0 ? Date.now() + timeLimitMin * 60_000 : null));
+  const [remaining, setRemaining] = useState<number | null>(deadline ? Math.ceil((deadline - Date.now()) / 1000) : null);
+  const finishing = useRef(false);
   const t0 = useRef(Date.now());
   const input = useRef<HTMLInputElement>(null);
   const q = data.questions[idx];
@@ -38,6 +49,19 @@ export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: (
     if (r.data.correct) setScore((s) => s + 1);
   }
 
+  async function finish() {
+    if (finishing.current) return;
+    finishing.current = true;
+    setBusy(true);
+    const r = await send('/api/learn/finish', { attemptId: data.attemptId });
+    setBusy(false);
+    if (!r.ok) {
+      finishing.current = false;
+      return setErr(r.data.error ?? '無法完成，請再試');
+    }
+    setSummary(r.data as unknown as Summary);
+  }
+
   async function next() {
     if (!last) {
       setIdx(idx + 1);
@@ -45,12 +69,21 @@ export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: (
       setFb(null);
       return;
     }
-    setBusy(true);
-    const r = await send('/api/learn/finish', { attemptId: data.attemptId });
-    setBusy(false);
-    if (!r.ok) return setErr(r.data.error ?? '無法完成，請再試');
-    setSummary(r.data as unknown as Summary);
+    await finish();
   }
+
+  // 固定卷面的時限倒數；歸零時自動交卷（未作答的題目以未答計）
+  useEffect(() => {
+    if (!deadline || summary) return;
+    const tick = () => {
+      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      setRemaining(left);
+      if (left === 0) void finish();
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, [deadline, summary]);
 
   if (summary) {
     const msg = summary.stars === 3 ? '太厲害了！' : summary.stars === 2 ? '做得好！' : summary.stars === 1 ? '不錯，繼續努力！' : '不要緊，多練習就會進步！';
@@ -59,6 +92,9 @@ export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: (
         <p className="text-4xl" aria-label={`${summary.stars} 顆星`}>{[1, 2, 3].map((i) => <span key={i} className={i <= summary.stars ? 'text-[#e8a900]' : 'text-line'}>★</span>)}</p>
         <h2 className="text-2xl font-bold">{msg}</h2>
         <p className="text-lg">答對 <b>{summary.correct}</b> / {summary.total} 題</p>
+        {typeof summary.score === 'number' && typeof summary.maxScore === 'number' && (
+          <p className="text-lg">得分 <b>{summary.score}</b> / {summary.maxScore} 分</p>
+        )}
         <div className="flex flex-col gap-2 sm:flex-row sm:justify-center">
           <Button onClick={onAgain}>再做一次</Button>
           <a href="/learn" className="inline-flex items-center justify-center rounded-lg border-2 border-line bg-white px-4 py-2.5 font-semibold hover:border-ballpoint">返回首頁</a>
@@ -72,7 +108,14 @@ export function PracticeRunner({ data, onAgain }: { data: RunnerData; onAgain: (
     <div className="space-y-4 rounded-xl border-2 border-line bg-white p-4 sm:p-6">
       <div className="flex items-center justify-between text-sm text-ink-soft">
         <span>{data.unit.title}</span>
-        <span aria-live="polite">第 {idx + 1} / {data.questions.length} 題</span>
+        <span className="flex items-center gap-3" aria-live="polite">
+          {remaining !== null && (
+            <span className={remaining <= 60 ? 'font-bold text-pen' : 'font-semibold'}>
+              ⏱ 剩餘 {Math.floor(remaining / 60)}:{String(remaining % 60).padStart(2, '0')}
+            </span>
+          )}
+          <span>第 {idx + 1} / {data.questions.length} 題</span>
+        </span>
       </div>
       <div className="h-2 overflow-hidden rounded-full bg-paper" aria-hidden>
         <div className="h-full bg-ballpoint transition-all" style={{ width: `${(idx / data.questions.length) * 100}%` }} />

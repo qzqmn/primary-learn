@@ -17,9 +17,34 @@ type Cfg = {
   sentLast24h: number;
 };
 
+type Templates = {
+  verifySubject: string;
+  verifyBody: string;
+  broadcastSubject: string;
+  broadcastBody: string;
+};
+
+const EMPTY_TEMPLATES: Templates = { verifySubject: '', verifyBody: '', broadcastSubject: '', broadcastBody: '' };
+
+function TextArea({ label, hint, value, onChange }: { label: string; hint?: string; value: string; onChange: (v: string) => void }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-sm font-semibold">{label}</span>
+      <textarea
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        rows={6}
+        className="w-full rounded-lg border-2 border-line bg-white px-3 py-2.5 font-mono text-sm outline-none focus:border-ballpoint"
+      />
+      {hint && <span className="mt-1 block text-xs text-ink-soft">{hint}</span>}
+    </label>
+  );
+}
+
 export function MailSettings() {
   const [cfg, setCfg] = useState<Cfg | null>(null);
   const [f, setF] = useState({ apiKey: '', fromName: '', fromEmail: '', replyTo: '', dailyLimit: '100' });
+  const [tpl, setTpl] = useState<Templates>(EMPTY_TEMPLATES);
   const [msg, setMsg] = useState<{ kind: 'error' | 'ok'; text: string } | null>(null);
   const [busy, setBusy] = useState('');
 
@@ -29,12 +54,14 @@ export function MailSettings() {
     const c: Cfg = r.data.config;
     setCfg(c);
     setF({ apiKey: '', fromName: c.fromName, fromEmail: c.fromEmail, replyTo: c.replyTo, dailyLimit: String(c.dailyLimit) });
+    if (r.data.templates) setTpl(r.data.templates as Templates);
   }, []);
   useEffect(() => {
     void load();
   }, [load]);
 
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement>) => setF({ ...f, [k]: e.target.value });
+  const setT = (k: keyof Templates) => (v: string) => setTpl({ ...tpl, [k]: v });
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
@@ -48,6 +75,17 @@ export function MailSettings() {
     setBusy('');
     if (!r.ok) return setMsg({ kind: 'error', text: r.data.error ?? '儲存失敗' });
     setMsg({ kind: 'ok', text: '已儲存。請按「發送測試郵件」確認設定可用。' });
+    await load();
+  }
+
+  async function saveTemplates(e: React.FormEvent) {
+    e.preventDefault();
+    setMsg(null);
+    setBusy('templates');
+    const r = await send('/api/admin/mail', tpl, 'PATCH');
+    setBusy('');
+    if (!r.ok) return setMsg({ kind: 'error', text: r.data.error ?? '儲存失敗' });
+    setMsg({ kind: 'ok', text: '郵件模板已儲存。' });
     await load();
   }
 
@@ -123,6 +161,26 @@ export function MailSettings() {
           )}
         </div>
         <p className="text-xs text-ink-soft">測試郵件只會發到你自己的管理員電郵。</p>
+      </form>
+
+      <form onSubmit={saveTemplates} className="space-y-4 rounded-xl border-2 border-line bg-white p-5">
+        <div>
+          <h2 className="text-lg font-bold">郵件模板</h2>
+          <p className="mt-1 text-sm text-ink-soft">編輯驗證信（註冊、驗證電郵、重設密碼）與廣播信的標題和內容。</p>
+        </div>
+        <Alert kind="info">
+          可用佔位符：<b className="font-mono">{'{{code}}'}</b> 驗證碼、<b className="font-mono">{'{{name}}'}</b> 收件人姓名／稱呼、
+          <b className="font-mono">{'{{org}}'}</b> 機構名稱、<b className="font-mono">{'{{minutes}}'}</b> 驗證碼有效分鐘數；
+          廣播信另有 <b className="font-mono">{'{{title}}'}</b>、<b className="font-mono">{'{{body}}'}</b>、<b className="font-mono">{'{{unsubscribeUrl}}'}</b>。
+          系統會自動帶入對應內容，請勿自行改動佔位符的寫法。
+        </Alert>
+        <Field label="驗證信標題" value={tpl.verifySubject} onChange={(e) => setT('verifySubject')(e.target.value)} maxLength={200} required />
+        <TextArea label="驗證信內容" value={tpl.verifyBody} onChange={setT('verifyBody')} hint="純文字；換行會保留。請務必保留 {{code}}，否則用戶收不到驗證碼。" />
+        <Field label="廣播信標題" value={tpl.broadcastSubject} onChange={(e) => setT('broadcastSubject')(e.target.value)} maxLength={200} required />
+        <TextArea label="廣播信內容" value={tpl.broadcastBody} onChange={setT('broadcastBody')} hint="純文字；{{body}} 會換成管理員撰寫的廣播內容。" />
+        <Button type="submit" disabled={!!busy}>
+          {busy === 'templates' ? '儲存中…' : '儲存郵件模板'}
+        </Button>
       </form>
     </div>
   );

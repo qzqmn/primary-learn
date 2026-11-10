@@ -37,7 +37,7 @@ export const POST = api(async (req) => {
   if (new Set(ids).size !== ids.length) throw new HttpError(400, '同一個內容包內有重複的單元 ID');
 
   const questions = p.units.reduce((n, u) => n + u.questions.length, 0);
-  getDb().insert(contentPacks).values({ name: p.pack, json: text, license: p.license, source: p.source ?? p.attribution ?? null, units: p.units.length, questions, uploadedBy: admin.id, createdAt: Date.now() }).run();
+  getDb().insert(contentPacks).values({ name: p.pack, json: text, license: p.license, source: p.source ?? p.attribution ?? null, licenseUrl: p.licenseUrl ?? null, retrievedAt: p.retrievedAt ?? null, adaptationNote: p.adaptationNote ?? null, sourceUrl: p.sourceUrl ?? null, units: p.units.length, questions, uploadedBy: admin.id, createdAt: Date.now() }).run();
   reloadCatalog();
   audit({ actorId: admin.id, action: 'content.upload', target: p.pack, meta: { units: p.units.length, questions, license: p.license } });
   return ok({ name: p.pack, units: p.units.length, questions });

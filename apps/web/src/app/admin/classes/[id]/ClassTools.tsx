@@ -179,10 +179,14 @@ export function StudentActions({ s, joinCode }: { s: { id: string; nickname: str
   );
 }
 
-export function AssignmentForm({ classId, units }: { classId: string; units: { id: string; label: string }[] }) {
+export function AssignmentForm({ classId, units, papers }: { classId: string; units: { id: string; label: string }[]; papers: { id: string; title: string }[] }) {
   const router = useRouter();
+  const [mode, setMode] = useState<'random' | 'fixed'>('random');
   const [unitId, setUnitId] = useState(units[0]?.id ?? '');
   const [count, setCount] = useState(10);
+  const [paperId, setPaperId] = useState(papers[0]?.id ?? '');
+  const [timeLimitMin, setTimeLimitMin] = useState('');
+  const [pointsPerQuestion, setPointsPerQuestion] = useState('10');
   const [due, setDue] = useState('');
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
@@ -191,32 +195,79 @@ export function AssignmentForm({ classId, units }: { classId: string; units: { i
     setBusy(true);
     setErr('');
     const dueAt = due ? new Date(`${due}T23:59:00+08:00`).getTime() : null;
-    const r = await send(`/api/classes/${classId}/assignments`, { unitId, count, dueAt });
+    const body: Record<string, unknown> = { mode, dueAt };
+    if (mode === 'random') {
+      body.unitId = unitId;
+      body.count = count;
+    } else {
+      body.paperId = paperId;
+      if (timeLimitMin) body.timeLimitMin = Number(timeLimitMin);
+      if (pointsPerQuestion) body.pointsPerQuestion = Number(pointsPerQuestion);
+    }
+    const r = await send(`/api/classes/${classId}/assignments`, body);
     setBusy(false);
     if (!r.ok) return setErr(r.data.error ?? '派發失敗');
     setDue('');
     router.refresh();
   }
   return (
-    <form onSubmit={submit} className="flex flex-wrap items-end gap-3">
-      <label className="block min-w-56 flex-1">
-        <span className="mb-1 block text-sm font-semibold">單元</span>
-        <select value={unitId} onChange={(e) => setUnitId(e.target.value)} className="w-full rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base">
-          {units.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}
-        </select>
-      </label>
-      <label className="block">
-        <span className="mb-1 block text-sm font-semibold">題數</span>
-        <select value={count} onChange={(e) => setCount(Number(e.target.value))} className="rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base">
-          {[5, 10, 15, 20].map((n) => <option key={n}>{n}</option>)}
-        </select>
-      </label>
-      <label className="block">
-        <span className="mb-1 block text-sm font-semibold">限期（可不填）</span>
-        <input type="date" value={due} onChange={(e) => setDue(e.target.value)} className="rounded-lg border-2 border-line bg-white px-3 py-2 text-base" />
-      </label>
-      <Button type="submit" disabled={busy}>派發功課</Button>
-      {err && <div className="w-full"><Alert>{err}</Alert></div>}
+    <form onSubmit={submit} className="space-y-3">
+      <div className="flex gap-2" role="tablist" aria-label="功課模式">
+        {(['random', 'fixed'] as const).map((m) => (
+          <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)} className={`rounded-full border-2 px-4 py-1.5 text-sm font-semibold ${mode === m ? 'border-ballpoint bg-ballpoint text-white' : 'border-line bg-white'}`}>
+            {m === 'random' ? '隨機抽題' : '固定卷面'}
+          </button>
+        ))}
+      </div>
+
+      {mode === 'random' ? (
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="block min-w-56 flex-1">
+            <span className="mb-1 block text-sm font-semibold">單元</span>
+            <select value={unitId} onChange={(e) => setUnitId(e.target.value)} className="w-full rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base">
+              {units.map((u) => <option key={u.id} value={u.id}>{u.label}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold">題數</span>
+            <select value={count} onChange={(e) => setCount(Number(e.target.value))} className="rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base">
+              {[5, 10, 15, 20].map((n) => <option key={n}>{n}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold">限期（可不填）</span>
+            <input type="date" value={due} onChange={(e) => setDue(e.target.value)} className="rounded-lg border-2 border-line bg-white px-3 py-2 text-base" />
+          </label>
+        </div>
+      ) : (
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="block min-w-56 flex-1">
+            <span className="mb-1 block text-sm font-semibold">試卷（只限已審核通過、非索引卷）</span>
+            <select value={paperId} onChange={(e) => setPaperId(e.target.value)} className="w-full rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base" required>
+              {papers.length === 0 && <option value="">（沒有可用的試卷）</option>}
+              {papers.map((p) => <option key={p.id} value={p.id}>{p.title}</option>)}
+            </select>
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold">時限（分鐘，可不填）</span>
+            <input type="number" min={1} max={300} value={timeLimitMin} onChange={(e) => setTimeLimitMin(e.target.value)} placeholder="沿用試卷設定" className="w-40 rounded-lg border-2 border-line bg-white px-3 py-2 text-base" />
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold">每題分數</span>
+            <input type="number" min={1} max={100} value={pointsPerQuestion} onChange={(e) => setPointsPerQuestion(e.target.value)} className="w-28 rounded-lg border-2 border-line bg-white px-3 py-2 text-base" />
+          </label>
+          <label className="block">
+            <span className="mb-1 block text-sm font-semibold">限期（可不填）</span>
+            <input type="date" value={due} onChange={(e) => setDue(e.target.value)} className="rounded-lg border-2 border-line bg-white px-3 py-2 text-base" />
+          </label>
+        </div>
+      )}
+
+      <div className="flex flex-wrap items-center gap-3">
+        <Button type="submit" disabled={busy || (mode === 'fixed' && !paperId)}>派發功課</Button>
+        {mode === 'fixed' && papers.length === 0 && <span className="text-sm text-pen">請先到「試卷」建立並審核通過一張試卷。</span>}
+      </div>
+      {err && <Alert>{err}</Alert>}
     </form>
   );
 }

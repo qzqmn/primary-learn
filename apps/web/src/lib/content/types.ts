@@ -16,6 +16,8 @@ export type ServerQuestion = {
   unit: string;
   strict?: boolean; // fraction：必須是最簡分數
   suffix?: string; // 輸入框後的單位，例如「厘米」
+  /** 逐題來源（僅伺服器端）：改編自外部開放授權內容時，逐題保留出處 */
+  source?: string;
 };
 /** 瀏覽器收到的版本：沒有答案、沒有解釋 */
 export type ClientQuestion = Pick<ServerQuestion, 'type' | 'prompt' | 'choices' | 'tag' | 'suffix'>;
@@ -32,6 +34,11 @@ export type Unit = {
   bank?: GenQuestion[]; // 靜態題庫（內容包）
   source: string; // "builtin" 或內容包名稱
   license?: string;
+  /** 授權治理：授權條文連結、取用日期、改編說明、原站連結 */
+  licenseUrl?: string;
+  retrievedAt?: string;
+  adaptationNote?: string;
+  sourceUrl?: string;
   /** 教學內容：重點與常見錯誤（例題由系統按單元即時生成） */
   lesson?: Lesson;
 };

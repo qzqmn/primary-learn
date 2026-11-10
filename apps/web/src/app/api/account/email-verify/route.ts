@@ -27,7 +27,7 @@ export const POST = api(async (req) => {
     if (!isMailReady()) throw new HttpError(400, '郵件服務尚未啟用，請先在「系統設定 → 郵件服務」完成設定並發送測試郵件');
     assertRate(`verify-mail:${me.id}`, 5, 3600);
     const code = issueOtp(me.email, 'verify_email');
-    await sendMail({ to: me.email, purpose: 'verify_email', ...codeMail({ org: orgName(), purpose: 'verify_email', code, minutes: OTP_TTL_MIN }) });
+    await sendMail({ to: me.email, purpose: 'verify_email', ...codeMail({ org: orgName(), purpose: 'verify_email', code, minutes: OTP_TTL_MIN, name: me.displayName }) });
     return ok();
   }
   assertRate(`verify-mail-confirm:${me.id}`, 10, 3600);

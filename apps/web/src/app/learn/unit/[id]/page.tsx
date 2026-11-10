@@ -15,6 +15,7 @@ export default async function UnitPage({ params, searchParams }: { params: Promi
   const points = unit.lesson?.points ?? unit.intro;
   // 例題由同一個題庫即時生成，答案與解釋由系統提供（這裡是教學，不是測驗）
   const examples = generateQuestions(unit, 3, Date.now() >>> 0);
+  const qSources = [...new Set((unit.bank ?? []).map((q) => q.source).filter((s): s is string => !!s))];
   return (
     <>
       <Link href={`/learn?s=${unit.subject}&g=${unit.grade}`} className="text-sm font-semibold text-ballpoint underline underline-offset-2">← 返回</Link>
@@ -41,6 +42,9 @@ export default async function UnitPage({ params, searchParams }: { params: Promi
               </ul>
             </div>
           )}
+          {qSources.length > 0 && (
+            <p className="mt-3 border-t border-line pt-2 text-xs leading-relaxed text-ink-soft">本單元部分題目改編自外部開放授權內容，逐題出處：{qSources.join('；')}。</p>
+          )}
         </section>
       )}
 
@@ -54,6 +58,7 @@ export default async function UnitPage({ params, searchParams }: { params: Promi
                 {q.type === 'choice' && q.choices && <p className="mt-1 text-sm text-ink-soft">選項：{q.choices.join('　／　')}</p>}
                 <p className="mt-1">答案：<b>{q.answer}{q.suffix ? ` ${q.suffix}` : ''}</b></p>
                 {q.explain && <p className="mt-1 text-sm leading-relaxed text-ink-soft">解釋：{q.explain}</p>}
+                {q.source && <p className="mt-1 text-xs text-ink-soft">題目來源：{q.source}</p>}
               </li>
             ))}
           </ol>
@@ -62,7 +67,18 @@ export default async function UnitPage({ params, searchParams }: { params: Promi
       )}
 
       <Practice unitId={unit.id} assignmentId={a} unitTitle={unit.title} />
-      <p className="text-center text-xs text-ink-soft">題目來源：{unit.source === 'builtin' ? '本系統' : unit.source}{unit.license ? `（${unit.license}）` : ''}</p>
+
+      <div className="text-center text-xs text-ink-soft">
+        <p>題目來源：{unit.source === 'builtin' ? '本系統' : unit.source}{unit.license ? `（${unit.license}）` : ''}</p>
+        {(unit.licenseUrl || unit.sourceUrl || unit.retrievedAt) && (
+          <p className="mt-1 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
+            {unit.licenseUrl && <a href={unit.licenseUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-ballpoint underline underline-offset-2">授權條款</a>}
+            {unit.sourceUrl && <a href={unit.sourceUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-ballpoint underline underline-offset-2">原始來源</a>}
+            {unit.retrievedAt && <span>取用日期：{unit.retrievedAt}</span>}
+          </p>
+        )}
+        {unit.adaptationNote && <p className="mt-1">改編說明：{unit.adaptationNote}</p>}
+      </div>
     </>
   );
 }

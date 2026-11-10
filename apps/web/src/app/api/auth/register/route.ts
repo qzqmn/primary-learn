@@ -46,7 +46,7 @@ export const POST = api(async (req) => {
     const row = { email, role: b.role, username, displayName: b.displayName, passwordHash: await hashPassword(b.password), createdAt: Date.now() };
     db.insert(pendingRegistrations).values(row).onConflictDoUpdate({ target: pendingRegistrations.email, set: row }).run();
     const code = issueOtp(email, 'register');
-    sendMailBackground({ to: email, purpose: 'register', ...codeMail({ org: orgName(), purpose: 'register', code, minutes: OTP_TTL_MIN }) });
+    sendMailBackground({ to: email, purpose: 'register', ...codeMail({ org: orgName(), purpose: 'register', code, minutes: OTP_TTL_MIN, name: b.displayName }) });
   }
   return ok({ message: '如果這個電郵可以註冊，驗證碼已發送。已有帳號的話請改用「忘記密碼」。' });
 });

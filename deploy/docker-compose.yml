@@ -1,6 +1,6 @@
 # VPS 部署（只拉取鏡像，不需要原始碼、不需要建置）
 #
-#   mkdir hk-primary-learn && cd hk-primary-learn
+#   mkdir primary-learn && cd primary-learn
 #   把這個檔案存成 docker-compose.yml；再把倉庫根目錄的 .env.example 存成 .env
 #   編輯 .env：至少填 APP_IMAGE，正式使用還要填 APP_URL、TRUST_PROXY
 #   docker compose up -d
@@ -19,7 +19,7 @@ name: hk-primary-learn
 
 services:
   app:
-    image: ${APP_IMAGE:?請在 .env 設定 APP_IMAGE，例如 ghcr.io/你的用戶名/hk-primary-learn:latest}
+    image: ${APP_IMAGE:?請在 .env 設定 APP_IMAGE，例如 ghcr.io/qzqmn/primary-learn:latest}
     pull_policy: always
     init: true
     restart: unless-stopped
