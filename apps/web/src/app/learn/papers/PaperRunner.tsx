@@ -8,7 +8,7 @@ import { SUBJECT_LABEL } from '@/lib/content/types';
 import { send } from '@/lib/client';
 
 type Subject = 'math' | 'english' | 'chinese' | 'general';
-type Kind = 'original' | 'licensed' | 'index' | 'private';
+type Kind = 'original' | 'licensed' | 'index' | 'private' | 'generated';
 
 type Item = {
   id: string;

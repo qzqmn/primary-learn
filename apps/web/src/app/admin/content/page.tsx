@@ -111,7 +111,12 @@ export default async function ContentPage() {
                 <td className="whitespace-nowrap">{hk(p.createdAt, false)}</td>
                 <td className="whitespace-nowrap text-xs">{p.reviewedAt ? <span className="font-semibold text-ok">已覆核<br />{hk(p.reviewedAt, false)}</span> : '未覆核'}</td>
                 <td>{p.enabled ? '使用中' : '已停用'}</td>
-                <td><PackActions name={p.name} enabled={p.enabled} /></td>
+                <td>
+                  <div className="space-y-0.5">
+                    <Link href={`/admin/content/${encodeURIComponent(p.name)}`} className="block whitespace-nowrap text-xs font-semibold text-ballpoint underline underline-offset-2">查看題目／編輯</Link>
+                    <PackActions name={p.name} enabled={p.enabled} />
+                  </div>
+                </td>
               </tr>
             ))}
           </Table>

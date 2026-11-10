@@ -320,7 +320,7 @@ export const papers = sqliteTable(
     subject: text('subject', { enum: ['math', 'english', 'chinese', 'general'] }).notNull(),
     grade: integer('grade').notNull(),
     ownerId: text('owner_id').notNull(),
-    kind: text('kind', { enum: ['original', 'licensed', 'index', 'private'] }).notNull(),
+    kind: text('kind', { enum: ['original', 'licensed', 'index', 'private', 'generated'] }).notNull(),
     status: text('status', { enum: ['draft', 'pending', 'approved', 'rejected'] }).notNull().default('draft'),
     visibility: text('visibility', { enum: ['private', 'class', 'public'] }).notNull().default('private'),
     license: text('license'),

@@ -1,11 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { schedule } from '../srs';
 import { generateSecret, base32Decode, hotp, totpAt, verifyTotp, otpauthUrl, TOTP_STEP_SEC } from '../totp';
-import { assertPaperCompliance, paperSchema, serializeQuestions, OWNER_DECLARATION } from '../papers';
+import { assertPaperCompliance, paperSchema, serializeQuestions, paperContentValues, pickPaperQuestions, OWNER_DECLARATION } from '../papers';
 import { BADGE_DEFS } from '../badges';
 import { allUnits } from '../content/registry';
 import { generateQuestions } from '../content/engine';
 import { isCorrect } from '../content/grade';
+import type { Unit } from '../content/types';
 
 const DAY = 86_400_000;
 const base = { intervalDays: 1, ease: 250, repetitions: 0, lapses: 0 };
@@ -146,5 +147,62 @@ describe('C2 數學參數化單元', () => {
       }
     }
     expect(checked).toBeGreaterThan(300);
+  });
+});
+
+describe('試卷生成（從題庫抽題）', () => {
+  const mkUnit = (id: string, bankCount: number, gensCount = 0): Unit => ({
+    id,
+    subject: 'math',
+    grade: 3,
+    title: id,
+    intro: [],
+    tags: [],
+    source: 'builtin',
+    bank: bankCount
+      ? Array.from({ length: bankCount }, (_, i) => ({ type: 'number' as const, prompt: `${id} 靜態題 ${i}`, answer: String(i), tag: 't' }))
+      : undefined,
+    gens: gensCount
+      ? Array.from({ length: gensCount }, (_, i) => (r) => ({ type: 'number' as const, prompt: `${id} 生成題 ${i}-${r.int(0, 9999)}`, answer: '1', tag: 't' }))
+      : undefined,
+  });
+
+  it('只抽靜態題庫：不超過可用題數、題面不重複、unit 來自所選單元', () => {
+    const units = [mkUnit('u-a', 3), mkUnit('u-b', 3)];
+    const out = pickPaperQuestions(units, 5, 42);
+    expect(out).toHaveLength(5);
+    expect(new Set(out.map((x) => x.prompt)).size).toBe(5);
+    for (const x of out) expect(units.some((u) => u.id === x.unit)).toBe(true);
+    // 抽超過總題數時，以可用題數為上限
+    expect(pickPaperQuestions(units, 10, 7)).toHaveLength(6);
+  });
+
+  it('沒有靜態題庫時由參數化生成補足到指定題數', () => {
+    const out = pickPaperQuestions([mkUnit('u-g', 0, 5)], 12, 9);
+    expect(out).toHaveLength(12);
+    expect(new Set(out.map((x) => x.prompt)).size).toBe(12);
+    for (const x of out) expect(x.unit).toBe('u-g');
+  });
+
+  it('選擇題選項洗牌後仍包含答案，且標準答案被 isCorrect() 判對', () => {
+    const units: Unit[] = [{
+      id: 'u-c', subject: 'math', grade: 3, title: 'u-c', intro: [], tags: [], source: 'builtin',
+      bank: Array.from({ length: 8 }, (_, i) => ({ type: 'choice' as const, prompt: `選擇 ${i} + ${i} = ?`, choices: [String(i * 2), String(i * 2 + 1), String(i * 2 + 2)], answer: String(i * 2), tag: 'add' })),
+    }];
+    for (const seed of [1, 42, 2026]) {
+      for (const x of pickPaperQuestions(units, 5, seed)) {
+        expect(x.type).toBe('choice');
+        expect(x.choices).toContain(x.answer);
+        expect(isCorrect(x, x.answer)).toBe(true);
+      }
+    }
+  });
+
+  it('生成卷（kind=generated）必須帶來源說明，且拒絕 NC 授權；完整輸入可通過 paperContentValues', () => {
+    const q = [{ type: 'choice' as const, prompt: '1 + 1 = ?', choices: ['1', '2', '3'], answer: '2', tag: 'add' }];
+    expect(() => assertPaperCompliance({ kind: 'generated', questions: q })).toThrow(/題庫生成/);
+    expect(() => assertPaperCompliance({ kind: 'generated', adaptationNote: '由內建題庫生成', license: 'CC BY-NC 4.0', questions: q })).toThrow();
+    const parsed = paperSchema.parse({ title: '生成卷', subject: 'math', grade: 3, kind: 'generated', adaptationNote: '由內建題庫生成', questions: q });
+    expect(() => paperContentValues(parsed, 'p-gen')).not.toThrow();
   });
 });

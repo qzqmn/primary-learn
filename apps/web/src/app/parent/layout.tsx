@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/lib/session';
 import { getOrgName } from '@/lib/settings';
+import { getServerT } from '@/lib/serverI18n';
 import { LogoutButton } from '../admin/LogoutButton';
 
 export const dynamic = 'force-dynamic';
@@ -11,13 +12,14 @@ export default async function ParentLayout({ children }: { children: React.React
   if (!user) redirect('/login');
   if (user.role !== 'parent') redirect('/');
   if (user.mustChangePassword) redirect('/account/password');
+  const t = await getServerT();
   return (
     <div className="min-h-dvh">
       <header className="grid-paper border-b-2 border-line">
         <div className="mx-auto flex max-w-3xl items-center justify-between gap-3 px-4 py-3">
           <Link href="/parent" className="text-lg font-bold">{getOrgName()}</Link>
           <div className="flex items-center gap-3 text-sm">
-            <Link href="/account/password" className="text-ballpoint underline underline-offset-2">更改密碼</Link>
+            <Link href="/account/password" className="text-ballpoint underline underline-offset-2">{t('nav.changePassword')}</Link>
             <span className="font-semibold">{user.displayName}</span>
             <LogoutButton />
           </div>

@@ -2,9 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import { send } from '@/lib/client';
+import { t, useLocale } from '@/components/LocaleSwitch';
 
 export function LogoutButton() {
   const router = useRouter();
+  useLocale(); // 訂閱語系變化，切換時重新渲染
   return (
     <button
       type="button"
@@ -15,7 +17,7 @@ export function LogoutButton() {
         router.refresh();
       }}
     >
-      登出
+      {t('nav.logout')}
     </button>
   );
 }

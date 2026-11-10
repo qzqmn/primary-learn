@@ -7,6 +7,7 @@ import { contentPacks } from '@/lib/db/schema';
 import { loadCatalog, packSchema } from '@/lib/content/registry';
 import { SUBJECT_LABEL, type Subject } from '@/lib/content/types';
 import { Card, Table } from '@/components/kit';
+import { Alert } from '@/components/ui';
 import { EditQuestion, ReviewTools } from './DetailTools';
 
 export const dynamic = 'force-dynamic';
@@ -105,6 +106,12 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
       <Link href="/admin/content" className="text-sm font-semibold text-ballpoint underline underline-offset-2">← 返回題庫與內容包</Link>
       <h1 className="text-2xl font-bold">內容包詳情：{name}</h1>
 
+      {from === 'catalog' && (
+        <Alert kind="info">
+          此為<b>隨系統附帶的目錄包</b>（來自 <code>content/</code> 目錄）：可以逐題查看和抽檢試做，但<b>不能在網上編輯題目</b>——修改請改倉庫 <code>content/</code> 內的 JSON 後重新部署。網上逐題「編輯」只適用於<b>資料庫上傳</b>的內容包。
+        </Alert>
+      )}
+
       <Card title="授權治理資訊">
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 text-sm">
           <dt className="font-semibold">類型</dt><dd>{from === 'db' ? '資料庫上傳' : '隨系統附帶（目錄包）'}</dd>
@@ -142,7 +149,13 @@ export default async function ContentDetailPage({ params }: { params: Promise<{ 
                       <td className="max-w-48 text-xs">{q.explain ?? '—'}</td>
                       <td className="text-xs">{q.tag}</td>
                       <td className="max-w-40 text-xs">{q.source ?? '—'}</td>
-                      <td>{from === 'db' && <EditQuestion name={name} unitId={u.id} index={i} q={{ prompt: q.prompt, answer: q.answer, explain: q.explain, tag: q.tag, choices: q.choices, source: q.source }} />}</td>
+                      <td>
+                        {from === 'db' ? (
+                          <EditQuestion name={name} unitId={u.id} index={i} q={{ prompt: q.prompt, answer: q.answer, explain: q.explain, tag: q.tag, choices: q.choices, source: q.source }} />
+                        ) : (
+                          <span className="text-xs text-ink-soft">目錄包不可網上編輯</span>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </Table>
