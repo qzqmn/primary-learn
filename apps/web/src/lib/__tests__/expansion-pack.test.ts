@@ -36,7 +36,7 @@ describe('原創擴充題庫：年級／學科分配', () => {
 
     // id 編碼（exp-m-p1-… 等）必須與所屬科別年級一致，避免日後改欄位時對不上
     expect(u.id, u.id).toMatch(new RegExp(`^exp-${CODE[s]}-p${g}-[a-z0-9-]+$`));
-    expect(u.bank, u.id).toHaveLength(12);
+    expect(u.bank, u.id).toHaveLength(40);
     expect(u.bank!.every((q) => q.tag.includes(`p${g}`)), `${u.id} tag 年級`).toBe(true);
     expect(u.lesson?.points.length, u.id).toBeGreaterThanOrEqual(2);
     expect(u.lesson?.pitfalls?.length, u.id).toBeGreaterThanOrEqual(1);
@@ -63,9 +63,9 @@ describe('原創擴充題庫：年級／學科分配', () => {
     }
   });
 
-  it('合計 288 題，且背景題目沒有重複題面', () => {
+  it('合計 960 題（v2 每單元 40 題），且背景題目沒有重複題面', () => {
     const prompts = added.flatMap((u) => u.bank!.map((q) => q.prompt));
-    expect(prompts).toHaveLength(288);
-    expect(new Set(prompts).size).toBe(288);
+    expect(prompts).toHaveLength(960);
+    expect(new Set(prompts).size).toBe(960);
   });
 });
