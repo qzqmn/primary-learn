@@ -5,9 +5,10 @@ import { getDb } from './db';
 import { assignments, attempts, classes, papers, users } from './db/schema';
 import { HttpError } from './http';
 import type { SessionUser } from './session';
-import { licenseAllowed } from './content/registry';
+import { licenseAllowed, loadCatalog } from './content/registry';
+import { makeRng } from './content/rng';
 import { toClient } from './content/engine';
-import type { ServerQuestion } from './content/types';
+import type { GenQuestion, ServerQuestion, Subject, Unit } from './content/types';
 
 /* ------------------------------------------------------------------ */
 /* 題目：沿用 content/registry.ts 的 choice / text / number 三型        */
@@ -62,7 +63,7 @@ const paperObject = z.object({
   title: z.string().trim().min(1).max(120),
   subject: z.enum(['math', 'english', 'chinese', 'general']),
   grade: z.coerce.number().int().min(1).max(6),
-  kind: z.enum(['original', 'licensed', 'index', 'private']),
+  kind: z.enum(['original', 'licensed', 'index', 'private', 'generated']),
   visibility: z.enum(['private', 'class', 'public']).default('private'),
   license: strField(120),
   licenseUrl: urlField,
@@ -144,12 +145,95 @@ export function assertPaperCompliance(p: ComplianceInput) {
   } else if (p.kind === 'index') {
     if (!sourceUrl) throw new HttpError(400, '索引卷必須填寫原站連結（sourceUrl）。');
     if (questions.length > 0) throw new HttpError(400, '索引卷只存外連、不存題目，questions 必須是空陣列；請勿貼上任何試卷題目。');
+  } else if (p.kind === 'generated') {
+    // 題庫生成卷：題目來自系統內建或已收錄的開放授權內容包，授權隨來源卷繼承
+    if (!questions.length) throw new HttpError(400, '生成卷必須至少抽到一題；請換一個科目／年級／來源再試。');
+    if (!adaptationNote) throw new HttpError(400, '生成卷必須寫明由哪個題庫生成（adaptationNote），以保留來源與授權資訊。');
+    if (license && !licenseAllowed(license)) throw new HttpError(400, `來源內容包的授權「${license}」不被接受（NC／ND／無授權），無法用來生成試卷。`);
   } else {
     // original / private
     if (!adaptationNote && !p.ownerDeclaration) throw new HttpError(400, '原創卷必須填寫原創聲明／改編說明（adaptationNote），或勾選「本人聲明為原創」，確認沒有收錄任何第三方試卷。');
     if (license && !licenseAllowed(license)) throw new HttpError(400, `原創卷不應附帶第三方授權「${license}」；如引用開放授權內容，請改用「開放授權卷」並補齊授權資料。`);
     if (!questions.length) throw new HttpError(400, '原創卷必須至少有一題。');
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* 從題庫生成試卷                                                       */
+/* ------------------------------------------------------------------ */
+
+/**
+ * 從指定單元抽題組卷：先隨機抽各單元的靜態題庫（整體洗牌、按題面去重），
+ * 不夠再用參數化生成（gens）補足。選擇題選項最後再洗牌一次。
+ * 回傳的 ServerQuestion 保留原始 unit id（作答統計可追溯到單元）。
+ */
+export function pickPaperQuestions(units: Unit[], count: number, seed: number): ServerQuestion[] {
+  const r = makeRng(seed);
+  const out: ServerQuestion[] = [];
+  const seen = new Set<string>();
+  const push = (unitId: string, q: GenQuestion) => {
+    if (out.length >= count || seen.has(q.prompt)) return;
+    seen.add(q.prompt);
+    out.push({ ...q, unit: unitId });
+  };
+
+  const shuffled = r.shuffle(units);
+  // 1) 靜態題庫
+  const bankPairs = shuffled.flatMap((u) => (u.bank ?? []).map((q) => ({ u, q })));
+  r.shuffle(bankPairs);
+  for (const { u, q } of bankPairs) {
+    if (out.length >= count) break;
+    push(u.id, q);
+  }
+  // 2) 參數化生成補足
+  const gensUnits = shuffled.filter((u) => u.gens?.length);
+  let guard = 0;
+  while (out.length < count && gensUnits.length && guard++ < count * 30) {
+    const u = gensUnits[guard % gensUnits.length];
+    const g = u.gens![r.int(0, u.gens!.length - 1)](r);
+    push(u.id, g);
+  }
+  // 3) 選擇題選項洗牌
+  for (const q of out) if (q.type === 'choice' && q.choices) q.choices = r.shuffle(q.choices);
+  return out;
+}
+
+/** 「從題庫生成試卷」表單的來源選項：科目 × 年級 × 來源 → 單元數／可用題數／是否參數化無上限 */
+export type GenSourceOption = {
+  source: string;
+  label: string;
+  subject: Subject;
+  grade: number;
+  units: number;
+  questions: number;
+  unlimited: boolean;
+  license: string | null;
+};
+
+export function genSourceOptions(): GenSourceOption[] {
+  const byKey = new Map<string, GenSourceOption>();
+  for (const unit of loadCatalog().units) {
+    const key = `${unit.subject}|${unit.grade}|${unit.source}`;
+    const e = byKey.get(key) ?? {
+      source: unit.source,
+      label: unit.source === 'builtin' ? '內建題庫（程式生成）' : `內容包：${unit.source}`,
+      subject: unit.subject,
+      grade: unit.grade,
+      units: 0,
+      questions: 0,
+      unlimited: false,
+      license: unit.license ?? null,
+    };
+    e.units += 1;
+    if (unit.gens?.length) {
+      e.unlimited = true;
+      e.questions += 9999;
+    } else {
+      e.questions += unit.bank?.length ?? 0;
+    }
+    byKey.set(key, e);
+  }
+  return [...byKey.values()].sort((a, b) => a.subject.localeCompare(b.subject) || a.grade - b.grade || a.source.localeCompare(b.source));
 }
 
 /** 把驗證後的題目加上固定 unit（供 /api/learn/answer、/finish 沿用），序列化成 papers.questions */

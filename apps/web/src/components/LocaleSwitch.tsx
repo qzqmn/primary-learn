@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useSyncExternalStore } from 'react';
+import { useRouter } from 'next/navigation';
 import { DEFAULT_LOCALE, LOCALE_LABEL, LOCALES, translate, type Key, type Locale } from '@/lib/i18n';
 
 const STORAGE_KEY = 'hkpl-locale';
@@ -62,6 +63,7 @@ function readStored(): Locale | null {
 
 export function LocaleSwitch() {
   const locale = useLocale();
+  const router = useRouter();
 
   // 首次掛載才讀取瀏覽器偏好，避免 SSR 與客戶端首次渲染不一致（hydration mismatch）
   useEffect(() => {
@@ -70,6 +72,12 @@ export function LocaleSwitch() {
     else document.documentElement.lang = current === 'zh-HK' ? 'zh-HK' : 'en';
   }, []);
 
+  function switchTo(l: Locale) {
+    setLocale(l);
+    // cookie 已更新，讓伺服器端頁面（RSC）也用新語系重渲
+    router.refresh();
+  }
+
   return (
     <div className="fixed bottom-3 right-3 z-50 flex items-center gap-1 rounded-full border-2 border-line bg-white/95 px-2 py-1 shadow-md backdrop-blur">
       <span className="hidden px-1 text-xs font-semibold text-ink-soft sm:inline">{t('title.language')}</span>
@@ -77,7 +85,7 @@ export function LocaleSwitch() {
         <button
           key={l}
           type="button"
-          onClick={() => setLocale(l)}
+          onClick={() => switchTo(l)}
           aria-pressed={locale === l}
           aria-label={l === 'zh-HK' ? '切換為繁體中文' : 'Switch to English'}
           className={`rounded-full px-2.5 py-1 text-xs font-bold transition-colors ${locale === l ? 'bg-ballpoint text-white' : 'text-ink-soft hover:bg-ballpoint-tint'}`}

@@ -8,7 +8,7 @@ import { SUBJECT_LABEL } from '@/lib/content/types';
 import { send } from '@/lib/client';
 
 type Subject = 'math' | 'english' | 'chinese' | 'general';
-type Kind = 'original' | 'licensed' | 'index' | 'private';
+type Kind = 'original' | 'licensed' | 'index' | 'private' | 'generated';
 type Status = 'draft' | 'pending' | 'approved' | 'rejected';
 type Visibility = 'private' | 'class' | 'public';
 
@@ -36,12 +36,15 @@ type Item = {
   reviewNote: string | null;
 };
 
-const KIND_LABEL: Record<Kind, string> = { original: '教師原創', licensed: '開放授權', index: '外連索引', private: '私人原創' };
+const KIND_LABEL: Record<Kind, string> = { original: '教師原創', licensed: '開放授權', index: '外連索引', private: '私人原創', generated: '題庫生成' };
 const STATUS_LABEL: Record<Status, string> = { draft: '草稿', pending: '待審核', approved: '已通過', rejected: '已退回' };
 const VIS_LABEL: Record<Visibility, string> = { private: '私人', class: '班級', public: '公開' };
 const SUBJECTS: Subject[] = ['math', 'english', 'chinese', 'general'];
 const btn = 'rounded border border-line bg-white px-2 py-1 text-xs font-semibold hover:border-ballpoint disabled:opacity-50';
 const selectCls = 'w-full rounded-lg border-2 border-line bg-white px-3 py-2.5 text-base';
+
+/** 可生成來源（科目 × 年級 × 來源 → 單元數／題數），由伺服器端頁面計算後傳入 */
+export type GenSource = { source: string; label: string; subject: Subject; grade: number; units: number; questions: number; unlimited: boolean; license: string | null };
 
 const ORIGINAL_TEMPLATE = JSON.stringify({
   title: 'P3 數學 單元測驗（原創）',
@@ -55,6 +58,9 @@ const ORIGINAL_TEMPLATE = JSON.stringify({
   questions: [
     { type: 'choice', prompt: '3 + 5 = ？', choices: ['6', '7', '8', '9'], answer: '8', tag: '加法' },
     { type: 'number', prompt: '12 − 4 = ？', answer: '8', tag: '減法' },
+    { type: 'choice', prompt: '6 × 5 = ？', choices: ['25', '30', '35', '11'], answer: '30', tag: '乘法' },
+    { type: 'number', prompt: '18 ÷ 3 = ？', answer: '6', tag: '除法' },
+    { type: 'number', prompt: '長方形長 8 厘米、闊 5 厘米，周界是多少厘米？', answer: '26', suffix: '厘米', tag: '周界' },
     { type: 'text', prompt: '一打等於多少件？', answer: '12', accept: ['十二'], tag: '數量單位' },
   ],
 }, null, 2);
@@ -74,8 +80,110 @@ const LICENSED_TEMPLATE = JSON.stringify({
   pointsPerQuestion: 10,
   questions: [
     { type: 'choice', prompt: '下列哪一項是可再生能源？', choices: ['煤', '石油', '太陽能', '天然氣'], answer: '太陽能', tag: '能源' },
+    { type: 'choice', prompt: '水的沸點在正常大氣壓下是多少攝氏度？', choices: ['50', '80', '100', '120'], answer: '100', tag: '水的三態' },
+    { type: 'number', prompt: '一台電風扇標示功率 60 瓦，使用 10 小時耗電多少瓦時（Wh）？', answer: '600', suffix: 'Wh', tag: '用電' },
+    { type: 'text', prompt: '香港的垃圾分類回收中，藍廢紙、黃鋁罐，還有什麼顏色對應膠樽？', answer: '黃', accept: ['黄', '黃色', '黄色'], tag: '環保' },
+    { type: 'choice', prompt: '下列哪個不是香港的法定節日？', choices: ['農曆新年', '聖誕節', '中秋節翌日', '萬聖節'], answer: '萬聖節', tag: '社區' },
   ],
 }, null, 2);
+
+/** 從題庫生成試卷：選科目／年級／來源，由系統自動抽題組卷 */
+function GenerateForm({ sources, onCreated }: { sources: GenSource[]; onCreated: () => void }) {
+  const [subject, setSubject] = useState<Subject>('math');
+  const [grade, setGrade] = useState('3');
+  const [source, setSource] = useState('builtin');
+  const [title, setTitle] = useState('');
+  const [count, setCount] = useState('10');
+  const [timeLimit, setTimeLimit] = useState('');
+  const [points, setPoints] = useState('10');
+  const [visibility, setVisibility] = useState<Visibility>('class');
+  const [busy, setBusy] = useState(false);
+  const [res, setRes] = useState<{ ok: boolean; t: string } | null>(null);
+
+  const opts = sources.filter((s) => s.subject === subject && s.grade === Number(grade));
+  const currentValid = opts.some((s) => s.source === source);
+  const effectiveSource = currentValid ? source : (opts.find((s) => s.source === 'builtin')?.source ?? opts[0]?.source ?? '');
+  const chosen = opts.find((s) => s.source === effectiveSource);
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!effectiveSource) return setRes({ ok: false, t: '這個科目／年級沒有可用的題庫來源，請先上傳內容包或換一格。' });
+    setBusy(true);
+    setRes(null);
+    const r = await send('/api/papers/generate', {
+      subject,
+      grade: Number(grade),
+      source: effectiveSource,
+      count: Number(count),
+      timeLimitMin: timeLimit ? Number(timeLimit) : null,
+      pointsPerQuestion: Number(points),
+      visibility,
+      ...(title.trim() ? { title: title.trim() } : {}),
+    });
+    setBusy(false);
+    if (!r.ok) return setRes({ ok: false, t: r.data.error ?? '生成失敗' });
+    setRes({ ok: true, t: `已生成 ${r.data.questionCount} 題的試卷，狀態為「待審核」，須由管理員覆核後才會對學生公開。` });
+    setTitle('');
+    onCreated();
+  }
+
+  return (
+    <form onSubmit={submit} className="space-y-3">
+      <Alert kind="info">
+        選好<b>科目、年級與題庫來源</b>後，系統會自動抽題組成一份固定卷面（題序、答案即時固定）。內建題庫可生成<b>無上限</b>的新題；內容包則受限於包內題數。生成的卷一律為「<b>待審核</b>」，須管理員覆核通過才對學生公開；授權會隨來源繼承（內建＝原創，內容包＝其自報的開放授權）。
+      </Alert>
+      <div className="grid gap-3 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">科目</span>
+          <select value={subject} onChange={(e) => setSubject(e.target.value as Subject)} className={selectCls}>
+            {SUBJECTS.map((s) => <option key={s} value={s}>{SUBJECT_LABEL[s]}</option>)}
+          </select>
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">年級</span>
+          <select value={grade} onChange={(e) => setGrade(e.target.value)} className={selectCls}>
+            {[1, 2, 3, 4, 5, 6].map((g) => <option key={g} value={g}>P{g}</option>)}
+          </select>
+        </label>
+        <label className="block sm:col-span-2">
+          <span className="mb-1 block text-sm font-semibold">題庫來源</span>
+          <select value={effectiveSource} onChange={(e) => setSource(e.target.value)} className={selectCls}>
+            {opts.length === 0 && <option value="">（這一格沒有可用來源）</option>}
+            {opts.map((s) => (
+              <option key={s.source} value={s.source}>
+                {s.label}（{s.units} 個單元{s.unlimited ? '，題量無上限' : `，靜態題 ${s.questions} 題`}{s.license ? `，授權 ${s.license}` : ''}）
+              </option>
+            ))}
+          </select>
+        </label>
+        <Field label="試卷標題（可留空自動命名）" value={title} onChange={(e) => setTitle(e.target.value)} maxLength={120} />
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">題數（1–50）</span>
+          <input type="number" min={1} max={50} value={count} onChange={(e) => setCount(e.target.value)} className={selectCls} />
+          {chosen && !chosen.unlimited && <span className="mt-1 block text-xs text-ink-soft">此來源只有 {chosen.questions} 題靜態題，實際生成會以可用題數為上限。</span>}
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">時限（分鐘，可留空）</span>
+          <input type="number" min={1} max={300} value={timeLimit} onChange={(e) => setTimeLimit(e.target.value)} placeholder="不限時" className={selectCls} />
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">每題分數</span>
+          <input type="number" min={1} max={100} value={points} onChange={(e) => setPoints(e.target.value)} className={selectCls} />
+        </label>
+        <label className="block">
+          <span className="mb-1 block text-sm font-semibold">可見範圍</span>
+          <select value={visibility} onChange={(e) => setVisibility(e.target.value as Visibility)} className={selectCls}>
+            <option value="private">私人（只有自己／管理員）</option>
+            <option value="class">班級（通過後所屬班級學生可見）</option>
+            <option value="public">公開（通過後所有學生可見）</option>
+          </select>
+        </label>
+      </div>
+      <Button type="submit" disabled={busy}>{busy ? '生成中…' : '生成試卷'}</Button>
+      {res && <Alert kind={res.ok ? 'ok' : 'error'}>{res.t}</Alert>}
+    </form>
+  );
+}
 
 /** 上傳「教師原創」或「明確開放授權」卷：貼上／挑選單一 JSON，直接 POST /api/papers */
 function UploadJson({ onCreated }: { onCreated: () => void }) {
@@ -244,7 +352,7 @@ function RowActions({ p, isAdmin, currentUserId, onChanged }: { p: Item; isAdmin
   );
 }
 
-export function PaperTools({ papers, isAdmin, currentUserId }: { papers: Item[]; isAdmin: boolean; currentUserId: string }) {
+export function PaperTools({ papers, isAdmin, currentUserId, genSources }: { papers: Item[]; isAdmin: boolean; currentUserId: string; genSources: GenSource[] }) {
   const router = useRouter();
   const refresh = () => router.refresh();
 
@@ -301,6 +409,7 @@ export function PaperTools({ papers, isAdmin, currentUserId }: { papers: Item[];
         )}
       </Card>
 
+      <Card title="從題庫生成試卷（自動抽題）"><GenerateForm sources={genSources} onCreated={refresh} /></Card>
       <Card title="上傳原創或開放授權卷（JSON）"><UploadJson onCreated={refresh} /></Card>
       <Card title="建立索引卷（只存外連、不存題目）"><IndexForm onCreated={refresh} /></Card>
     </div>
